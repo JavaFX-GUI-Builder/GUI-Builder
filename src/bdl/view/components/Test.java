@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- *
+ * A short test class to test the output of the parsed xml file.
  * @author Ben Goodwin
  */
 public class Test extends Application {

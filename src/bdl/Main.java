@@ -9,7 +9,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
- *
+ * Simple Main class.
+ * 
  * @author Ben Goodwin
  */
 public class Main extends Application {

@@ -64,7 +64,12 @@ public class ComponentViewReader {
         return al;
     }
 
-    public static Document ParseSettings() {
+    /**
+     * Reads in the xml properties file located at
+     * bdl.view.components.component-options.xml and parses the file creating 
+     * a list of ComponentSettings with all properties initialised. 
+     */
+    public static void ParseSettings() {
         File settings;
         try {
             settings = new File("src/bdl/view/components/component-options.xml");
@@ -152,6 +157,5 @@ public class ComponentViewReader {
                 }
             }
         }
-        return null;
     }
 }
