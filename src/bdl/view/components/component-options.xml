@@ -25,10 +25,10 @@
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
-            <image type="File">true</image>
-            <enabled type="boolean">true</enabled>
-            <tooltip type="String">true</tooltip>
-            <wrapText type="boolean" />
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+            <other type="boolean">wrapText</other>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -40,17 +40,17 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">true</textProperty>
         </listeners>
     </component>
     <component id="Text Field">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
-            <image type="File">true</image>
-            <enabled type="boolean">true</enabled>
-            <tooltip type="String">true</tooltip>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -62,17 +62,17 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">true</textProperty>
         </listeners>
     </component>
     <component id="Menu Bar">
         <properties>
             <name type="String">true</name>
-            <text type="String">true</text>
-            <image type="File">true</image>
-            <enabled type="boolean">true</enabled>
-            <tooltip type="String">true</tooltip>
+            <text type="String">false</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -84,7 +84,7 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
@@ -92,8 +92,8 @@
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
-            <image type="File">true</image>
-            <enabled type="boolean">true</enabled>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
             <tooltip type="String">true</tooltip>
         </properties>
         <layout>
@@ -106,7 +106,7 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
@@ -136,9 +136,9 @@
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
-            <image type="File">true</image>
-            <enabled type="boolean">true</enabled>
-            <tooltip type="String">true</tooltip>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -148,10 +148,10 @@
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
             <resizable type="boolean">true</resizable>
-            <dividerPosition type="int" />
+            <other type="int">dividerPosition</other>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
@@ -159,11 +159,11 @@
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
-            <image type="File">true</image>
-            <enabled type="boolean">true</enabled>
-            <tooltip type="String">true</tooltip>
-            <verticalScrollProperty type="ScrollPane.ScrollBarPolicy" />
-            <horizontalScrollProperty type="ScrollPane.ScrollBarPolicy" />
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+            <other type="ScrollPane.ScrollBarPolicy">verticalScrollProperty</other>
+            <other type="ScrollPane.ScrollBarPolicy">horizontalScrollProperty</other>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -175,7 +175,7 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
@@ -183,9 +183,9 @@
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
-            <image type="File">true</image>
-            <enabled type="boolean">true</enabled>
-            <tooltip type="String">true</tooltip>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -205,9 +205,9 @@
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
-            <image type="File">true</image>
-            <enabled type="boolean">true</enabled>
-            <tooltip type="String">true</tooltip>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -219,7 +219,7 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
@@ -227,7 +227,7 @@
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
-            <image type="File">true</image>
+            <image type="File">false</image>
             <enabled type="boolean">true</enabled>
             <tooltip type="String">true</tooltip>
         </properties>
