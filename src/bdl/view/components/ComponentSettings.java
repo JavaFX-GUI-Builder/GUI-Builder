@@ -1,5 +1,6 @@
 package bdl.view.components;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -11,12 +12,12 @@ import java.util.Collection;
  *
  * @author Ben Goodwin
  */
-class ComponentSettings {
+public class ComponentSettings {
 
     private String name;
-    private Collection<Properties> properties;
-    private Collection<Layout> layout;
-    private Collection<Listeners> listeners;
+    private Collection<Properties> properties = new ArrayList<>();
+    private Collection<Layout> layout = new ArrayList<>();
+    private Collection<Listeners> listeners = new ArrayList<>();
 
     public Collection<Properties> getProperties() {
         return properties;
@@ -34,21 +35,96 @@ class ComponentSettings {
         return name;
     }
 
-    private static class Properties {
+    public void setName(String nodeValue) {
+        name = nodeValue;
+    }
 
-        public Properties() {
+    public void addProperties(String name, String type, String value) {
+        properties.add(new Properties(name, type, value));
+    }
+
+    public void addLayout(String name, String type, String value) {
+        layout.add(new Layout(name, type, value));
+    }
+
+    public void addListeners(String name, String type, String value) {
+        listeners.add(new Listeners(name, type, value));
+    }
+
+    
+    
+    public class Properties {
+
+        private final String name;
+        private final String type;
+        private final String value;
+
+        public Properties(String name, String type, String value) {
+            this.name = name;
+            this.type = type;
+            this.value = value;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getValue() {
+            return value;
         }
     }
 
-    private static class Layout {
+    public class Layout {
 
-        public Layout() {
+        private final String name;
+        private final String type;
+        private final String value;
+
+        public Layout(String name, String type, String value) {
+            this.name = name;
+            this.type = type;
+            this.value = value;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getValue() {
+            return value;
         }
     }
 
-    private static class Listeners {
+    public class Listeners {
 
-        public Listeners() {
+        private final String name;
+        private final String type;
+        private final String value;
+
+        public Listeners(String name, String type, String value) {
+            this.name = name;
+            this.type = type;
+            this.value = value;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getValue() {
+            return value;
         }
     }
 }
