@@ -1,0 +1,271 @@
+<root>
+    <component id="Button">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">true</image>
+            <enabled type="boolean">true</enabled>
+            <tooltip type="String">true</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Text Area">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+            <other type="boolean">wrapText</other>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">true</textProperty>
+        </listeners>
+    </component>
+    <component id="Text Field">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">true</textProperty>
+        </listeners>
+    </component>
+    <component id="Menu Bar">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">false</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Menu">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">true</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Menu Item">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">true</image>
+            <enabled type="boolean">true</enabled>
+            <tooltip type="String">true</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Split Pane">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+            <other type="int">dividerPosition</other>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Scroll Pane">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+            <other type="ScrollPane.ScrollBarPolicy">verticalScrollProperty</other>
+            <other type="ScrollPane.ScrollBarPolicy">horizontalScrollProperty</other>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="List View">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Toolbar">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Combo Box">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">true</enabled>
+            <tooltip type="String">true</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Check Box">
+        <properties>
+            <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">true</image>
+            <enabled type="boolean">true</enabled>
+            <tooltip type="String">true</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+</root>
+

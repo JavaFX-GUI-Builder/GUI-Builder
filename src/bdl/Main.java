@@ -1,4 +1,4 @@
-package bdl.main;
+package bdl;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -9,30 +9,31 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
- *
+ * Simple Main class.
+ * 
  * @author Ben Goodwin
  */
 public class Main extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+                Button btn = new Button();
+                btn.setText("Say 'Hello World'");
+                btn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        System.out.println("Hello World!");
+                    }
+                });
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+                StackPane root = new StackPane();
+                root.getChildren().add(btn);
         
-        Scene scene = new Scene(root, 300, 250);
+                Scene scene = new Scene(root, 300, 250);
         
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+                primaryStage.setTitle("Hello World!");
+                primaryStage.setScene(scene);
+                primaryStage.show();
     }
 
     /**
