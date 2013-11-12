@@ -10,6 +10,12 @@ public class GUIObject {
 
     private GRegion root;
 
+    public GUIObject(GRegion root, String stageTitle, int stageWidth, int stageHeight) {
+        this.root = root;
+        this.stageTitle = stageTitle;
+        this.stageWidth = stageWidth;
+        this.stageHeight = stageHeight;
+    }
 
     public String getStageTitle() {
         return stageTitle;

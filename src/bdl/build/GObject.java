@@ -15,12 +15,11 @@ public abstract class GObject {
      * @return The name of this field in the java file
      */
     public String getFieldName(){
-        Image i = new Image("");
-        double d = i.getWidth();
-
         return fieldName;
-
     }
 
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
 }
