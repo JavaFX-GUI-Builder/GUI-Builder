@@ -1,10 +1,9 @@
 package bdl.build;
 
-import javafx.scene.image.Image;
-
 public abstract class GObject {
 
     private String fieldName;
+    private String initCode;
 
     public GObject(String fieldName) {
         this.fieldName = fieldName;
@@ -22,4 +21,11 @@ public abstract class GObject {
         this.fieldName = fieldName;
     }
 
+    public String getInitCode() {
+        return initCode;
+    }
+
+    public void setInitCode(String initCode) {
+        this.initCode = initCode;
+    }
 }

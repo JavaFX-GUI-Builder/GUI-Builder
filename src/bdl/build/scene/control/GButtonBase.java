@@ -7,4 +7,12 @@ public abstract class GButtonBase extends GLabeled {
     public GButtonBase(String fieldName) {
         super(fieldName);
     }
+
+    public String getOnAction() {
+        return onAction;
+    }
+
+    public void setOnAction(String onAction) {
+        this.onAction = onAction;
+    }
 }
