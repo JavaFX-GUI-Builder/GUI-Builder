@@ -285,10 +285,9 @@
             <resizable type="boolean">false</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent)    )">false</onActionProperty>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-
 </root>
 
