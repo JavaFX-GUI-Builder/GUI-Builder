@@ -267,5 +267,28 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
+    <component id="Label">
+	<properties>
+	    <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">false</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent)    )">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+
 </root>
 
