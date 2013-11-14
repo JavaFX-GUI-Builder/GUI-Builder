@@ -57,7 +57,7 @@ public class ComponentViewReader {
      * @return A collection of Strings of names of components supported
      */
     public static Collection<String> allComponentNames() {
-        ArrayList al = new ArrayList<>();
+        ArrayList al = new ArrayList<ComponentSettings>();
         for (ComponentSettings cs : allComponents) {
             al.add(cs.getName());
         }
@@ -69,7 +69,7 @@ public class ComponentViewReader {
      * bdl.view.components.component-options.xml and parses the file creating 
      * a list of ComponentSettings with all properties initialised. 
      */
-    public static void ParseSettings() {
+    public static void parseSettings() {
         File settings;
         try {
             settings = new File("src/bdl/view/components/component-options.xml");
