@@ -57,7 +57,7 @@ public class ComponentViewReader {
      * @return A collection of Strings of names of components supported
      */
     public static Collection<String> allComponentNames() {
-        ArrayList al = new ArrayList<ComponentSettings>();
+        ArrayList<String> al = new ArrayList<>();
         for (ComponentSettings cs : allComponents) {
             al.add(cs.getName());
         }
