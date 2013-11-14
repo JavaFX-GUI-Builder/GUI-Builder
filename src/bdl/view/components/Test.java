@@ -11,7 +11,7 @@ public class Test extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        ComponentViewReader.ParseSettings();
+        ComponentViewReader.parseSettings();
         for (ComponentSettings cse : ComponentViewReader.allComponents()) {
             System.out.println("Name: " + cse.getName());
             System.out.println("Properties: ");
