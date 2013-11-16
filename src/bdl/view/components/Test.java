@@ -33,6 +33,7 @@ public class Test extends Application {
                 }
             }
         }
+        System.exit(0);
     }
 
     /**
