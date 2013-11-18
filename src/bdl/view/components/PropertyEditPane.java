@@ -1,6 +1,8 @@
 package bdl.view.components;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -46,6 +48,13 @@ public class PropertyEditPane extends HBox {
                 HBox.setHgrow(l, Priority.NEVER);
                 HBox.setHgrow(s, Priority.ALWAYS);
 
+                tf.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent t) {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+
                 a.getChildren().addAll(l, s, tf);
                 vb.add(a);
             }
@@ -70,6 +79,13 @@ public class PropertyEditPane extends HBox {
                 HBox.setHgrow(l, Priority.NEVER);
                 HBox.setHgrow(s, Priority.ALWAYS);
 
+                tf.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent t) {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+
                 a.getChildren().addAll(l, s, tf);
                 vb.add(a);
             }
@@ -93,6 +109,13 @@ public class PropertyEditPane extends HBox {
                 HBox.setHgrow(tf, Priority.NEVER);
                 HBox.setHgrow(l, Priority.NEVER);
                 HBox.setHgrow(s, Priority.ALWAYS);
+
+                tf.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent t) {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
 
                 a.getChildren().addAll(l, s, tf);
                 vb.add(a);
