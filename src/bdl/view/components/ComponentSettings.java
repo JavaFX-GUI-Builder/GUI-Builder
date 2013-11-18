@@ -110,12 +110,12 @@ public class ComponentSettings {
 
         private final String name;
         private final String type;
-        private final String value;
+        private final boolean value;
 
         public Properties(String name, String type, String value) {
             this.name = name;
             this.type = type;
-            this.value = value;
+            this.value = Boolean.parseBoolean(value);
         }
 
         public String getName() {
@@ -126,7 +126,7 @@ public class ComponentSettings {
             return type;
         }
 
-        public String getValue() {
+        public boolean getValue() {
             return value;
         }
     }
@@ -138,12 +138,12 @@ public class ComponentSettings {
 
         private final String name;
         private final String type;
-        private final String value;
+        private final boolean value;
 
         public Layout(String name, String type, String value) {
             this.name = name;
             this.type = type;
-            this.value = value;
+            this.value = Boolean.parseBoolean(value);
         }
 
         public String getName() {
@@ -154,7 +154,7 @@ public class ComponentSettings {
             return type;
         }
 
-        public String getValue() {
+        public boolean getValue() {
             return value;
         }
     }
@@ -166,12 +166,12 @@ public class ComponentSettings {
 
         private final String name;
         private final String type;
-        private final String value;
+        private final boolean value;
 
         public Listeners(String name, String type, String value) {
             this.name = name;
             this.type = type;
-            this.value = value;
+            this.value = Boolean.parseBoolean(value);
         }
 
         public String getName() {
@@ -182,7 +182,7 @@ public class ComponentSettings {
             return type;
         }
 
-        public String getValue() {
+        public boolean getValue() {
             return value;
         }
     }
