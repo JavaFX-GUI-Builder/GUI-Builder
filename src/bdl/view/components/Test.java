@@ -1,6 +1,7 @@
 package bdl.view.components;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -12,28 +13,30 @@ public class Test extends Application {
     @Override
     public void start(Stage primaryStage) {
         ComponentViewReader.parseSettings();
-        for (ComponentSettings cse : ComponentViewReader.allComponents()) {
-            System.out.println("Name: " + cse.getName());
-            System.out.println("Properties: ");
-            for (ComponentSettings.Properties p : cse.getProperties()) {
-                if (p.getValue().equals("true")) {
-                    System.out.println("     " + p.getName());
-                }
-            }
-            System.out.println("Layout: ");
-            for (ComponentSettings.Layout p : cse.getLayout()) {
-                if (p.getValue().equals("true")) {
-                    System.out.println("     " + p.getName());
-                }
-            }
-            System.out.println("Listeners: ");
-            for (ComponentSettings.Listeners p : cse.getListeners()) {
-                if (p.getValue().equals("true")) {
-                    System.out.println("     " + p.getName());
-                }
-            }
-        }
-        System.exit(0);
+//        for (ComponentSettings cse : ComponentViewReader.allComponents()) {
+//            System.out.println("Name: " + cse.getName());
+//            System.out.println("Properties: ");
+//            for (ComponentSettings.Properties p : cse.getProperties()) {
+//                if (p.getValue()) {
+//                    System.out.println("     " + p.getName());
+//                }
+//            }
+//            System.out.println("Layout: ");
+//            for (ComponentSettings.Layout p : cse.getLayout()) {
+//                if (p.getValue()) {
+//                    System.out.println("     " + p.getName());
+//                }
+//            }
+//            System.out.println("Listeners: ");
+//            for (ComponentSettings.Listeners p : cse.getListeners()) {
+//                if (p.getValue()) {
+//                    System.out.println("     " + p.getName());
+//                }
+//            }
+//        }
+        
+        primaryStage.setScene(new Scene(new PropertyEditPane()));
+        primaryStage.show();
     }
 
     /**
