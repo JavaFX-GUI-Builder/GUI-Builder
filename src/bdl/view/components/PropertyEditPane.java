@@ -1,9 +1,10 @@
 package bdl.view.components;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -11,7 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -33,12 +33,12 @@ public class PropertyEditPane extends HBox {
         Label hl = new Label("Properties");
         hl.setFont(new Font(hl.getFont().getFamily(), hl.getFont().getSize() + 3));
         vb.add(hl);
-        for (ComponentSettings.Properties p : cs.getProperties()) {
+        for (final ComponentSettings.Properties p : cs.getProperties()) {
             if (p.getValue()) {
                 HBox a = new HBox();
                 Label l = new Label(p.getName());
                 l.setFont(new Font(l.getFont().getFamily(), l.getFont().getSize() + 1));
-                TextField tf = new TextField();
+                final TextField tf = new TextField();
                 tf.promptTextProperty().setValue(p.getType());
 
                 Pane s = new Pane();
@@ -48,10 +48,18 @@ public class PropertyEditPane extends HBox {
                 HBox.setHgrow(l, Priority.NEVER);
                 HBox.setHgrow(s, Priority.ALWAYS);
 
+                tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
+                        if(t1 == false) {
+                            System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
+                        }
+                    }
+                });
                 tf.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
                     }
                 });
 
@@ -64,12 +72,12 @@ public class PropertyEditPane extends HBox {
         il.setFont(new Font(il.getFont().getFamily(), il.getFont().getSize() + 3));
         vb.add(il);
 
-        for (ComponentSettings.Layout p : cs.getLayout()) {
+        for (final ComponentSettings.Layout p : cs.getLayout()) {
             if (p.getValue()) {
                 HBox a = new HBox();
                 Label l = new Label(p.getName());
                 l.setFont(new Font(l.getFont().getFamily(), l.getFont().getSize() + 1));
-                TextField tf = new TextField();
+                final TextField tf = new TextField();
                 tf.promptTextProperty().setValue(p.getType());
 
                 Pane s = new Pane();
@@ -79,10 +87,18 @@ public class PropertyEditPane extends HBox {
                 HBox.setHgrow(l, Priority.NEVER);
                 HBox.setHgrow(s, Priority.ALWAYS);
 
+                tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
+                        if(t1 == false) {
+                            System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
+                        }
+                    }
+                });
                 tf.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
                     }
                 });
 
@@ -95,12 +111,12 @@ public class PropertyEditPane extends HBox {
         jl.setFont(new Font(jl.getFont().getFamily(), jl.getFont().getSize() + 3));
         vb.add(jl);
 
-        for (ComponentSettings.Listeners p : cs.getListeners()) {
+        for (final ComponentSettings.Listeners p : cs.getListeners()) {
             if (p.getValue()) {
                 HBox a = new HBox();
                 Label l = new Label(p.getName());
                 l.setFont(new Font(l.getFont().getFamily(), l.getFont().getSize() + 1));
-                TextField tf = new TextField();
+                final TextField tf = new TextField();
                 tf.promptTextProperty().setValue(p.getType());
 
                 Pane s = new Pane();
@@ -110,10 +126,18 @@ public class PropertyEditPane extends HBox {
                 HBox.setHgrow(l, Priority.NEVER);
                 HBox.setHgrow(s, Priority.ALWAYS);
 
+                tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
+                        if(t1 == false) {
+                            System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
+                        }
+                    }
+                });
                 tf.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
                     }
                 });
 
