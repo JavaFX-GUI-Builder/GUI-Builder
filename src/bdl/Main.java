@@ -1,87 +1,111 @@
 package bdl;
 
-import bdl.view.components.PropertyEditPane;
-import java.util.Set;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * Simple Main class.
- * 
- * @author David Hodgson
+ *  Main class.
  */
 public class Main extends Application {
 
-    Parent root;
+    AnchorPane root;
     
     @Override
     public void start(Stage stage) throws Exception {
-        root = FXMLLoader.load(getClass().getResource("GUIBuilder.fxml"));
+
+        BorderPane borderPane = new BorderPane();
+        root = new AnchorPane();
+        root.prefWidth(854);
+        root.prefHeight(500);
+        AnchorPane.setBottomAnchor(borderPane, 0.0);
+        AnchorPane.setTopAnchor(borderPane, 0.0);
+        AnchorPane.setLeftAnchor(borderPane, 0.0);
+        AnchorPane.setRightAnchor(borderPane, 0.0);
+        root.getChildren().add(borderPane);
+
+        MenuBar menuBar = new MenuBar();
+        Menu menuFile = new Menu("File");
+        MenuItem mItmClose = new MenuItem("Close");
+        Menu menuEdit = new Menu("Edit");
+        MenuItem mItmDelete = new MenuItem("Delete");
+        Menu menuHelp = new Menu("Help");
+        MenuItem mItmAbout = new MenuItem("About");
+        menuBar.getMenus().addAll(menuFile, menuEdit, menuHelp);
+        menuFile.getItems().add(mItmClose);
+        menuEdit.getItems().add(mItmDelete);
+        menuEdit.getItems().add(mItmAbout);
+
+        borderPane.setTop(menuBar);
+
+        SplitPane mainContent = new SplitPane();
+
+        AnchorPane left = new AnchorPane();
+        Accordion leftAccordion = new Accordion();
+        AnchorPane.setLeftAnchor(leftAccordion, 0.0);
+        AnchorPane.setRightAnchor(leftAccordion, 0.0);
+        AnchorPane.setTopAnchor(leftAccordion, 0.0);
+        AnchorPane.setBottomAnchor(leftAccordion, 0.0);
+        leftAccordion.getPanes().add(new TitledPane("Containers", new Pane()));
+        leftAccordion.getPanes().add(new TitledPane("Controls", new Pane()));
+        leftAccordion.getPanes().add(new TitledPane("Menus", new Pane()));
+        left.getChildren().add(leftAccordion);
+
+
+        AnchorPane middle = new AnchorPane();
+        SplitPane middleSplitPane = new SplitPane();
+        middleSplitPane.setOrientation(Orientation.VERTICAL);
+        AnchorPane.setTopAnchor(middleSplitPane, 0.0);
+        AnchorPane.setBottomAnchor(middleSplitPane, 0.0);
+        AnchorPane.setLeftAnchor(middleSplitPane, 0.0);
+        AnchorPane.setRightAnchor(middleSplitPane, 0.0);
+        middleSplitPane.getItems().addAll(new AnchorPane(), new AnchorPane());
+        middleSplitPane.setDividerPositions(0.5);
+        middle.getChildren().add(middleSplitPane);
+
+        AnchorPane right = new AnchorPane();
+        SplitPane rightSplitPane = new SplitPane();
+        rightSplitPane.setDividerPositions(0.6);
+        rightSplitPane.setOrientation(Orientation.VERTICAL);
+        AnchorPane.setTopAnchor(rightSplitPane, 0.0);
+        AnchorPane.setBottomAnchor(rightSplitPane, 0.0);
+        AnchorPane.setLeftAnchor(rightSplitPane, 0.0);
+        AnchorPane.setRightAnchor(rightSplitPane, 0.0);
+
+        AnchorPane rightSplitPaneTop = new AnchorPane();
+
+        Accordion propertiesAccordian = new Accordion();
+        AnchorPane.setTopAnchor(propertiesAccordian, 0.0);
+        AnchorPane.setBottomAnchor(propertiesAccordian, 0.0);
+        AnchorPane.setLeftAnchor(propertiesAccordian, 0.0);
+        AnchorPane.setRightAnchor(propertiesAccordian, 0.0);
+        propertiesAccordian.getPanes().add(new TitledPane("Properties", new Pane()));
+        propertiesAccordian.getPanes().add(new TitledPane("Layout", new Pane()));
+        propertiesAccordian.getPanes().add(new TitledPane("Listeners", new Pane()));
+        rightSplitPaneTop.getChildren().add(propertiesAccordian);
+
+        AnchorPane rightSplitPaneBottom = new AnchorPane();
+
+        rightSplitPane.getItems().addAll(rightSplitPaneTop, rightSplitPaneBottom);
+
+        right.getChildren().add(rightSplitPane);
+
+        mainContent.getItems().addAll(left, middle, right);
+        mainContent.setDividerPositions(0.25, 0.75);
+
+        borderPane.setCenter(mainContent);
         
-//        ObservableList<Node> nodes = root.getChildrenUnmodifiable();
-//        for (Node n : nodes) {
-//            System.out.println("Child id: " + n.getId());
-//        }
-        
-        Scene scene = new Scene(root, 1024, 768);
-        
-        // Find the AnchorPane on the right and add a PropertyEditPane to it.
-//        Node anchorPaneRight = searchForNode(root, "#anchorPaneRight");
-//        if (anchorPaneRight != null) { System.out.println("Found anchorPaneRight!"); }
-//        else { System.err.println("Failed to find anchorPaneRight."); }
-//        ObservableList<Node> rootNodes = root.getChildrenUnmodifiable();
-//        for (Node n : rootNodes)
-//            System.out.println("Root node: "+n.getId());
-//        if (anchorPaneRight == null) {
-//            System.err.println("anchorPaneRight is null.");
-//        } else { System.out.println("anchorPaneRight is NOT null! =D"); }
-//        Set<Node> nodes = root.lookupAll("anchorPaneRight");
-//        if (nodes.size() == 1) {
-//            Node[] nodes2 = new Node[0];
-//            AnchorPane anchorPaneRight = (AnchorPane) nodes.toArray(nodes2)[0];
-//            if (anchorPaneRight != null) {
-//                anchorPaneRight.getChildren().addAll(new PropertyEditPane());
-//                System.out.println("Added PropertyEditPane to right AnchorPane.");
-//            } else { System.err.println("anchorPaneRight is null."); }
-//        } else { System.err.println("lookupAll returned empty."); }
-        
-//        Node anchorPaneRightNode = root.lookupAll("#anchorPaneRight");
-//        if (anchorPaneRightNode != null) {
-//            AnchorPane anchorPaneRight = (AnchorPane) anchorPaneRightNode;
-//            //Parent anchorPaneRightParent = anchorPaneRight.getParent();
-//            anchorPaneRight.getChildren().addAll(new PropertyEditPane());
-//            System.out.println("Added PropertyEditPane to right AnchorPane.");
-//        } else { System.err.println("Failed to find right AnchorPane."); }
+        Scene scene = new Scene(root, 1024, 500);
         
         stage.setTitle("GUI Builder");
         stage.setScene(scene);
-        //stage.setResizable(false);
         stage.show();
     }
-    
-//    private Node searchForNode(Node rootNode, String nodeId) {
-//        ObservableList<Node> nodes = ((Parent)rootNode).getChildrenUnmodifiable();
-//        
-//        // Breadth first.
-//        for (Node n : nodes) {
-//            System.out.println("Node ID: "+n.getId());
-//            if (n.getId().equals(nodeId)) { return n; }
-//        }
-//        // Then go deeper.
-//        for (Node n : nodes) {
-//            Node result = searchForNode(n,nodeId);
-//            if (result != null) { return result; }
-//        }
-//        
-//        return null;
-//    }
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
