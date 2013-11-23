@@ -1,38 +1,25 @@
 package bdl.build.scene.image;
 
-import bdl.build.scene.GNode;
+import bdl.build.GObject;
+import bdl.build.GType;
+import javafx.scene.image.ImageView;
 
-public class GImageView extends GNode {
+public class GImageView extends ImageView implements GObject {
 
-    private GImage image;
-    private String fitWidth = "";
-    private String fitHeight = "";
+    private String fieldName;
 
-    public GImageView(String fieldName) {
-        super(fieldName);
+    @Override
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public GImage getImage() {
-        return image;
+    @Override
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public void setImage(GImage image) {
-        this.image = image;
-    }
-
-    public String getFitWidth() {
-        return fitWidth;
-    }
-
-    public void setFitWidth(String fitWidth) {
-        this.fitWidth = fitWidth;
-    }
-
-    public String getFitHeight() {
-        return fitHeight;
-    }
-
-    public void setFitHeight(String fitHeight) {
-        this.fitHeight = fitHeight;
+    @Override
+    public GType getType() {
+        return GType.ImageView;
     }
 }

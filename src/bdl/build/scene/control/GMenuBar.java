@@ -1,8 +1,25 @@
 package bdl.build.scene.control;
 
-public class GMenuBar extends GControl {
+import bdl.build.GObject;
+import bdl.build.GType;
+import javafx.scene.control.MenuBar;
 
-    public GMenuBar(String fieldName) {
-        super(fieldName);
+public class GMenuBar extends MenuBar implements GObject {
+
+    private String fieldName;
+
+    @Override
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    @Override
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    @Override
+    public GType getType() {
+        return GType.MenuBar;
     }
 }

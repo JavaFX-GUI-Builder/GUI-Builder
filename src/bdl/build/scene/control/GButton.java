@@ -1,18 +1,25 @@
 package bdl.build.scene.control;
 
-public class GButton extends GButtonBase {
+import bdl.build.GObject;
+import bdl.build.GType;
+import javafx.scene.control.Button;
 
-    private String label;
+public class GButton extends Button implements GObject {
 
-    public GButton(String fieldName) {
-        super(fieldName);
+    private String fieldName;
+
+    @Override
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public String getLabel() {
-        return label == null ? "" : label;
+    @Override
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    @Override
+    public GType getType() {
+        return GType.Button;
     }
 }

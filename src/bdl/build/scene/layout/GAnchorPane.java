@@ -1,11 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.scene.layout;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.Menu;
+import javafx.scene.layout.AnchorPane;
 
-public class GMenu extends Menu implements GObject {
-
+public class GAnchorPane extends AnchorPane implements GObject {
     private String fieldName;
 
     @Override
@@ -20,6 +19,6 @@ public class GMenu extends Menu implements GObject {
 
     @Override
     public GType getType() {
-        return GType.Menu;
+        return GType.AnchorPane;
     }
 }

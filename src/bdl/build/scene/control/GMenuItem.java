@@ -2,10 +2,24 @@ package bdl.build.scene.control;
 
 
 import bdl.build.GObject;
+import bdl.build.GType;
+import javafx.scene.control.MenuItem;
 
-public class GMenuItem extends GObject {
+public class GMenuItem extends MenuItem implements GObject {
+    private String fieldName;
 
-    public GMenuItem(String fieldName) {
-        super(fieldName);
+    @Override
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    @Override
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    @Override
+    public GType getType() {
+        return GType.MenuItem;
     }
 }

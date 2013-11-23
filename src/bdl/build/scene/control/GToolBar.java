@@ -1,23 +1,27 @@
 package bdl.build.scene.control;
 
 import bdl.build.GObject;
+import bdl.build.GType;
+import javafx.scene.control.ToolBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GToolBar extends GControl {
+public class GToolBar extends ToolBar implements GObject {
+    private String fieldName;
 
-    private ArrayList<GButton> buttons = new ArrayList<>();
-
-    public GToolBar(String fieldName) {
-        super(fieldName);
+    @Override
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public void addButton(GButton button) {
-        buttons.add(button);
+    @Override
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public List<GButton> getButtons() {
-        return buttons;
+    @Override
+    public GType getType() {
+        return GType.ToolBar;
     }
 }
