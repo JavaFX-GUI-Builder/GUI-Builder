@@ -46,15 +46,43 @@ public class Main extends Application {
         SplitPane mainContent = new SplitPane();
 
         AnchorPane left = new AnchorPane();
-        Accordion leftAccordion = new Accordion();
-        AnchorPane.setLeftAnchor(leftAccordion, 0.0);
-        AnchorPane.setRightAnchor(leftAccordion, 0.0);
-        AnchorPane.setTopAnchor(leftAccordion, 0.0);
-        AnchorPane.setBottomAnchor(leftAccordion, 0.0);
-        leftAccordion.getPanes().add(new TitledPane("Containers", new Pane()));
-        leftAccordion.getPanes().add(new TitledPane("Controls", new Pane()));
-        leftAccordion.getPanes().add(new TitledPane("Menus", new Pane()));
-        left.getChildren().add(leftAccordion);
+        SplitPane leftSplitPane = new SplitPane();
+        leftSplitPane.setOrientation(Orientation.VERTICAL);
+        AnchorPane.setLeftAnchor(leftSplitPane, 0.0);
+        AnchorPane.setRightAnchor(leftSplitPane, 0.0);
+        AnchorPane.setTopAnchor(leftSplitPane, 0.0);
+        AnchorPane.setBottomAnchor(leftSplitPane, 0.0);
+
+
+        ListView<Label> leftList = new ListView<>();
+
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+
+        TreeItem<String> treeRoot = new TreeItem<>("AnchorPane");
+        treeRoot.setExpanded(true);
+        treeRoot.getChildren().add(new TreeItem<>("Button"));
+        treeRoot.getChildren().add(new TreeItem<>("Button"));
+        treeRoot.getChildren().add(new TreeItem<>("Button"));
+        treeRoot.getChildren().add(new TreeItem<>("Button"));
+
+        TreeView<String> leftTreeView = new TreeView<>(treeRoot);
+
+        TitledPane leftTitledPane = new TitledPane("Hierarchy", leftTreeView);
+        leftTitledPane.setCollapsible(false);
+
+        leftSplitPane.getItems().addAll(leftList, leftTitledPane);
+        left.getChildren().add(leftSplitPane);
 
 
         AnchorPane middle = new AnchorPane();
