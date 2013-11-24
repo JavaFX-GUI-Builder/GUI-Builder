@@ -8,7 +8,13 @@ public enum GType {
     ToolBar("javafx.scene.control.ToolBar"),
     Image("javafx.scene.image.Image"),
     ImageView("javafx.scene.image.ImageView"),
-    AnchorPane("javafx.scene.layout.AnchorPane");
+    AnchorPane("javafx.scene.layout.AnchorPane"),
+    CheckBox("javafx.scene.control.CheckBox"),
+    ComboBox("javafx.scene.control.ComboBox"),
+    Label("javafx.scene.control.Label"),
+    ListView("javafx.scene.control.ListView"),
+    TextArea("javafx.scene.control.TextArea"),
+    TextField("javafx.scene.control.TextField");
 
     private String importStatement;
 
