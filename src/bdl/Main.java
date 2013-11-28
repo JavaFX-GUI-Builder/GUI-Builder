@@ -3,6 +3,8 @@ package bdl;
 import bdl.view.components.ComponentViewReader;
 import bdl.view.components.PropertyEditPane;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -39,12 +41,17 @@ public class Main extends Application {
         MenuItem mItmClose = new MenuItem("Close");
         Menu menuEdit = new Menu("Edit");
         MenuItem mItmDelete = new MenuItem("Delete");
+        Menu menuView = new Menu("View");
+        final CheckMenuItem mItmHistory = new CheckMenuItem("Show History");
+        final CheckMenuItem mItmHierarchy = new CheckMenuItem("Show Hierarchy");
         Menu menuHelp = new Menu("Help");
         MenuItem mItmAbout = new MenuItem("About");
-        menuBar.getMenus().addAll(menuFile, menuEdit, menuHelp);
+        menuBar.getMenus().addAll(menuFile, menuEdit, menuView, menuHelp);
         menuFile.getItems().add(mItmClose);
         menuEdit.getItems().add(mItmDelete);
         menuEdit.getItems().add(mItmAbout);
+        menuView.getItems().add(mItmHistory);
+        menuView.getItems().add(mItmHierarchy);
 
         borderPane.setTop(menuBar);
         //End MenuBar
@@ -53,7 +60,7 @@ public class Main extends Application {
 
         //Begin Left panel
         AnchorPane left = new AnchorPane();
-        SplitPane leftSplitPane = new SplitPane();
+        final SplitPane leftSplitPane = new SplitPane();
         leftSplitPane.setOrientation(Orientation.VERTICAL);
         AnchorPane.setLeftAnchor(leftSplitPane, 0.0);
         AnchorPane.setRightAnchor(leftSplitPane, 0.0);
@@ -86,11 +93,26 @@ public class Main extends Application {
 
         TreeView<String> leftTreeView = new TreeView<>(treeRoot);
 
-        TitledPane leftTitledPane = new TitledPane("Hierarchy", leftTreeView);
+        final TitledPane leftTitledPane = new TitledPane("Hierarchy", leftTreeView);
         leftTitledPane.setCollapsible(false);
         //End left hierarchy panel
 
-        leftSplitPane.getItems().addAll(leftList, leftTitledPane);
+        leftSplitPane.getItems().addAll(leftList);
+        leftSplitPane.setDividerPosition(0, 0.6);
+        
+        mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                if(mItmHierarchy.isSelected()) {
+                    leftSplitPane.getItems().add(leftTitledPane);
+                    leftSplitPane.setDividerPosition(0, 0.6);
+                }
+                else {
+                    leftSplitPane.getItems().remove(leftTitledPane);
+                }
+            }   
+        });
+        
         left.getChildren().add(leftSplitPane);
 
         //Begin middle panel
@@ -108,7 +130,7 @@ public class Main extends Application {
 
         //Begin right panel
         AnchorPane right = new AnchorPane();
-        SplitPane rightSplitPane = new SplitPane();
+        final SplitPane rightSplitPane = new SplitPane();
         rightSplitPane.setDividerPositions(0.7);
         rightSplitPane.setOrientation(Orientation.VERTICAL);
         AnchorPane.setTopAnchor(rightSplitPane, 0.0);
@@ -118,7 +140,7 @@ public class Main extends Application {
         //End right panel
 
         AnchorPane rightSplitPaneTop = new AnchorPane();
-
+        
         //Begin right properties panel
         ComponentViewReader.parseSettings();
         PropertyEditPane pep = new PropertyEditPane();
@@ -131,9 +153,23 @@ public class Main extends Application {
         rightSplitPaneTop.getChildren().add(propertyScroll);
         //End right properties panel
 
-        AnchorPane rightSplitPaneBottom = new AnchorPane();
+        final AnchorPane rightSplitPaneBottom = new AnchorPane();
 
-        rightSplitPane.getItems().addAll(rightSplitPaneTop, rightSplitPaneBottom);
+        rightSplitPane.getItems().addAll(rightSplitPaneTop);
+        rightSplitPane.setDividerPosition(0, 0.6);
+        
+        mItmHistory.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                if(mItmHistory.isSelected()) {
+                    rightSplitPane.getItems().add(rightSplitPaneBottom);
+                    rightSplitPane.setDividerPosition(0, 0.6);
+                }
+                else {
+                    rightSplitPane.getItems().remove(rightSplitPaneBottom);
+                }
+            }   
+        });
 
         right.getChildren().add(rightSplitPane);
 
