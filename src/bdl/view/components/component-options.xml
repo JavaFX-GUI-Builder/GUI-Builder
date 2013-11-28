@@ -6,8 +6,8 @@
             <image type="File">true</image>
             <enabled type="boolean">true</enabled>
             <tooltip type="String">true</tooltip>
-            <foregroundColour type="Color">true</foregroundColour>
-            <backgroundColour type="Color">true</backgroundColour>
+            <foreground type="Color">true</foreground>
+            <background type="Color">true</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -30,8 +30,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
-            <foregroundColour type="Color">true</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">true</foreground>
+            <background type="Color">false</background>
             <other type="boolean">wrapText</other>
         </properties>
         <layout>
@@ -55,8 +55,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
-            <foregroundColour type="Color">true</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">true</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -79,8 +79,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -103,8 +103,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">true</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -127,8 +127,8 @@
             <image type="File">true</image>
             <enabled type="boolean">true</enabled>
             <tooltip type="String">true</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -151,8 +151,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -176,8 +176,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
             <other type="ScrollPane.ScrollBarPolicy">verticalScrollProperty</other>
             <other type="ScrollPane.ScrollBarPolicy">horizontalScrollProperty</other>
         </properties>
@@ -202,8 +202,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -226,8 +226,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -250,8 +250,8 @@
             <image type="File">false</image>
             <enabled type="boolean">true</enabled>
             <tooltip type="String">true</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -274,8 +274,8 @@
             <image type="File">true</image>
             <enabled type="boolean">true</enabled>
             <tooltip type="String">true</tooltip>
-            <foregroundColour type="Color">false</foregroundColour>
-            <backgroundColour type="Color">false</backgroundColour>
+            <foreground type="Color">false</foreground>
+            <background type="Color">false</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -298,8 +298,8 @@
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
-            <foregroundColour type="Color">true</foregroundColour>
-            <backgroundColour type="Color">true</backgroundColour>
+            <foreground type="Color">true</foreground>
+            <background type="Color">true</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>

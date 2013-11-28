@@ -2,66 +2,70 @@ package bdl.view.components;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Control;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 
 /**
  *
  * @author Ben Goodwin
  */
-public class PropertyEditPane extends HBox {
+public class PropertyEditPane extends Pane {
 
-    private VBox vbox = new VBox();
+    private GridPane grid = new GridPane();
 
     public PropertyEditPane() {
-        this.getChildren().addAll(vbox);
+        this.setPadding(new Insets(3, 3, 3, 3));
         updateContents("Button");
-        vbox.setFillWidth(true);
+        this.getChildren().add(grid);
     }
 
     private void setContents(ComponentSettings cs) {
-        ObservableList vb = vbox.getChildren();
+        int x = 0;
 
         Label hl = new Label("Properties");
-        hl.setFont(new Font(hl.getFont().getFamily(), hl.getFont().getSize() + 3));
-        vb.add(hl);
+        hl.setFont(Font.font(hl.getFont().getFamily(), FontWeight.BOLD, hl.getFont().getSize() + 0.5));
+        grid.add(hl, 0, x, 2, 1);
+        x++;
         for (final ComponentSettings.Properties p : cs.getProperties()) {
-            HBox temp = createRow(p);
-            if (temp != null) {
-                vb.add(temp);
+            if (p.getValue()) {
+                createRow(p, x);
+                x++;
             }
         }
 
         Label ll = new Label("Layout");
-        ll.setFont(new Font(ll.getFont().getFamily(), ll.getFont().getSize() + 3));
-        vb.add(ll);
+        ll.setFont(Font.font(ll.getFont().getFamily(), FontWeight.BOLD, ll.getFont().getSize() + 0.5));
+        grid.add(ll, 0, x);
+        x++;
         for (final ComponentSettings.Layout p : cs.getLayout()) {
-            HBox temp = createRow(p);
-            if (temp != null) {
-                vb.add(temp);
+            if (p.getValue()) {
+                createRow(p, x);
+                x++;
             }
         }
 
         Label jl = new Label("Listeners");
-        jl.setFont(new Font(jl.getFont().getFamily(), jl.getFont().getSize() + 3));
-        vb.add(jl);
+        jl.setFont(Font.font(jl.getFont().getFamily(), FontWeight.BOLD, jl.getFont().getSize() + 0.5));
+        grid.add(jl, 0, x);
+        x++;
         for (final ComponentSettings.Listeners p : cs.getListeners()) {
-            HBox temp = createRow(p);
-            if (temp != null) {
-                vb.add(temp);
+            if (p.getValue()) {
+                createRow(p, x);
+                x++;
             }
         }
     }
@@ -73,38 +77,27 @@ public class PropertyEditPane extends HBox {
      * properties panel with the appropriate settings for.
      */
     public void updateContents(String componentName) {
-        vbox.getChildren().clear();
+        grid = new GridPane();
         setContents(ComponentViewReader.getSettingsByName(componentName));
     }
 
-    private HBox createRow(final ComponentSettings.PropertyType p) {
-        if (p.getValue()) {
-            HBox a = new HBox();
-            Label l = new Label(p.getName());
-            l.setFont(new Font(l.getFont().getFamily(), l.getFont().getSize() + 1));
-            Pane right;
-            if (p.getType().equals("boolean")) {
-                right = createCheckBox(p);
-            } else {
-                right = createTextField(p, p.getType());
-            }
-
-            Pane s = new Pane();
-            a.setFillHeight(true);
-            a.setSpacing(10);
-            HBox.setHgrow(right, Priority.NEVER);
-            HBox.setHgrow(l, Priority.NEVER);
-            HBox.setHgrow(s, Priority.SOMETIMES);
-            
-            a.getChildren().addAll(l, s, right);
-            return a;
+    private void createRow(final ComponentSettings.PropertyType p, int row) {
+        Label l = new Label(p.getName());
+        GridPane.setHalignment(l, HPos.RIGHT);
+        GridPane.setMargin(l, new Insets(0, 5, 0, 0));
+        grid.add(l, 0, row);
+        if (p.getType().equals("boolean")) {
+            grid.add(createCheckBox(p), 1, row);
+        } else if (p.getType().equals("File"))   {
+            grid.add(createTextField(p), 1, row);
+        } else if (p.getType().equals("Color"))   {
+            grid.add(createColorPicker(p), 1, row);
         } else {
-            return null;
+            grid.add(createTextField(p), 1, row);
         }
     }
 
-    private Pane createCheckBox(final ComponentSettings.PropertyType p) {
-        Pane a = new Pane();
+    private CheckBox createCheckBox(final ComponentSettings.PropertyType p) {
         final CheckBox b = new CheckBox();
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -112,18 +105,18 @@ public class PropertyEditPane extends HBox {
                 System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + b.isSelected());
             }
         });
-        b.setAlignment(Pos.CENTER_LEFT);
-        
-        Pane s = new Pane();
-        a.getChildren().addAll(b, s);
-        return a;
+
+        return b;
     }
 
-    private Pane createTextField(final ComponentSettings.PropertyType p, String type) {
-        Pane a = new Pane();
+    private TextField createTextField(final ComponentSettings.PropertyType p) {
         final TextField tf = new TextField();
-        tf.promptTextProperty().setValue(type);
-
+        tf.promptTextProperty().setValue(p.getType());
+        if (p.getType().equals("int")) {
+            tf.setMaxWidth(50);
+        } else {
+            tf.setMaxWidth(100);
+        }
         tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
@@ -138,7 +131,18 @@ public class PropertyEditPane extends HBox {
                 System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
             }
         });
-        a.getChildren().add(tf);
-        return a;
+        return tf;
+    }
+
+    private ColorPicker createColorPicker(final ComponentSettings.PropertyType p) {
+        final ColorPicker cp = new ColorPicker();
+        cp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + cp.getValue().toString());
+            }
+            
+        });
+        return cp;
     }
 }
