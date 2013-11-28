@@ -14,7 +14,9 @@ public enum GType {
     Label("javafx.scene.control.Label"),
     ListView("javafx.scene.control.ListView"),
     TextArea("javafx.scene.control.TextArea"),
-    TextField("javafx.scene.control.TextField");
+    TextField("javafx.scene.control.TextField"),
+    SplitPane("javafx.scene.control.SplitPane"),
+    ScrollPane("javafx.scene.control.ScrollPane");
 
     private String importStatement;
 
