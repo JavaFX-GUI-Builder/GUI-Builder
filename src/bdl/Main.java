@@ -21,6 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        //Begin Main panel
         BorderPane borderPane = new BorderPane();
         root = new AnchorPane();
         root.prefWidth(854);
@@ -30,7 +31,9 @@ public class Main extends Application {
         AnchorPane.setLeftAnchor(borderPane, 0.0);
         AnchorPane.setRightAnchor(borderPane, 0.0);
         root.getChildren().add(borderPane);
+        //End Main panel
 
+        //Begin MenuBar
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("File");
         MenuItem mItmClose = new MenuItem("Close");
@@ -44,9 +47,11 @@ public class Main extends Application {
         menuEdit.getItems().add(mItmAbout);
 
         borderPane.setTop(menuBar);
+        //End MenuBar
 
         SplitPane mainContent = new SplitPane();
 
+        //Begin Left panel
         AnchorPane left = new AnchorPane();
         SplitPane leftSplitPane = new SplitPane();
         leftSplitPane.setOrientation(Orientation.VERTICAL);
@@ -55,22 +60,23 @@ public class Main extends Application {
         AnchorPane.setTopAnchor(leftSplitPane, 0.0);
         AnchorPane.setBottomAnchor(leftSplitPane, 0.0);
 
-
+        //Begin left component list
         ListView<Label> leftList = new ListView<>();
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        leftList.getItems().add(new Label("Button", new Button("Button")));
+        //End left component list
 
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-
+        //Begin left hierarchy panel
         TreeItem<String> treeRoot = new TreeItem<>("AnchorPane");
         treeRoot.setExpanded(true);
         treeRoot.getChildren().add(new TreeItem<>("Button"));
@@ -82,11 +88,12 @@ public class Main extends Application {
 
         TitledPane leftTitledPane = new TitledPane("Hierarchy", leftTreeView);
         leftTitledPane.setCollapsible(false);
+        //End left hierarchy panel
 
         leftSplitPane.getItems().addAll(leftList, leftTitledPane);
         left.getChildren().add(leftSplitPane);
 
-
+        //Begin middle panel
         AnchorPane middle = new AnchorPane();
         SplitPane middleSplitPane = new SplitPane();
         middleSplitPane.setOrientation(Orientation.VERTICAL);
@@ -97,7 +104,9 @@ public class Main extends Application {
         middleSplitPane.getItems().addAll(new AnchorPane(), new AnchorPane());
         middleSplitPane.setDividerPositions(0.5);
         middle.getChildren().add(middleSplitPane);
+        //End middle panel
 
+        //Begin right panel
         AnchorPane right = new AnchorPane();
         SplitPane rightSplitPane = new SplitPane();
         rightSplitPane.setDividerPositions(0.7);
@@ -106,9 +115,11 @@ public class Main extends Application {
         AnchorPane.setBottomAnchor(rightSplitPane, 0.0);
         AnchorPane.setLeftAnchor(rightSplitPane, 0.0);
         AnchorPane.setRightAnchor(rightSplitPane, 0.0);
+        //End right panel
 
         AnchorPane rightSplitPaneTop = new AnchorPane();
 
+        //Begin right properties panel
         ComponentViewReader.parseSettings();
         PropertyEditPane pep = new PropertyEditPane();
         ScrollPane propertyScroll = new ScrollPane();
@@ -118,17 +129,7 @@ public class Main extends Application {
         AnchorPane.setLeftAnchor(propertyScroll, 0.0);
         AnchorPane.setRightAnchor(propertyScroll, 0.0);
         rightSplitPaneTop.getChildren().add(propertyScroll);
-        
-        
-//        Accordion propertiesAccordian = new Accordion();
-//        AnchorPane.setTopAnchor(propertiesAccordian, 0.0);
-//        AnchorPane.setBottomAnchor(propertiesAccordian, 0.0);
-//        AnchorPane.setLeftAnchor(propertiesAccordian, 0.0);
-//        AnchorPane.setRightAnchor(propertiesAccordian, 0.0);
-//        propertiesAccordian.getPanes().add(new TitledPane("Properties", new Pane()));
-//        propertiesAccordian.getPanes().add(new TitledPane("Layout", new Pane()));
-//        propertiesAccordian.getPanes().add(new TitledPane("Listeners", new Pane()));
-//        rightSplitPaneTop.getChildren().add(propertiesAccordian);
+        //End right properties panel
 
         AnchorPane rightSplitPaneBottom = new AnchorPane();
 
