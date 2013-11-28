@@ -1,5 +1,7 @@
 package bdl;
 
+import bdl.view.components.ComponentViewReader;
+import bdl.view.components.PropertyEditPane;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -98,7 +100,7 @@ public class Main extends Application {
 
         AnchorPane right = new AnchorPane();
         SplitPane rightSplitPane = new SplitPane();
-        rightSplitPane.setDividerPositions(0.6);
+        rightSplitPane.setDividerPositions(0.7);
         rightSplitPane.setOrientation(Orientation.VERTICAL);
         AnchorPane.setTopAnchor(rightSplitPane, 0.0);
         AnchorPane.setBottomAnchor(rightSplitPane, 0.0);
@@ -107,15 +109,26 @@ public class Main extends Application {
 
         AnchorPane rightSplitPaneTop = new AnchorPane();
 
-        Accordion propertiesAccordian = new Accordion();
-        AnchorPane.setTopAnchor(propertiesAccordian, 0.0);
-        AnchorPane.setBottomAnchor(propertiesAccordian, 0.0);
-        AnchorPane.setLeftAnchor(propertiesAccordian, 0.0);
-        AnchorPane.setRightAnchor(propertiesAccordian, 0.0);
-        propertiesAccordian.getPanes().add(new TitledPane("Properties", new Pane()));
-        propertiesAccordian.getPanes().add(new TitledPane("Layout", new Pane()));
-        propertiesAccordian.getPanes().add(new TitledPane("Listeners", new Pane()));
-        rightSplitPaneTop.getChildren().add(propertiesAccordian);
+        ComponentViewReader.parseSettings();
+        PropertyEditPane pep = new PropertyEditPane();
+        ScrollPane propertyScroll = new ScrollPane();
+        propertyScroll.setContent(pep);
+        AnchorPane.setTopAnchor(propertyScroll, 0.0);
+        AnchorPane.setBottomAnchor(propertyScroll, 0.0);
+        AnchorPane.setLeftAnchor(propertyScroll, 0.0);
+        AnchorPane.setRightAnchor(propertyScroll, 0.0);
+        rightSplitPaneTop.getChildren().add(propertyScroll);
+        
+        
+//        Accordion propertiesAccordian = new Accordion();
+//        AnchorPane.setTopAnchor(propertiesAccordian, 0.0);
+//        AnchorPane.setBottomAnchor(propertiesAccordian, 0.0);
+//        AnchorPane.setLeftAnchor(propertiesAccordian, 0.0);
+//        AnchorPane.setRightAnchor(propertiesAccordian, 0.0);
+//        propertiesAccordian.getPanes().add(new TitledPane("Properties", new Pane()));
+//        propertiesAccordian.getPanes().add(new TitledPane("Layout", new Pane()));
+//        propertiesAccordian.getPanes().add(new TitledPane("Listeners", new Pane()));
+//        rightSplitPaneTop.getChildren().add(propertiesAccordian);
 
         AnchorPane rightSplitPaneBottom = new AnchorPane();
 

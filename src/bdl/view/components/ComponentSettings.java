@@ -102,17 +102,17 @@ public class ComponentSettings {
     public void addListeners(String name, String type, String value) {
         listeners.add(new Listeners(name, type, value));
     }
-
+    
     /**
      * Simple Properties object to store name, type, value.
+     * To be extended, not used, for code simplicity.
      */
-    public class Properties {
-
+    public class PropertyType {
         private final String name;
         private final String type;
         private final boolean value;
 
-        public Properties(String name, String type, String value) {
+        public PropertyType(String name, String type, String value) {
             this.name = name;
             this.type = type;
             this.value = Boolean.parseBoolean(value);
@@ -128,62 +128,33 @@ public class ComponentSettings {
 
         public boolean getValue() {
             return value;
+        }
+    }
+
+    /**
+     * Simple Properties object to store name, type, value.
+     */
+    public class Properties extends ComponentSettings.PropertyType {
+        public Properties(String name, String type, String value) {
+            super(name, type, value);
         }
     }
 
     /**
      * Simple Layout object to store name, type, value.
      */
-    public class Layout {
-
-        private final String name;
-        private final String type;
-        private final boolean value;
-
+    public class Layout extends ComponentSettings.PropertyType {
         public Layout(String name, String type, String value) {
-            this.name = name;
-            this.type = type;
-            this.value = Boolean.parseBoolean(value);
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public boolean getValue() {
-            return value;
+            super(name, type, value);
         }
     }
 
     /**
      * Simple Listeners object to store name, type, value.
      */
-    public class Listeners {
-
-        private final String name;
-        private final String type;
-        private final boolean value;
-
+    public class Listeners extends ComponentSettings.PropertyType {
         public Listeners(String name, String type, String value) {
-            this.name = name;
-            this.type = type;
-            this.value = Boolean.parseBoolean(value);
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public boolean getValue() {
-            return value;
+            super(name, type, value);
         }
     }
 }

@@ -5,12 +5,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
@@ -34,115 +39,29 @@ public class PropertyEditPane extends HBox {
         hl.setFont(new Font(hl.getFont().getFamily(), hl.getFont().getSize() + 3));
         vb.add(hl);
         for (final ComponentSettings.Properties p : cs.getProperties()) {
-            if (p.getValue()) {
-                HBox a = new HBox();
-                Label l = new Label(p.getName());
-                l.setFont(new Font(l.getFont().getFamily(), l.getFont().getSize() + 1));
-                final TextField tf = new TextField();
-                tf.promptTextProperty().setValue(p.getType());
-
-                Pane s = new Pane();
-                a.setFillHeight(true);
-                a.setSpacing(10);
-                HBox.setHgrow(tf, Priority.NEVER);
-                HBox.setHgrow(l, Priority.NEVER);
-                HBox.setHgrow(s, Priority.ALWAYS);
-
-                tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
-                        if(t1 == false) {
-                            System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
-                        }
-                    }
-                });
-                tf.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent t) {
-                        System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
-                    }
-                });
-
-                a.getChildren().addAll(l, s, tf);
-                vb.add(a);
+            HBox temp = createRow(p);
+            if (temp != null) {
+                vb.add(temp);
             }
         }
 
-        Label il = new Label("Layout");
-        il.setFont(new Font(il.getFont().getFamily(), il.getFont().getSize() + 3));
-        vb.add(il);
-
+        Label ll = new Label("Layout");
+        ll.setFont(new Font(ll.getFont().getFamily(), ll.getFont().getSize() + 3));
+        vb.add(ll);
         for (final ComponentSettings.Layout p : cs.getLayout()) {
-            if (p.getValue()) {
-                HBox a = new HBox();
-                Label l = new Label(p.getName());
-                l.setFont(new Font(l.getFont().getFamily(), l.getFont().getSize() + 1));
-                final TextField tf = new TextField();
-                tf.promptTextProperty().setValue(p.getType());
-
-                Pane s = new Pane();
-                a.setFillHeight(true);
-                a.setSpacing(10);
-                HBox.setHgrow(tf, Priority.NEVER);
-                HBox.setHgrow(l, Priority.NEVER);
-                HBox.setHgrow(s, Priority.ALWAYS);
-
-                tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
-                        if(t1 == false) {
-                            System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
-                        }
-                    }
-                });
-                tf.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent t) {
-                        System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
-                    }
-                });
-
-                a.getChildren().addAll(l, s, tf);
-                vb.add(a);
+            HBox temp = createRow(p);
+            if (temp != null) {
+                vb.add(temp);
             }
         }
 
         Label jl = new Label("Listeners");
         jl.setFont(new Font(jl.getFont().getFamily(), jl.getFont().getSize() + 3));
         vb.add(jl);
-
         for (final ComponentSettings.Listeners p : cs.getListeners()) {
-            if (p.getValue()) {
-                HBox a = new HBox();
-                Label l = new Label(p.getName());
-                l.setFont(new Font(l.getFont().getFamily(), l.getFont().getSize() + 1));
-                final TextField tf = new TextField();
-                tf.promptTextProperty().setValue(p.getType());
-
-                Pane s = new Pane();
-                a.setFillHeight(true);
-                a.setSpacing(10);
-                HBox.setHgrow(tf, Priority.NEVER);
-                HBox.setHgrow(l, Priority.NEVER);
-                HBox.setHgrow(s, Priority.ALWAYS);
-
-                tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
-                        if(t1 == false) {
-                            System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
-                        }
-                    }
-                });
-                tf.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent t) {
-                        System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
-                    }
-                });
-
-                a.getChildren().addAll(l, s, tf);
-                vb.add(a);
+            HBox temp = createRow(p);
+            if (temp != null) {
+                vb.add(temp);
             }
         }
     }
@@ -156,5 +75,70 @@ public class PropertyEditPane extends HBox {
     public void updateContents(String componentName) {
         vbox.getChildren().clear();
         setContents(ComponentViewReader.getSettingsByName(componentName));
+    }
+
+    private HBox createRow(final ComponentSettings.PropertyType p) {
+        if (p.getValue()) {
+            HBox a = new HBox();
+            Label l = new Label(p.getName());
+            l.setFont(new Font(l.getFont().getFamily(), l.getFont().getSize() + 1));
+            Pane right;
+            if (p.getType().equals("boolean")) {
+                right = createCheckBox(p);
+            } else {
+                right = createTextField(p, p.getType());
+            }
+
+            Pane s = new Pane();
+            a.setFillHeight(true);
+            a.setSpacing(10);
+            HBox.setHgrow(right, Priority.NEVER);
+            HBox.setHgrow(l, Priority.NEVER);
+            HBox.setHgrow(s, Priority.SOMETIMES);
+            
+            a.getChildren().addAll(l, s, right);
+            return a;
+        } else {
+            return null;
+        }
+    }
+
+    private Pane createCheckBox(final ComponentSettings.PropertyType p) {
+        Pane a = new Pane();
+        final CheckBox b = new CheckBox();
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + b.isSelected());
+            }
+        });
+        b.setAlignment(Pos.CENTER_LEFT);
+        
+        Pane s = new Pane();
+        a.getChildren().addAll(b, s);
+        return a;
+    }
+
+    private Pane createTextField(final ComponentSettings.PropertyType p, String type) {
+        Pane a = new Pane();
+        final TextField tf = new TextField();
+        tf.promptTextProperty().setValue(type);
+
+        tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
+                if (t1 == false) {
+                    System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
+                }
+            }
+        });
+        tf.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
+            }
+        });
+        a.getChildren().add(tf);
+        return a;
     }
 }
