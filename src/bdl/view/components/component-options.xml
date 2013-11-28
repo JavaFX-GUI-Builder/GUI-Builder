@@ -19,8 +19,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="TextArea">
@@ -44,8 +44,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">true</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">true</textProperty>
         </listeners>
     </component>
     <component id="TextField">
@@ -68,8 +68,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">true</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">true</textProperty>
         </listeners>
     </component>
     <component id="MenuBar">
@@ -92,8 +92,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="Menu">
@@ -116,8 +116,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="MenuItem">
@@ -140,8 +140,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="SplitPane">
@@ -165,8 +165,8 @@
             <other type="int">dividerPosition</other>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ScrollPane">
@@ -191,8 +191,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ListView">
@@ -215,8 +215,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ToolBar">
@@ -239,8 +239,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ComboBox">
@@ -263,8 +263,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="CheckBox">
@@ -287,8 +287,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">true</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="Label">
@@ -311,8 +311,8 @@
             <resizable type="boolean">false</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="Image">
@@ -335,8 +335,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ImageView">
@@ -359,8 +359,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="AnchorPane">
@@ -383,8 +383,8 @@
             <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
-            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
-            <textProperty type="StringProperty">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
 </root>

@@ -15,6 +15,7 @@ import static bdl.build.GType.TextArea;
 import static bdl.build.GType.TextField;
 import static bdl.build.GType.ToolBar;
 import bdl.build.scene.control.GButton;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +24,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
@@ -43,8 +45,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
+import javafx.stage.Popup;
+import javafx.stage.PopupWindow;
+import javafx.stage.Stage;
 
 /**
  *
@@ -181,6 +188,7 @@ public class PropertyEditPane extends Pane {
 
     private CheckBox createCheckBox(final ComponentSettings.PropertyType p) {
         final CheckBox b = new CheckBox();
+        b.setMaxWidth(120);
         b.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
@@ -199,10 +207,9 @@ public class PropertyEditPane extends Pane {
         } else {
             tf.setMaxWidth(120);
         }
-        if(p.getName().equals("name")) {
+        if (p.getName().equals("name")) {
             addValidation(tf, "name");
-        }
-        else {
+        } else {
             addValidation(tf, p.getType());
         }
         
@@ -225,6 +232,7 @@ public class PropertyEditPane extends Pane {
 
     private ColorPicker createColorPicker(final ComponentSettings.PropertyType p) {
         final ColorPicker cp = new ColorPicker();
+        cp.setMaxWidth(120);
         cp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
@@ -235,11 +243,32 @@ public class PropertyEditPane extends Pane {
     }
 
     private Button createFileChooser(final ComponentSettings.PropertyType p) {
-        return new Button("Browse");
+        final Button b = new Button("Browse...");
+        b.setMaxWidth(120);
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                FileChooser fc = new FileChooser();
+                File f = fc.showOpenDialog(b.getScene().getWindow());
+                if (f != null) {
+                    b.setText(f.getName());
+                    System.out.println("Trigger: " + f.getAbsolutePath());
+                }
+            }
+        });
+        return b;
     }
 
     private Button createListenerHint(final ComponentSettings.PropertyType p) {
-        return new Button("Listener Hint");
+        final Button b = new Button("Listener Hint");
+        b.setMaxWidth(120);
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                new ListenerHintWindow(p);
+            }
+        });
+        return b;
     }
 
     private void addValidation(TextField tf, String type) {
@@ -255,8 +284,7 @@ public class PropertyEditPane extends Pane {
                     }
                 }
             });
-        }
-        else if(type.equals("name")) {
+        } else if (type.equals("name")) {
             tf.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
