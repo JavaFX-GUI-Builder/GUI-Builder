@@ -1,23 +1,50 @@
 package bdl.view.components;
 
+import bdl.build.GObject;
+import static bdl.build.GType.Button;
+import static bdl.build.GType.CheckBox;
+import static bdl.build.GType.ComboBox;
+import static bdl.build.GType.Image;
+import static bdl.build.GType.ImageView;
+import static bdl.build.GType.Label;
+import static bdl.build.GType.ListView;
+import static bdl.build.GType.MenuBar;
+import static bdl.build.GType.ScrollPane;
+import static bdl.build.GType.SplitPane;
+import static bdl.build.GType.TextArea;
+import static bdl.build.GType.TextField;
+import static bdl.build.GType.ToolBar;
+import bdl.build.scene.control.GButton;
+import java.util.ArrayList;
+import java.util.Collection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -28,8 +55,7 @@ public class PropertyEditPane extends Pane {
     private GridPane grid = new GridPane();
 
     public PropertyEditPane() {
-        this.setPadding(new Insets(3, 3, 3, 3));
-        updateContents("Button");
+        updateContents(new GButton());
         this.getChildren().add(grid);
     }
 
@@ -76,11 +102,65 @@ public class PropertyEditPane extends Pane {
      * @param componentName The currently selected Component name to fill the
      * properties panel with the appropriate settings for.
      */
-    public void updateContents(String componentName) {
+    public void updateContents(GObject gObj) {
         grid = new GridPane();
-        setContents(ComponentViewReader.getSettingsByName(componentName));
+        ComponentSettings cs = ComponentViewReader.getSettingsByName(gObj.getType().toString());
+        setContents(cs);
     }
 
+//    public void fillContents(GObject gObj) {
+//        switch(gObj.getType()) {
+//            case Button: 
+//                Button b = (Button) gObj;
+//                break;
+//            case Menu: 
+//                Menu m = (Menu) gObj;
+//                break;
+//            case MenuBar: 
+//                MenuBar mb = (MenuBar) gObj;
+//                break;
+//            case MenuItem: 
+//                MenuItem mi = (MenuItem) gObj;
+//                break;
+//            case ToolBar: 
+//                ToolBar tb = (ToolBar) gObj;
+//                break;
+//            case Image: 
+//                Image i = (Image) gObj;
+//                break;
+//            case ImageView: 
+//                ImageView iv = (ImageView) gObj;
+//                break;
+//            case AnchorPane: 
+//                AnchorPane ap = (AnchorPane) gObj;
+//                break;
+//            case CheckBox: 
+//                CheckBox cb = (CheckBox) gObj;
+//                break;
+//            case ComboBox: 
+//                ComboBox cob = (ComboBox) gObj;
+//                break;
+//            case Label: 
+//                Label l = (Label) gObj;
+//                break;
+//            case ListView: 
+//                ListView lv = (ListView) gObj;
+//                break;
+//            case TextArea: 
+//                TextArea ta = (TextArea) gObj;
+//                break;
+//            case TextField: 
+//                TextField tf = (TextField) gObj;
+//                break;
+//            case SplitPane: 
+//                SplitPane sp = (SplitPane) gObj;
+//                break;
+//            case ScrollPane: 
+//                ScrollPane scp = (ScrollPane) gObj;
+//                break;
+//            default: 
+//        }
+//    }
     private void createRow(final ComponentSettings.PropertyType p, int row) {
         Label l = new Label(p.getName());
         GridPane.setHalignment(l, HPos.RIGHT);
@@ -88,12 +168,14 @@ public class PropertyEditPane extends Pane {
         grid.add(l, 0, row);
         if (p.getType().equals("boolean")) {
             grid.add(createCheckBox(p), 1, row);
-        } else if (p.getType().equals("File"))   {
-            grid.add(createTextField(p), 1, row);
-        } else if (p.getType().equals("Color"))   {
+        } else if (p.getType().equals("File")) {
+            grid.add(createFileChooser(p), 1, row);
+        } else if (p.getType().equals("Color")) {
             grid.add(createColorPicker(p), 1, row);
-        } else {
+        } else if (p.getType().equals("String") || p.getType().equals("int") || p.getType().equals("float") || p.getType().equals("double")) {
             grid.add(createTextField(p), 1, row);
+        } else {
+            grid.add(createListenerHint(p), 1, row);
         }
     }
 
@@ -115,8 +197,15 @@ public class PropertyEditPane extends Pane {
         if (p.getType().equals("int")) {
             tf.setMaxWidth(50);
         } else {
-            tf.setMaxWidth(100);
+            tf.setMaxWidth(120);
         }
+        if(p.getName().equals("name")) {
+            addValidation(tf, "name");
+        }
+        else {
+            addValidation(tf, p.getType());
+        }
+        
         tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
@@ -141,8 +230,41 @@ public class PropertyEditPane extends Pane {
             public void handle(ActionEvent t) {
                 System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + cp.getValue().toString());
             }
-            
         });
         return cp;
+    }
+
+    private Button createFileChooser(final ComponentSettings.PropertyType p) {
+        return new Button("Browse");
+    }
+
+    private Button createListenerHint(final ComponentSettings.PropertyType p) {
+        return new Button("Listener Hint");
+    }
+
+    private void addValidation(TextField tf, String type) {
+        if (type.equals("int")) {
+            tf.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    String character = event.getCharacter();
+                    try {
+                        Integer.parseInt(character);
+                    } catch (Exception e) {
+                        event.consume();
+                    }
+                }
+            });
+        }
+        else if(type.equals("name")) {
+            tf.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    if (event.getCharacter().equals(" ")) {
+                        event.consume();
+                    }
+                }
+            });
+        }
     }
 }

@@ -23,7 +23,7 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-    <component id="Text Area">
+    <component id="TextArea">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -48,7 +48,7 @@
             <textProperty type="StringProperty">true</textProperty>
         </listeners>
     </component>
-    <component id="Text Field">
+    <component id="TextField">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -72,7 +72,7 @@
             <textProperty type="StringProperty">true</textProperty>
         </listeners>
     </component>
-    <component id="Menu Bar">
+    <component id="MenuBar">
         <properties>
             <name type="String">true</name>
             <text type="String">false</text>
@@ -120,7 +120,7 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-    <component id="Menu Item">
+    <component id="MenuItem">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -144,7 +144,7 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-    <component id="Split Pane">
+    <component id="SplitPane">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -169,7 +169,7 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-    <component id="Scroll Pane">
+    <component id="ScrollPane">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -195,7 +195,7 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-    <component id="List View">
+    <component id="ListView">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -219,7 +219,7 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-    <component id="Toolbar">
+    <component id="ToolBar">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -243,7 +243,7 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-    <component id="Combo Box">
+    <component id="ComboBox">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -267,7 +267,7 @@
             <textProperty type="StringProperty">false</textProperty>
         </listeners>
     </component>
-    <component id="Check Box">
+    <component id="CheckBox">
         <properties>
             <name type="String">true</name>
             <text type="String">true</text>
@@ -309,6 +309,78 @@
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
             <resizable type="boolean">false</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Image">
+	<properties>
+	    <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">true</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">true</tooltip>
+            <foreground type="Color">true</foreground>
+            <background type="Color">true</background>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="ImageView">
+	<properties>
+	    <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">true</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">true</tooltip>
+            <foreground type="Color">true</foreground>
+            <background type="Color">true</background>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
+            <textProperty type="StringProperty">false</textProperty>
+        </listeners>
+    </component>
+    <component id="AnchorPane">
+	<properties>
+	    <name type="String">true</name>
+            <text type="String">true</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+            <foreground type="Color">true</foreground>
+            <background type="Color">true</background>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="ObjectProperty(EventHandler(ActionEvent))">false</onActionProperty>
