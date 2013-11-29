@@ -17,7 +17,26 @@ public class GButton extends Button implements GObject {
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
+            }
+        });
+        setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
                 viewListeners.onMouseClicked(thisNode);
+                viewListeners.onMousePressed(thisNode, mouseEvent);
+            }
+        });
+        setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                viewListeners.onMouseReleased(thisNode, mouseEvent);
+            }
+        });
+        setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                viewListeners.onMouseDragged(thisNode, mouseEvent);
             }
         });
     }
