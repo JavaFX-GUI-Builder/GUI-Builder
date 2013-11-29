@@ -1,5 +1,6 @@
 package bdl;
 
+import bdl.build.scene.control.GButton;
 import bdl.view.components.ComponentViewReader;
 import bdl.view.components.PropertyEditPane;
 import javafx.application.Application;
@@ -8,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -101,8 +101,17 @@ public class Main extends Application {
         AnchorPane.setBottomAnchor(middleSplitPane, 0.0);
         AnchorPane.setLeftAnchor(middleSplitPane, 0.0);
         AnchorPane.setRightAnchor(middleSplitPane, 0.0);
-        middleSplitPane.getItems().addAll(new AnchorPane(), new AnchorPane());
-        middleSplitPane.setDividerPositions(0.5);
+
+        AnchorPane middleTop = new AnchorPane();
+        ViewListeners viewListeners = new ViewListeners(middleTop);
+        GButton b = new GButton(viewListeners);
+        b.setText("Button Text");
+        b.setLayoutX(10);
+        b.setLayoutY(10);
+        middleTop.getChildren().add(b);
+
+        middleSplitPane.getItems().addAll(middleTop, new AnchorPane());
+        middleSplitPane.setDividerPositions(0.75);
         middle.getChildren().add(middleSplitPane);
         //End middle panel
 
@@ -141,7 +150,7 @@ public class Main extends Application {
         mainContent.setDividerPositions(0.25, 0.75);
 
         borderPane.setCenter(mainContent);
-        
+
         Scene scene = new Scene(root, 1024, 500);
         
         stage.setTitle("GUI Builder");
