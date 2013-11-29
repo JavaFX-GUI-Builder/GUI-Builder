@@ -62,7 +62,7 @@ public class PropertyEditPane extends Pane {
     private GridPane grid = new GridPane();
 
     public PropertyEditPane() {
-        updateContents(new GButton());
+        updateContents(new GButton(null));
         this.getChildren().add(grid);
     }
 
