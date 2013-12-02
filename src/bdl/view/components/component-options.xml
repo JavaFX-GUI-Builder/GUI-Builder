@@ -387,5 +387,53 @@
             <textProperty type="">false</textProperty>
         </listeners>
     </component>
+    <component id="Circle">
+	<properties>
+	    <name type="String">true</name>
+            <text type="String">false</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+            <foreground type="Color">true</foreground>
+            <background type="Color">false</background>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
+        </listeners>
+    </component>
+    <component id="Rectangle">
+	<properties>
+	    <name type="String">true</name>
+            <text type="String">false</text>
+            <image type="File">false</image>
+            <enabled type="boolean">false</enabled>
+            <tooltip type="String">false</tooltip>
+            <foreground type="Color">true</foreground>
+            <background type="Color">false</background>
+        </properties>
+        <layout>
+            <xPos type="int">true</xPos>
+            <yPos type="int">true</yPos>
+            <minHeight type="int">true</minHeight>
+            <minWidth type="int">true</minWidth>
+            <maxHeight type="int">true</maxHeight>
+            <maxWidth type="int">true</maxWidth>
+            <resizable type="boolean">true</resizable>
+        </layout>
+        <listeners>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
+        </listeners>
+    </component>
 </root>
 
