@@ -19,19 +19,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 /**
- *  Main class.
+ * Main class.
  */
 public class Main extends Application {
 
     AnchorPane root;
-    
+
     @Override
     public void start(Stage stage) throws Exception {
 
+        stage.setMinWidth(800);
+        stage.setMinHeight(500);
+        
         //Begin Main panel
         BorderPane borderPane = new BorderPane();
         root = new AnchorPane();
@@ -42,6 +42,7 @@ public class Main extends Application {
         AnchorPane.setLeftAnchor(borderPane, 0.0);
         AnchorPane.setRightAnchor(borderPane, 0.0);
         root.getChildren().add(borderPane);
+        
         //End Main panel
 
         //Begin MenuBar
@@ -92,10 +93,11 @@ public class Main extends Application {
         leftList.getItems().add(GType.TextField);
         leftList.getItems().add(GType.ToolBar);
 //        leftList.getItems().add(GType.ImageView);
+//        leftList.getItems().add(GType.Circle);
+//        leftList.getItems().add(GType.Rectangle);
         leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<GType>() {
             @Override
             public void changed(ObservableValue<? extends GType> observableValue, GType gType, GType gType2) {
-
             }
         });
 
@@ -108,7 +110,7 @@ public class Main extends Application {
                     GType curType = leftList.getSelectionModel().getSelectedItem();
                     if (curType != null) {
                         GObject newThing = null;
-                        switch(curType) {
+                        switch (curType) {
                             case Button:
                                 GButton newBtn = new GButton(viewListeners);
                                 newBtn.setText("Test");
@@ -176,16 +178,24 @@ public class Main extends Application {
                             case ImageView:
                                 //Do nothing for the minute
                                 break;
+                            case Circle:
+                                //Do nothing for the minute
+                                break;
+                            case Rectangle:
+                                //Do nothing for the minute
+                                break;
                         }
 
                         //Could be null, e.g. ListView or ScrollPane
-                        if (newThing != null) middleTop.getChildren().add((Node)newThing);
+                        if (newThing != null) {
+                            middleTop.getChildren().add((Node) newThing);
+                        }
                     }
                     leftList.getSelectionModel().select(-1);
                 }
             }
-        }); 
-        
+        });
+
         //End left component list
 
         //Begin left hierarchy panel
@@ -204,20 +214,20 @@ public class Main extends Application {
 
         leftSplitPane.getItems().addAll(leftList);
         leftSplitPane.setDividerPosition(0, 0.6);
-        
+        leftSplitPane.setMinWidth(225);
+
         mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                if(mItmHierarchy.isSelected()) {
+                if (mItmHierarchy.isSelected()) {
                     leftSplitPane.getItems().add(leftTitledPane);
                     leftSplitPane.setDividerPosition(0, 0.6);
-                }
-                else {
+                } else {
                     leftSplitPane.getItems().remove(leftTitledPane);
                 }
-            }   
+            }
         });
-        
+
         left.getChildren().add(leftSplitPane);
 
         //Begin middle panel
@@ -254,7 +264,7 @@ public class Main extends Application {
         //End right panel
 
         AnchorPane rightSplitPaneTop = new AnchorPane();
-        
+
         //Begin right properties panel
         ComponentViewReader.parseSettings();
         PropertyEditPane pep = new PropertyEditPane();
@@ -271,18 +281,19 @@ public class Main extends Application {
 
         rightSplitPane.getItems().addAll(rightSplitPaneTop);
         rightSplitPane.setDividerPosition(0, 0.6);
+        rightSplitPane.setMinWidth(225);
         
+
         mItmHistory.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                if(mItmHistory.isSelected()) {
+                if (mItmHistory.isSelected()) {
                     rightSplitPane.getItems().add(rightSplitPaneBottom);
                     rightSplitPane.setDividerPosition(0, 0.6);
-                }
-                else {
+                } else {
                     rightSplitPane.getItems().remove(rightSplitPaneBottom);
                 }
-            }   
+            }
         });
 
         right.getChildren().add(rightSplitPane);
@@ -292,8 +303,8 @@ public class Main extends Application {
 
         borderPane.setCenter(mainContent);
 
-        Scene scene = new Scene(root, 1024, 500);
-        
+        Scene scene = new Scene(root, 1024, 600);
+
         stage.setTitle("GUI Builder");
         stage.setScene(scene);
         stage.show();
