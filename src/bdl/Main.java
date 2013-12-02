@@ -1,17 +1,26 @@
 package bdl;
 
-import bdl.build.scene.control.GButton;
+import bdl.build.GObject;
+import bdl.build.GType;
+import bdl.build.scene.control.*;
 import bdl.view.components.ComponentViewReader;
 import bdl.view.components.PropertyEditPane;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  *  Main class.
@@ -68,19 +77,115 @@ public class Main extends Application {
         AnchorPane.setBottomAnchor(leftSplitPane, 0.0);
 
         //Begin left component list
-        ListView<Label> leftList = new ListView<>();
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
-        leftList.getItems().add(new Label("Button", new Button("Button")));
+        final ListView<GType> leftList = new ListView<>();
+        leftList.getItems().add(GType.Button);
+        leftList.getItems().add(GType.CheckBox);
+        leftList.getItems().add(GType.ComboBox);
+        leftList.getItems().add(GType.Label);
+//        leftList.getItems().add(GType.ListView);
+//        leftList.getItems().add(GType.Menu);
+//        leftList.getItems().add(GType.MenuBar);
+//        leftList.getItems().add(GType.MenuItem);
+//        leftList.getItems().add(GType.ScrollPane);
+//        leftList.getItems().add(GType.SplitPane);
+        leftList.getItems().add(GType.TextArea);
+        leftList.getItems().add(GType.TextField);
+        leftList.getItems().add(GType.ToolBar);
+//        leftList.getItems().add(GType.ImageView);
+        leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<GType>() {
+            @Override
+            public void changed(ObservableValue<? extends GType> observableValue, GType gType, GType gType2) {
+
+            }
+        });
+
+        final AnchorPane middleTop = new AnchorPane();
+        final ViewListeners viewListeners = new ViewListeners(middleTop);
+        leftList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getClickCount() == 2) {
+                    GType curType = leftList.getSelectionModel().getSelectedItem();
+                    if (curType != null) {
+                        GObject newThing = null;
+                        switch(curType) {
+                            case Button:
+                                GButton newBtn = new GButton(viewListeners);
+                                newBtn.setText("Test");
+                                newBtn.setLayoutX(10);
+                                newBtn.setLayoutY(10);
+                                newThing = newBtn;
+                                break;
+                            case CheckBox:
+                                GCheckBox newChkBox = new GCheckBox(viewListeners);
+                                newChkBox.setLayoutX(10);
+                                newChkBox.setLayoutY(10);
+                                newThing = newChkBox;
+                                break;
+                            case ComboBox:
+                                GComboBox newCBox = new GComboBox(viewListeners);
+                                newCBox.setLayoutX(10);
+                                newCBox.setLayoutY(10);
+                                newThing = newCBox;
+                                break;
+                            case Label:
+                                GLabel newLbl = new GLabel(viewListeners);
+                                newLbl.setLayoutX(10);
+                                newLbl.setLayoutY(10);
+                                newLbl.setText("Label");
+                                newThing = newLbl;
+                                break;
+                            case ListView:
+                                //Do nothing, don't want to deal with this just yet
+                                break;
+                            case Menu:
+                                //Can't add to AnchorPane
+                                break;
+                            case MenuBar:
+                                //Can't add to AnchorPane
+                                break;
+                            case MenuItem:
+                                //Can't add to AnchorPane
+                                break;
+                            case ScrollPane:
+                                //Do nothing, don't want to deal with this just yet
+                                break;
+                            case SplitPane:
+                                //Do nothing, don't want to deal with this just yet
+                                break;
+                            case TextArea:
+                                GTextArea newTxtArea = new GTextArea(viewListeners);
+                                newTxtArea.setText("Text Area Text!");
+                                newTxtArea.setLayoutX(10);
+                                newTxtArea.setLayoutY(10);
+                                newThing = newTxtArea;
+                                break;
+                            case TextField:
+                                GTextField newTxtField = new GTextField(viewListeners);
+                                newTxtField.setText("Text Field Text!");
+                                newTxtField.setLayoutX(10);
+                                newTxtField.setLayoutY(10);
+                                newThing = newTxtField;
+                                break;
+                            case ToolBar:
+                                GToolBar newToolBar = new GToolBar(viewListeners);
+                                newToolBar.setLayoutX(10);
+                                newToolBar.setLayoutY(10);
+                                newThing = newToolBar;
+                                break;
+                            case ImageView:
+                                //Do nothing for the minute
+                                break;
+                        }
+
+                        //Could be null, e.g. ListView or ScrollPane
+                        if (newThing != null) middleTop.getChildren().add((Node)newThing);
+                    }
+                    leftList.getSelectionModel().select(-1);
+                }
+            }
+        }); 
+        
         //End left component list
 
         //Begin left hierarchy panel
@@ -124,12 +229,12 @@ public class Main extends Application {
         AnchorPane.setLeftAnchor(middleSplitPane, 0.0);
         AnchorPane.setRightAnchor(middleSplitPane, 0.0);
 
-        AnchorPane middleTop = new AnchorPane();
-        ViewListeners viewListeners = new ViewListeners(middleTop);
+
+
         GButton b = new GButton(viewListeners);
         b.setText("Button Text");
-        b.setLayoutX(10);
-        b.setLayoutY(10);
+        b.setLayoutX(100);
+        b.setLayoutY(100);
         middleTop.getChildren().add(b);
 
         middleSplitPane.getItems().addAll(middleTop, new AnchorPane());
