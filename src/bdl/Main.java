@@ -31,7 +31,7 @@ public class Main extends Application {
     AnchorPane root;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(final Stage stage) throws Exception {
 
         stage.setMinWidth(800);
         stage.setMinHeight(500);
@@ -56,7 +56,20 @@ public class Main extends Application {
         mItmClose.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.exit(0);
+                stage.close();
+            }
+        });
+        final MenuItem mItmFullScreen = new MenuItem("Make Full Screen");
+        mItmFullScreen.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (stage.isFullScreen()) {
+                    stage.setFullScreen(false);
+                    mItmFullScreen.setText("Make Full Screen");
+                } else {
+                    stage.setFullScreen(true);
+                    mItmFullScreen.setText("Exit Full Screen");
+                }
             }
         });
         Menu menuEdit = new Menu("Edit");
@@ -67,11 +80,9 @@ public class Main extends Application {
         Menu menuHelp = new Menu("Help");
         MenuItem mItmAbout = new MenuItem("About");
         menuBar.getMenus().addAll(menuFile, menuEdit, menuView, menuHelp);
-        menuFile.getItems().add(mItmClose);
-        menuEdit.getItems().add(mItmDelete);
-        menuEdit.getItems().add(mItmAbout);
-        menuView.getItems().add(mItmHistory);
-        menuView.getItems().add(mItmHierarchy);
+        menuFile.getItems().addAll(mItmFullScreen, mItmClose);
+        menuEdit.getItems().addAll(mItmDelete, mItmAbout);
+        menuView.getItems().addAll(mItmHierarchy, mItmHistory);
 
         borderPane.setTop(menuBar);
         //End MenuBar
@@ -105,11 +116,6 @@ public class Main extends Application {
 //        leftList.getItems().add(GType.ImageView);
         leftList.getItems().add(GType.Circle);
         leftList.getItems().add(GType.Rectangle);
-        leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<GType>() {
-            @Override
-            public void changed(ObservableValue<? extends GType> observableValue, GType gType, GType gType2) {
-            }
-        });
 
         final AnchorPane middleTop = new AnchorPane();
         final ViewListeners viewListeners = new ViewListeners(middleTop);
