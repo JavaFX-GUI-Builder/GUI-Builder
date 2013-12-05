@@ -6,6 +6,7 @@ import bdl.build.scene.control.*;
 import bdl.build.scene.shape.GCircle;
 import bdl.build.scene.shape.GRectangle;
 import bdl.view.components.ComponentViewReader;
+import bdl.view.components.MainMenuBar;
 import bdl.view.components.PropertyEditPane;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -29,10 +30,15 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     AnchorPane root;
+    public static Stage stage;
+    public static SplitPane leftSplitPane;
+    public static TitledPane leftTitledPane;
+    public static SplitPane rightSplitPane;
+    public static AnchorPane rightSplitPaneBottom;
 
     @Override
     public void start(final Stage stage) throws Exception {
-
+        this.stage = stage;
         stage.setMinWidth(800);
         stage.setMinHeight(500);
         
@@ -50,48 +56,15 @@ public class Main extends Application {
         //End Main panel
 
         //Begin MenuBar
-        MenuBar menuBar = new MenuBar();
-        Menu menuFile = new Menu("File");
-        MenuItem mItmClose = new MenuItem("Close");
-        mItmClose.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                stage.close();
-            }
-        });
-        final MenuItem mItmFullScreen = new MenuItem("Make Full Screen");
-        mItmFullScreen.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if (stage.isFullScreen()) {
-                    stage.setFullScreen(false);
-                    mItmFullScreen.setText("Make Full Screen");
-                } else {
-                    stage.setFullScreen(true);
-                    mItmFullScreen.setText("Exit Full Screen");
-                }
-            }
-        });
-        Menu menuEdit = new Menu("Edit");
-        MenuItem mItmDelete = new MenuItem("Delete");
-        Menu menuView = new Menu("View");
-        final CheckMenuItem mItmHistory = new CheckMenuItem("Show History");
-        final CheckMenuItem mItmHierarchy = new CheckMenuItem("Show Hierarchy");
-        Menu menuHelp = new Menu("Help");
-        MenuItem mItmAbout = new MenuItem("About");
-        menuBar.getMenus().addAll(menuFile, menuEdit, menuView, menuHelp);
-        menuFile.getItems().addAll(mItmFullScreen, mItmClose);
-        menuEdit.getItems().addAll(mItmDelete, mItmAbout);
-        menuView.getItems().addAll(mItmHierarchy, mItmHistory);
 
-        borderPane.setTop(menuBar);
+        borderPane.setTop(new MainMenuBar());
         //End MenuBar
 
         SplitPane mainContent = new SplitPane();
 
         //Begin Left panel
         AnchorPane left = new AnchorPane();
-        final SplitPane leftSplitPane = new SplitPane();
+        leftSplitPane = new SplitPane();
         leftSplitPane.setOrientation(Orientation.VERTICAL);
         AnchorPane.setLeftAnchor(leftSplitPane, 0.0);
         AnchorPane.setRightAnchor(leftSplitPane, 0.0);
@@ -237,7 +210,7 @@ public class Main extends Application {
 
         TreeView<String> leftTreeView = new TreeView<>(treeRoot);
 
-        final TitledPane leftTitledPane = new TitledPane("Hierarchy", leftTreeView);
+        leftTitledPane = new TitledPane("Hierarchy", leftTreeView);
         leftTitledPane.setCollapsible(false);
         //End left hierarchy panel
 
@@ -245,17 +218,7 @@ public class Main extends Application {
         leftSplitPane.setDividerPosition(0, 0.6);
         leftSplitPane.setMinWidth(225);
 
-        mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (mItmHierarchy.isSelected()) {
-                    leftSplitPane.getItems().add(leftTitledPane);
-                    leftSplitPane.setDividerPosition(0, 0.6);
-                } else {
-                    leftSplitPane.getItems().remove(leftTitledPane);
-                }
-            }
-        });
+
 
         left.getChildren().add(leftSplitPane);
 
@@ -293,7 +256,7 @@ public class Main extends Application {
 
         //Begin right panel
         AnchorPane right = new AnchorPane();
-        final SplitPane rightSplitPane = new SplitPane();
+        rightSplitPane = new SplitPane();
         rightSplitPane.setDividerPositions(0.7);
         rightSplitPane.setOrientation(Orientation.VERTICAL);
         AnchorPane.setTopAnchor(rightSplitPane, 0.0);
@@ -316,24 +279,12 @@ public class Main extends Application {
         rightSplitPaneTop.getChildren().add(propertyScroll);
         //End right properties panel
 
-        final AnchorPane rightSplitPaneBottom = new AnchorPane();
+        rightSplitPaneBottom = new AnchorPane();
 
         rightSplitPane.getItems().addAll(rightSplitPaneTop);
         rightSplitPane.setDividerPosition(0, 0.6);
         rightSplitPane.setMinWidth(225);
-        
 
-        mItmHistory.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (mItmHistory.isSelected()) {
-                    rightSplitPane.getItems().add(rightSplitPaneBottom);
-                    rightSplitPane.setDividerPosition(0, 0.6);
-                } else {
-                    rightSplitPane.getItems().remove(rightSplitPaneBottom);
-                }
-            }
-        });
 
         right.getChildren().add(rightSplitPane);
 
