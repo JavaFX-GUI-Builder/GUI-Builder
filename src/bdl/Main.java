@@ -3,6 +3,8 @@ package bdl;
 import bdl.build.GObject;
 import bdl.build.GType;
 import bdl.build.scene.control.*;
+import bdl.build.scene.shape.GCircle;
+import bdl.build.scene.shape.GRectangle;
 import bdl.view.components.ComponentViewReader;
 import bdl.view.components.PropertyEditPane;
 import javafx.application.Application;
@@ -17,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -93,8 +96,8 @@ public class Main extends Application {
         leftList.getItems().add(GType.TextField);
         leftList.getItems().add(GType.ToolBar);
 //        leftList.getItems().add(GType.ImageView);
-//        leftList.getItems().add(GType.Circle);
-//        leftList.getItems().add(GType.Rectangle);
+        leftList.getItems().add(GType.Circle);
+        leftList.getItems().add(GType.Rectangle);
         leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<GType>() {
             @Override
             public void changed(ObservableValue<? extends GType> observableValue, GType gType, GType gType2) {
@@ -179,10 +182,23 @@ public class Main extends Application {
                                 //Do nothing for the minute
                                 break;
                             case Circle:
-                                //Do nothing for the minute
+                                GCircle newCircle = new GCircle(viewListeners);
+                                newCircle.setStrokeWidth(5);
+                                newCircle.setStroke(Color.RED);
+                                newCircle.setRadius(10);
+                                newCircle.setFill(Color.PINK);
+                                newCircle.setLayoutX(50);
+                                newCircle.setLayoutY(50);
+                                newThing = newCircle;
                                 break;
                             case Rectangle:
-                                //Do nothing for the minute
+                                GRectangle newRectangle = new GRectangle(viewListeners);
+                                newRectangle.setFill(Color.DARKORCHID);
+                                newRectangle.setWidth(100);
+                                newRectangle.setHeight(100);
+                                newRectangle.setLayoutX(100);
+                                newRectangle.setLayoutY(100);
+                                newThing = newRectangle;
                                 break;
                         }
 
