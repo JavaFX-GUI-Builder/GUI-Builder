@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
@@ -52,6 +53,12 @@ public class Main extends Application {
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("File");
         MenuItem mItmClose = new MenuItem("Close");
+        mItmClose.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.exit(0);
+            }
+        });
         Menu menuEdit = new Menu("Edit");
         MenuItem mItmDelete = new MenuItem("Delete");
         Menu menuView = new Menu("View");
@@ -248,24 +255,34 @@ public class Main extends Application {
 
         //Begin middle panel
         AnchorPane middle = new AnchorPane();
-        SplitPane middleSplitPane = new SplitPane();
-        middleSplitPane.setOrientation(Orientation.VERTICAL);
-        AnchorPane.setTopAnchor(middleSplitPane, 0.0);
-        AnchorPane.setBottomAnchor(middleSplitPane, 0.0);
-        AnchorPane.setLeftAnchor(middleSplitPane, 0.0);
-        AnchorPane.setRightAnchor(middleSplitPane, 0.0);
+        final TabPane middleTabPane = new TabPane();
+        middleTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        Tab viewTab = new Tab("    Editor View    ");
+        Tab codeTab = new Tab("    Code View    ");
+        final Tab previewTab = new Tab("    Preview GUI    ");
 
-
+        previewTab.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if (previewTab.isSelected()) {
+                    middleTabPane.getSelectionModel().select(0);
+                    System.out.println("XXX");
+                }
+            }
+        });
+        middleTabPane.getTabs().addAll(viewTab, codeTab, previewTab);
+        AnchorPane.setTopAnchor(middleTabPane, 0.0);
+        AnchorPane.setBottomAnchor(middleTabPane, 0.0);
+        AnchorPane.setLeftAnchor(middleTabPane, 0.0);
+        AnchorPane.setRightAnchor(middleTabPane, 0.0);
 
         GButton b = new GButton(viewListeners);
         b.setText("Button Text");
         b.setLayoutX(100);
         b.setLayoutY(100);
         middleTop.getChildren().add(b);
-
-        middleSplitPane.getItems().addAll(middleTop, new AnchorPane());
-        middleSplitPane.setDividerPositions(0.75);
-        middle.getChildren().add(middleSplitPane);
+        viewTab.setContent(middleTop);
+        middle.getChildren().add(middleTabPane);
         //End middle panel
 
         //Begin right panel
