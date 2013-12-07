@@ -254,7 +254,7 @@ public class PropertyEditPane extends Pane {
         return b;
     }
 
-    private void addValidation(TextField tf, String type) {
+    private void addValidation(final TextField tf, String type) {
         if (type.equals("int")) {
             tf.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
                 @Override
@@ -271,9 +271,16 @@ public class PropertyEditPane extends Pane {
             tf.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
-                    if (event.getCharacter().equals(" ")) {
-                        event.consume();
+                    if(tf.getText().length() == 0) {
+                        if(!event.getCharacter().matches("[a-z]")) {
+                            event.consume();
+                        }
                     }
+                    else {
+                        if(!event.getCharacter().matches("\\w")) {
+                            event.consume();
+                    }
+                }
                 }
             });
         }
