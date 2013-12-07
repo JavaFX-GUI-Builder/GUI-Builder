@@ -147,7 +147,7 @@ public class PropertyEditPane extends Pane {
         if (p.getType().equals("boolean")) {
             grid.add(createCheckBox(p), 1, row);
         } else if (p.getType().equals("File")) {
-            grid.add(createFileChooser(p), 1, row);
+            grid.add(createImageHint(p), 1, row);
         } else if (p.getType().equals("Color")) {
             grid.add(createColorPicker(p), 1, row);
         } else if (p.getType().equals("String") || p.getType().equals("int") || p.getType().equals("float") || p.getType().equals("double")) {
@@ -225,6 +225,18 @@ public class PropertyEditPane extends Pane {
                     b.setText(f.getName());
                     System.out.println("Trigger: " + f.getAbsolutePath());
                 }
+            }
+        });
+        return b;
+    }
+    
+    private Button createImageHint(final ComponentSettings.PropertyType p) {
+        final Button b = new Button("Image Hint");
+        b.setMaxWidth(120);
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                new ImageHintWindow(p);
             }
         });
         return b;
