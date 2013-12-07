@@ -13,11 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -85,6 +82,43 @@ public class PropertyEditPane extends Pane {
         grid = new GridPane();
         ComponentSettings cs = ComponentViewReader.getSettingsByName(gObj.getType().toString());
         setContents(cs);
+    }
+
+    public void fillContents(GObject gObj) {
+        //Most generic to most specific
+        gObj.getFieldName();
+
+        if (gObj instanceof Node) {
+            //Catches all, but uses instanceof just to fit in with the rest...
+            Node nObj = (Node) gObj;
+            nObj.getLayoutX();
+            nObj.getLayoutY();
+        }
+        if (gObj instanceof Control) {
+            //Catches Labeled (all of those below), TextArea, TextField, ToolBar, ComboBox, ColorPicker, etc
+            Control cObj = (Control) gObj;
+            cObj.getHeight();
+            cObj.getWidth();
+            cObj.getMaxHeight();
+            cObj.getMaxWidth();
+            cObj.getMinHeight();
+            cObj.getMinWidth();
+        }
+        if (gObj instanceof Labeled) {
+            //Catches TitledPane, Label, Button, CheckBox, Hyperlink, MenuButton, ToggleButton
+            Labeled lObj = (Labeled) gObj;
+            lObj.getText();
+            lObj.isUnderline();
+            lObj.getFont();
+            lObj.getTextFill();
+            lObj.getAlignment();
+        }
+
+        //Then go to the most specific, to catch the single-type only values
+        if (gObj instanceof CheckBox) {
+            CheckBox cObj = (CheckBox) gObj;
+            cObj.isSelected();
+        }
     }
 
 //    public void fillContents(GObject gObj) {
