@@ -26,12 +26,12 @@ public class ListenerHintWindow {
         ta.setEditable(false);
         if (p.getName().equals("onActionProperty")) {
             ta.setText(".setOnAction(new EventHandler<ActionEvent>() {\n"
-                    + "            @Override\n" + "            public void handle(ActionEvent t) {\n"
-                    + "                        //TODO\n" + "            }\n" + "});");
+                    + "    @Override\n" + "    public void handle(ActionEvent t) {\n"
+                    + "        //TODO\n" + "    }\n" + "});");
         } else if (p.getName().equals("textProperty")) {
             ta.setText(".setOnKeyTyped(new EventHandler<KeyEvent>() {\n"
-                    + "            @Override\n" + "            public void handle(KeyEvent t) {\n"
-                    + "                        //TODO\n" + "            }\n" + "});");
+                    + "    @Override\n" + "    public void handle(KeyEvent t) {\n"
+                    + "        //TODO\n" + "    }\n" + "});");
         }
         vb.getChildren().addAll(l, ta);
         pane.getChildren().add(vb);
