@@ -1,57 +1,28 @@
-package bdl.view.components;
+package bdl.view.components.right;
 
 import bdl.build.GObject;
-import static bdl.build.GType.Button;
-import static bdl.build.GType.CheckBox;
-import static bdl.build.GType.ComboBox;
-import static bdl.build.GType.Image;
-import static bdl.build.GType.ImageView;
-import static bdl.build.GType.Label;
-import static bdl.build.GType.ListView;
-import static bdl.build.GType.MenuBar;
-import static bdl.build.GType.ScrollPane;
-import static bdl.build.GType.SplitPane;
-import static bdl.build.GType.TextArea;
-import static bdl.build.GType.TextField;
-import static bdl.build.GType.ToolBar;
 import bdl.build.scene.control.GButton;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
+
+import bdl.view.components.ComponentSettings;
+import bdl.view.components.ComponentViewReader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
 
 /**
  *

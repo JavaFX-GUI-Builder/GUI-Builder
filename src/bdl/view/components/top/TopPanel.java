@@ -1,6 +1,8 @@
-package bdl.view.components;
+package bdl.view.components.top;
 
 import bdl.Main;
+import bdl.view.components.left.LeftPanel;
+import bdl.view.components.right.RightPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckMenuItem;
@@ -8,9 +10,9 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
-public class MainMenuBar extends MenuBar {
+public class TopPanel extends MenuBar {
 
-    public MainMenuBar() {
+    public TopPanel() {
         Menu menuFile = new Menu("File");
 
         MenuItem mItmClose = new MenuItem("Close");
@@ -46,10 +48,10 @@ public class MainMenuBar extends MenuBar {
             @Override
             public void handle(ActionEvent t) {
                 if (mItmHierarchy.isSelected()) {
-                    Main.leftSplitPane.getItems().add(Main.leftTitledPane);
-                    Main.leftSplitPane.setDividerPosition(0, 0.6);
+                    Main.leftPanel.getItems().add(LeftPanel.hierarchyPane);
+                    Main.leftPanel.setDividerPosition(0, 0.6);
                 } else {
-                    Main.leftSplitPane.getItems().remove(Main.leftTitledPane);
+                    Main.leftPanel.getItems().remove(LeftPanel.hierarchyPane);
                 }
             }
         });
@@ -58,10 +60,10 @@ public class MainMenuBar extends MenuBar {
             @Override
             public void handle(ActionEvent t) {
                 if (mItmHistory.isSelected()) {
-                    Main.rightSplitPane.getItems().add(Main.rightSplitPaneBottom);
-                    Main.rightSplitPane.setDividerPosition(0, 0.6);
+                    Main.rightPanel.getItems().add(RightPanel.rightSplitPaneBottom);
+                    Main.rightPanel.setDividerPosition(0, 0.6);
                 } else {
-                    Main.rightSplitPane.getItems().remove(Main.rightSplitPaneBottom);
+                    Main.rightPanel.getItems().remove(RightPanel.rightSplitPaneBottom);
                 }
             }
         });

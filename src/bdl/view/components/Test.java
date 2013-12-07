@@ -1,5 +1,6 @@
 package bdl.view.components;
 
+import bdl.view.components.right.PropertyEditPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -37,6 +38,7 @@ public class Test extends Application {
         
         primaryStage.setScene(new Scene(new PropertyEditPane()));
         primaryStage.show();
+
     }
 
     /**
