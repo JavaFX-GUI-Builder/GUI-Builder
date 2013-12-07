@@ -2,7 +2,6 @@ package bdl.view.right;
 
 import bdl.build.GObject;
 import bdl.build.scene.control.GButton;
-import bdl.build.scene.control.GTextArea;
 import java.io.File;
 
 import bdl.view.components.ComponentSettings;
@@ -14,7 +13,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -31,7 +36,7 @@ public class PropertyEditPane extends Pane {
     private GridPane grid = new GridPane();
 
     public PropertyEditPane() {
-        updateContents(new GTextArea(null));
+        updateContents(new GButton(null));
         this.getChildren().add(grid);
     }
 
@@ -83,7 +88,7 @@ public class PropertyEditPane extends Pane {
         ComponentSettings cs = ComponentViewReader.getSettingsByName(gObj.getType().toString());
         setContents(cs);
     }
-
+    
     public void fillContents(GObject gObj) {
         //Most generic to most specific
         gObj.getFieldName();
