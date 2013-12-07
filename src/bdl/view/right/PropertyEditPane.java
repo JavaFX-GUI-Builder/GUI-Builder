@@ -2,10 +2,9 @@ package bdl.view.right;
 
 import bdl.build.GObject;
 import bdl.build.scene.control.GButton;
-import java.io.File;
-
 import bdl.view.components.ComponentSettings;
 import bdl.view.components.ComponentViewReader;
+import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -23,9 +22,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.FileChooser;
 
 /**
  *
@@ -34,46 +34,90 @@ import javafx.stage.FileChooser;
 public class PropertyEditPane extends Pane {
 
     private GridPane grid = new GridPane();
+    private TextField name = new TextField();
+    private TextField text = new TextField();
+    private Button image = new Button();
+    private CheckBox enabled = new CheckBox();
+    private TextField tooltip = new TextField();
+    private ColorPicker foreground = new ColorPicker();
+    private ColorPicker background = new ColorPicker();
+    private TextField xPos = new TextField();
+    private TextField yPos = new TextField();
+    private TextField minHeight = new TextField();
+    private TextField minWidth = new TextField();
+    private TextField maxHeight = new TextField();
+    private TextField maxWidth = new TextField();
+    private Button listenerHint = new Button();
+    private Node[] list = {name, text, image, enabled, tooltip, foreground, background, xPos, yPos, minHeight, minWidth, maxHeight, maxWidth, listenerHint};
+    private GObject object;
 
     public PropertyEditPane() {
         updateContents(new GButton(null));
         this.getChildren().add(grid);
     }
 
-    private void setContents(ComponentSettings cs) {
-        int x = 0;
-
+    private void setContents(ComponentSettings cs, GObject gObj) {
+        int row = 0;
+        int i = 0;
         Label hl = new Label("Properties");
         hl.setFont(Font.font(hl.getFont().getFamily(), FontWeight.BOLD, hl.getFont().getSize() + 0.5));
-        grid.add(hl, 0, x, 2, 1);
-        x++;
-        for (final ComponentSettings.Properties p : cs.getProperties()) {
-            if (p.getValue()) {
-                createRow(p, x);
-                x++;
+        grid.add(hl, 0, row, 2, 1);
+        row++;
+        ArrayList<ComponentSettings.Properties> alp = (ArrayList<ComponentSettings.Properties>) cs.getProperties();
+        for (int j = 0; j < alp.size(); j++) {
+            if (list[i] instanceof TextField && alp.get(j).getValue()) {
+                String value = "";
+                if(gObj instanceof Labeled) {
+                    Labeled lObj = (Labeled) gObj;
+                    value = lObj.getText();
+                }
+                System.out.println("1 " + value + " " + alp.get(j).getName());
+                list[i] = createTextField(alp.get(j), value);
+                createRow(alp.get(j).getName(), list[i], row);
+                System.out.println("2 " + value + " " + alp.get(j).getName());
+            } else if (list[i] instanceof Button && alp.get(j).getValue()) {
+                if (alp.get(j).getName().equals("image")) {
+                    list[i] = createImageHint(alp.get(j));
+                }
+                createRow(alp.get(j).getName(), list[i], row);
+            } else if (list[i] instanceof CheckBox && alp.get(j).getValue()) {
+                list[i] = createCheckBox(alp.get(j));
+                createRow(alp.get(j).getName(), list[i], row);
+            } else if (list[i] instanceof ColorPicker && alp.get(j).getValue()) {
+                list[i] = createColorPicker(alp.get(j));
+                createRow(alp.get(j).getName(), list[i], row);
             }
+            i++;
+            row++;
         }
 
         Label ll = new Label("Layout");
         ll.setFont(Font.font(ll.getFont().getFamily(), FontWeight.BOLD, ll.getFont().getSize() + 0.5));
-        grid.add(ll, 0, x);
-        x++;
-        for (final ComponentSettings.Layout p : cs.getLayout()) {
-            if (p.getValue()) {
-                createRow(p, x);
-                x++;
+        grid.add(ll, 0, row);
+        row++;
+        ArrayList<ComponentSettings.Layout> all = (ArrayList<ComponentSettings.Layout>) cs.getLayout();
+        for (int j = 0; j < all.size(); j++) {
+            if (list[i] instanceof TextField && all.get(j).getValue()) {
+                String value = "";
+                list[i] = createTextField(all.get(j), value);
+                createRow(all.get(j).getName(), list[i], row);
             }
+            row++;
         }
 
         Label jl = new Label("Listeners");
         jl.setFont(Font.font(jl.getFont().getFamily(), FontWeight.BOLD, jl.getFont().getSize() + 0.5));
-        grid.add(jl, 0, x);
-        x++;
-        for (final ComponentSettings.Listeners p : cs.getListeners()) {
-            if (p.getValue()) {
-                createRow(p, x);
-                x++;
+        grid.add(jl, 0, row);
+        row++;
+        ArrayList<ComponentSettings.Listeners> alli = (ArrayList<ComponentSettings.Listeners>) cs.getListeners();
+        for (int j = 0; j < alli.size(); j++) {
+            if (list[i] instanceof Button && alli.get(j).getValue()) {
+                if (alli.get(j).getType().equals("listeners")) {
+                    list[i] = createListenerHint(alli.get(j));
+                }
+                createRow(alli.get(j).getName(), list[i], row);
             }
+            row++;
         }
     }
 
@@ -84,117 +128,65 @@ public class PropertyEditPane extends Pane {
      * properties panel with the appropriate settings for.
      */
     public void updateContents(GObject gObj) {
+        object = gObj;
         grid = new GridPane();
         ComponentSettings cs = ComponentViewReader.getSettingsByName(gObj.getType().toString());
-        setContents(cs);
-    }
-    
-    public void fillContents(GObject gObj) {
-        //Most generic to most specific
-        gObj.getFieldName();
-
-        if (gObj instanceof Node) {
-            //Catches all, but uses instanceof just to fit in with the rest...
-            Node nObj = (Node) gObj;
-            nObj.getLayoutX();
-            nObj.getLayoutY();
-        }
-        if (gObj instanceof Control) {
-            //Catches Labeled (all of those below), TextArea, TextField, ToolBar, ComboBox, ColorPicker, etc
-            Control cObj = (Control) gObj;
-            cObj.getHeight();
-            cObj.getWidth();
-            cObj.getMaxHeight();
-            cObj.getMaxWidth();
-            cObj.getMinHeight();
-            cObj.getMinWidth();
-        }
-        if (gObj instanceof Labeled) {
-            //Catches TitledPane, Label, Button, CheckBox, Hyperlink, MenuButton, ToggleButton
-            Labeled lObj = (Labeled) gObj;
-            lObj.getText();
-            lObj.isUnderline();
-            lObj.getFont();
-            lObj.getTextFill();
-            lObj.getAlignment();
-        }
-
-        //Then go to the most specific, to catch the single-type only values
-        if (gObj instanceof CheckBox) {
-            CheckBox cObj = (CheckBox) gObj;
-            cObj.isSelected();
-        }
+        setContents(cs, gObj);
+        //fillContents(gObj);
     }
 
-//    public void fillContents(GObject gObj) {
-//        switch(gObj.getType()) {
-//            case Button: 
-//                Button b = (Button) gObj;
-//                break;
-//            case Menu: 
-//                Menu m = (Menu) gObj;
-//                break;
-//            case MenuBar: 
-//                MenuBar mb = (MenuBar) gObj;
-//                break;
-//            case MenuItem: 
-//                MenuItem mi = (MenuItem) gObj;
-//                break;
-//            case ToolBar: 
-//                ToolBar tb = (ToolBar) gObj;
-//                break;
-//            case Image: 
-//                Image i = (Image) gObj;
-//                break;
-//            case ImageView: 
-//                ImageView iv = (ImageView) gObj;
-//                break;
-//            case AnchorPane: 
-//                AnchorPane ap = (AnchorPane) gObj;
-//                break;
-//            case CheckBox: 
-//                CheckBox cb = (CheckBox) gObj;
-//                break;
-//            case ComboBox: 
-//                ComboBox cob = (ComboBox) gObj;
-//                break;
-//            case Label: 
-//                Label l = (Label) gObj;
-//                break;
-//            case ListView: 
-//                ListView lv = (ListView) gObj;
-//                break;
-//            case TextArea: 
-//                TextArea ta = (TextArea) gObj;
-//                break;
-//            case TextField: 
-//                TextField tf = (TextField) gObj;
-//                break;
-//            case SplitPane: 
-//                SplitPane sp = (SplitPane) gObj;
-//                break;
-//            case ScrollPane: 
-//                ScrollPane scp = (ScrollPane) gObj;
-//                break;
-//            default: 
-//        }
-//    }
-    private void createRow(final ComponentSettings.PropertyType p, int row) {
-        Label l = new Label(p.getName());
+    private void fillContents(GObject gObj) {
+        if (gObj != null) {
+            //Most generic to most specific
+            ((TextField)list[0]).setText(gObj.getFieldName());
+
+            if (gObj instanceof Node) {
+                //Catches all, but uses instanceof just to fit in with the rest...
+                Node nObj = (Node) gObj;
+                xPos.setText("" + nObj.getLayoutX());
+                yPos.setText("" + nObj.getLayoutY());
+            }
+            if (gObj instanceof Control) {
+                //Catches Labeled (all of those below), TextArea, TextField, ToolBar, ComboBox, ColorPicker, etc
+                Control cObj = (Control) gObj;
+//            cObj.getHeight();
+//            cObj.getWidth();
+                maxHeight.setText("" + cObj.getMaxHeight());
+                maxWidth.setText("" + cObj.getMaxWidth());
+                minHeight.setText("" + cObj.getMinHeight());
+                minWidth.setText("" + cObj.getMinWidth());
+                enabled.setSelected(cObj.disableProperty().getValue());
+                tooltip.setText((cObj.getTooltip() != null) ? cObj.getTooltip().getText() : "");
+            }
+            if (gObj instanceof Labeled) {
+                //Catches TitledPane, Label, Button, CheckBox, Hyperlink, MenuButton, ToggleButton
+                Labeled lObj = (Labeled) gObj;
+                text.setText(lObj.getText());
+//            lObj.isUnderline();
+//            lObj.getFont();
+//            lObj.getTextFill();
+//            lObj.getAlignment();
+            }
+            if (gObj instanceof Shape) {
+                Shape sObj = (Shape) gObj;
+                foreground.setValue((Color) sObj.getStroke());
+                background.setValue((Color) sObj.getFill());
+            }
+
+            //Then go to the most specific, to catch the single-type only values
+            if (gObj instanceof CheckBox) {
+                CheckBox cObj = (CheckBox) gObj;
+                cObj.isSelected();
+            }
+        }
+    }
+
+    private void createRow(String p, Node node, int row) {
+        Label l = new Label(p);
         GridPane.setHalignment(l, HPos.RIGHT);
         GridPane.setMargin(l, new Insets(0, 5, 0, 0));
         grid.add(l, 0, row);
-        if (p.getType().equals("boolean")) {
-            grid.add(createCheckBox(p), 1, row);
-        } else if (p.getType().equals("File")) {
-            grid.add(createImageHint(p), 1, row);
-        } else if (p.getType().equals("Color")) {
-            grid.add(createColorPicker(p), 1, row);
-        } else if (p.getType().equals("String") || p.getType().equals("int") || p.getType().equals("float") || p.getType().equals("double")) {
-            grid.add(createTextField(p), 1, row);
-        } else {
-            grid.add(createListenerHint(p), 1, row);
-        }
+        grid.add(node, 1, row);
     }
 
     private CheckBox createCheckBox(final ComponentSettings.PropertyType p) {
@@ -210,7 +202,7 @@ public class PropertyEditPane extends Pane {
         return b;
     }
 
-    private TextField createTextField(final ComponentSettings.PropertyType p) {
+    private TextField createTextField(final ComponentSettings.PropertyType p, String value) {
         final TextField tf = new TextField();
         tf.promptTextProperty().setValue(p.getType());
         if (p.getType().equals("int")) {
@@ -223,7 +215,7 @@ public class PropertyEditPane extends Pane {
         } else {
             addValidation(tf, p.getType());
         }
-        
+
         tf.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
@@ -238,6 +230,8 @@ public class PropertyEditPane extends Pane {
                 System.out.println("Trigger: " + p.getName() + " " + p.getType() + " - " + tf.getText());
             }
         });
+        tf.setText(value);
+        System.out.println("3 " + value + " " + p.getName());
         return tf;
     }
 
@@ -253,23 +247,6 @@ public class PropertyEditPane extends Pane {
         return cp;
     }
 
-    private Button createFileChooser(final ComponentSettings.PropertyType p) {
-        final Button b = new Button("Browse...");
-        b.setMaxWidth(120);
-        b.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                FileChooser fc = new FileChooser();
-                File f = fc.showOpenDialog(b.getScene().getWindow());
-                if (f != null) {
-                    b.setText(f.getName());
-                    System.out.println("Trigger: " + f.getAbsolutePath());
-                }
-            }
-        });
-        return b;
-    }
-    
     private Button createImageHint(final ComponentSettings.PropertyType p) {
         final Button b = new Button("Image Hint");
         b.setMaxWidth(120);
@@ -311,18 +288,18 @@ public class PropertyEditPane extends Pane {
             tf.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
-                    if(tf.getText().length() == 0) {
-                        if(!event.getCharacter().matches("[a-z]")) {
+                    if (tf.getText().length() == 0) {
+                        if (!event.getCharacter().matches("[a-z]")) {
+                            event.consume();
+                        }
+                    } else {
+                        if (!event.getCharacter().matches("\\w")) {
                             event.consume();
                         }
                     }
-                    else {
-                        if(!event.getCharacter().matches("\\w")) {
-                            event.consume();
-                    }
-                }
                 }
             });
         }
+        else {} 
     }
 }

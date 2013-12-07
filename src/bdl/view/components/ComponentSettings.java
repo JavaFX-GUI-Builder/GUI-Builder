@@ -2,6 +2,7 @@ package bdl.view.components;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Component Settings stores editable values for components. Stores the settings
@@ -15,9 +16,9 @@ import java.util.Collection;
 public class ComponentSettings {
 
     private String name;
-    private Collection<Properties> properties = new ArrayList<>();
-    private Collection<Layout> layout = new ArrayList<>();
-    private Collection<Listeners> listeners = new ArrayList<>();
+    private List<Properties> properties = new ArrayList<>();
+    private List<Layout> layout = new ArrayList<>();
+    private List<Listeners> listeners = new ArrayList<>();
 
     /**
      * Returns a collection of Properties properties associated with the this
@@ -25,7 +26,7 @@ public class ComponentSettings {
      * 
      * @return A collection of Properties objects associated with this component
      */
-    public Collection<Properties> getProperties() {
+    public List<Properties> getProperties() {
         return properties;
     }
 
@@ -35,7 +36,7 @@ public class ComponentSettings {
      * 
      * @return A collection of Layout objects associated with this component
      */
-    public Collection<Layout> getLayout() {
+    public List<Layout> getLayout() {
         return layout;
     }
 
@@ -45,7 +46,7 @@ public class ComponentSettings {
      * 
      * @return A collection of Listener objects associated with this component
      */
-    public Collection<Listeners> getListeners() {
+    public List<Listeners> getListeners() {
         return listeners;
     }
 

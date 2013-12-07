@@ -18,8 +18,8 @@
             <maxWidth type="int">true</maxWidth>            
         </layout>
         <listeners>
-            <onActionProperty type="listeners">true</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="TextArea">
@@ -31,6 +31,7 @@
             <tooltip type="String">true</tooltip>
             <foreground type="Color">true</foreground>
             <background type="Color">false</background>
+            <other type="boolean">wrapText</other>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -41,8 +42,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">true</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">true</textProperty>
         </listeners>
     </component>
     <component id="TextField">
@@ -64,8 +65,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">true</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">true</textProperty>
         </listeners>
     </component>
     <component id="MenuBar">
@@ -87,8 +88,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="Menu">
@@ -110,8 +111,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="MenuItem">
@@ -133,8 +134,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">true</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="SplitPane">
@@ -154,10 +155,11 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
+            <other type="int">dividerPosition</other>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ScrollPane">
@@ -169,6 +171,8 @@
             <tooltip type="String">false</tooltip>
             <foreground type="Color">false</foreground>
             <background type="Color">false</background>
+            <other type="ScrollPane.ScrollBarPolicy">verticalScrollProperty</other>
+            <other type="ScrollPane.ScrollBarPolicy">horizontalScrollProperty</other>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
@@ -179,8 +183,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ListView">
@@ -202,8 +206,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">true</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ToolBar">
@@ -225,8 +229,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ComboBox">
@@ -248,8 +252,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">true</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="CheckBox">
@@ -271,8 +275,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">true</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">true</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="Label">
@@ -294,8 +298,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="Image">
@@ -317,8 +321,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="ImageView">
@@ -340,8 +344,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="AnchorPane">
@@ -363,8 +367,8 @@
             <maxWidth type="int">true</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="Circle">
@@ -386,8 +390,8 @@
             <maxWidth type="int">false</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
     <component id="Rectangle">
@@ -409,8 +413,8 @@
             <maxWidth type="int">false</maxWidth>
         </layout>
         <listeners>
-            <onActionProperty type="listeners">false</onActionProperty>
-            <textProperty type="listeners">false</textProperty>
+            <onActionProperty type="">false</onActionProperty>
+            <textProperty type="">false</textProperty>
         </listeners>
     </component>
 </root>

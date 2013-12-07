@@ -50,7 +50,9 @@ public class Main extends Application {
         //Begin MiddlePanel
         SplitPane mainContent = new SplitPane();
         middleTop = new AnchorPane();
+        rightPanel = new RightPanel();
         viewListeners = new ViewListeners(middleTop);
+        leftPanel = new LeftPanel(viewListeners);
 
         AnchorPane middleAnchorPane = new AnchorPane();
         MiddlePanel middleTabPane = new MiddlePanel();
@@ -63,7 +65,6 @@ public class Main extends Application {
 
         //Begin LeftPanel
         AnchorPane leftAnchorPane = new AnchorPane();
-        leftPanel = new LeftPanel(viewListeners);
         leftPanel.setOrientation(Orientation.VERTICAL);
         AnchorPane.setLeftAnchor(leftPanel, 0.0);
         AnchorPane.setRightAnchor(leftPanel, 0.0);
@@ -76,7 +77,6 @@ public class Main extends Application {
 
         //Begin RightPanel
         AnchorPane rightAnchorPane = new AnchorPane();
-        rightPanel = new RightPanel();
         AnchorPane.setTopAnchor(rightPanel, 0.0);
         AnchorPane.setBottomAnchor(rightPanel, 0.0);
         AnchorPane.setLeftAnchor(rightPanel, 0.0);

@@ -1,6 +1,7 @@
 package bdl;
 
-import javafx.event.EventHandler;
+import bdl.build.GObject;
+import bdl.view.right.PropertyEditPane;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -12,6 +13,7 @@ public class ViewListeners {
 
     private AnchorPane viewWindow;
     private Rectangle outline;
+    private PropertyEditPane pep = Main.rightPanel.pep;
 
     boolean isMousePressed = false;
 
@@ -38,6 +40,7 @@ public class ViewListeners {
         outline.setLayoutY(nodeY - 4);
         outline.setWidth(nodeW + 8);
         outline.setHeight(nodeH + 8);
+        pep.updateContents((GObject) node);
     }
 
     double curX = 0, curY = 0;
@@ -49,6 +52,7 @@ public class ViewListeners {
             node.setLayoutY(y);
             outline.setLayoutX(x - 4);
             outline.setLayoutY(y - 4);
+            pep.updateContents((GObject) node);
         }
     }
 
