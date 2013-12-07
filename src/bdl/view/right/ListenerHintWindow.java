@@ -1,8 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package bdl.view.components.right;
+package bdl.view.right;
 
 import bdl.view.components.ComponentSettings;
 import javafx.scene.Scene;

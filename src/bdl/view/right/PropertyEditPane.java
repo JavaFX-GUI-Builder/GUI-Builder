@@ -1,4 +1,4 @@
-package bdl.view.components.right;
+package bdl.view.right;
 
 import bdl.build.GObject;
 import bdl.build.scene.control.GButton;

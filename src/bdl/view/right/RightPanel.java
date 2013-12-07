@@ -1,4 +1,4 @@
-package bdl.view.components.right;
+package bdl.view.right;
 
 import bdl.view.components.ComponentViewReader;
 import javafx.scene.control.ScrollPane;

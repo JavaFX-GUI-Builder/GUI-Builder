@@ -1,4 +1,4 @@
-package bdl.view.components.left;
+package bdl.view.left;
 
 import bdl.Main;
 import bdl.ViewListeners;
@@ -11,7 +11,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 public class LeftPanel extends SplitPane {

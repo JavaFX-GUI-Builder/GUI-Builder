@@ -1,6 +1,6 @@
 package bdl.view.components;
 
-import bdl.view.components.right.PropertyEditPane;
+import bdl.view.right.PropertyEditPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

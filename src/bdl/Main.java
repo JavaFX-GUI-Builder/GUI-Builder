@@ -1,9 +1,9 @@
 package bdl;
 
-import bdl.view.components.left.LeftPanel;
-import bdl.view.components.middle.MiddlePanel;
-import bdl.view.components.right.RightPanel;
-import bdl.view.components.top.TopPanel;
+import bdl.view.left.LeftPanel;
+import bdl.view.middle.MiddlePanel;
+import bdl.view.right.RightPanel;
+import bdl.view.top.TopPanel;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;

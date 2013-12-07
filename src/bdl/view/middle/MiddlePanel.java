@@ -1,4 +1,4 @@
-package bdl.view.components.middle;
+package bdl.view.middle;
 
 import bdl.Main;
 import bdl.build.scene.control.GButton;
