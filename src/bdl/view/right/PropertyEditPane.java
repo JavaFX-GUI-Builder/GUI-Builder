@@ -2,6 +2,7 @@ package bdl.view.right;
 
 import bdl.build.GObject;
 import bdl.build.scene.control.GButton;
+import bdl.build.scene.control.GTextArea;
 import java.io.File;
 
 import bdl.view.components.ComponentSettings;
@@ -33,7 +34,7 @@ public class PropertyEditPane extends Pane {
     private GridPane grid = new GridPane();
 
     public PropertyEditPane() {
-        updateContents(new GButton(null));
+        updateContents(new GTextArea(null));
         this.getChildren().add(grid);
     }
 

@@ -15,8 +15,7 @@
             <minHeight type="int">true</minHeight>
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
-            <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
+            <maxWidth type="int">true</maxWidth>            
         </layout>
         <listeners>
             <onActionProperty type="">true</onActionProperty>
@@ -28,8 +27,8 @@
             <name type="String">true</name>
             <text type="String">true</text>
             <image type="File">false</image>
-            <enabled type="boolean">false</enabled>
-            <tooltip type="String">false</tooltip>
+            <enabled type="boolean">true</enabled>
+            <tooltip type="String">true</tooltip>
             <foreground type="Color">true</foreground>
             <background type="Color">false</background>
             <other type="boolean">wrapText</other>
@@ -41,7 +40,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -53,9 +51,9 @@
             <name type="String">true</name>
             <text type="String">true</text>
             <image type="File">false</image>
-            <enabled type="boolean">false</enabled>
-            <tooltip type="String">false</tooltip>
-            <foreground type="Color">true</foreground>
+            <enabled type="boolean">true</enabled>
+            <tooltip type="String">true</tooltip>
+            <foreground type="Color">false</foreground>
             <background type="Color">false</background>
         </properties>
         <layout>
@@ -65,7 +63,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -89,7 +86,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -113,7 +109,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -137,7 +132,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">true</onActionProperty>
@@ -161,7 +155,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
             <other type="int">dividerPosition</other>
         </layout>
         <listeners>
@@ -188,7 +181,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -212,7 +204,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">true</onActionProperty>
@@ -222,7 +213,7 @@
     <component id="ToolBar">
         <properties>
             <name type="String">true</name>
-            <text type="String">true</text>
+            <text type="String">false</text>
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
@@ -236,7 +227,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -260,7 +250,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">true</onActionProperty>
@@ -284,7 +273,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">true</onActionProperty>
@@ -292,8 +280,8 @@
         </listeners>
     </component>
     <component id="Label">
-	<properties>
-	    <name type="String">true</name>
+        <properties>
+            <name type="String">true</name>
             <text type="String">true</text>
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
@@ -308,7 +296,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">false</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -316,8 +303,8 @@
         </listeners>
     </component>
     <component id="Image">
-	<properties>
-	    <name type="String">true</name>
+        <properties>
+            <name type="String">true</name>
             <text type="String">true</text>
             <image type="File">true</image>
             <enabled type="boolean">false</enabled>
@@ -332,7 +319,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -340,8 +326,8 @@
         </listeners>
     </component>
     <component id="ImageView">
-	<properties>
-	    <name type="String">true</name>
+        <properties>
+            <name type="String">true</name>
             <text type="String">true</text>
             <image type="File">true</image>
             <enabled type="boolean">false</enabled>
@@ -356,7 +342,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -364,8 +349,8 @@
         </listeners>
     </component>
     <component id="AnchorPane">
-	<properties>
-	    <name type="String">true</name>
+        <properties>
+            <name type="String">true</name>
             <text type="String">true</text>
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
@@ -380,7 +365,6 @@
             <minWidth type="int">true</minWidth>
             <maxHeight type="int">true</maxHeight>
             <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -388,23 +372,22 @@
         </listeners>
     </component>
     <component id="Circle">
-	<properties>
-	    <name type="String">true</name>
+        <properties>
+            <name type="String">true</name>
             <text type="String">false</text>
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
             <foreground type="Color">true</foreground>
-            <background type="Color">false</background>
+            <background type="Color">true</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
             <yPos type="int">true</yPos>
             <minHeight type="int">true</minHeight>
-            <minWidth type="int">true</minWidth>
-            <maxHeight type="int">true</maxHeight>
-            <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
+            <minWidth type="int">false</minWidth>
+            <maxHeight type="int">false</maxHeight>
+            <maxWidth type="int">false</maxWidth>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>
@@ -412,23 +395,22 @@
         </listeners>
     </component>
     <component id="Rectangle">
-	<properties>
-	    <name type="String">true</name>
+        <properties>
+            <name type="String">true</name>
             <text type="String">false</text>
             <image type="File">false</image>
             <enabled type="boolean">false</enabled>
             <tooltip type="String">false</tooltip>
             <foreground type="Color">true</foreground>
-            <background type="Color">false</background>
+            <background type="Color">true</background>
         </properties>
         <layout>
             <xPos type="int">true</xPos>
             <yPos type="int">true</yPos>
             <minHeight type="int">true</minHeight>
             <minWidth type="int">true</minWidth>
-            <maxHeight type="int">true</maxHeight>
-            <maxWidth type="int">true</maxWidth>
-            <resizable type="boolean">true</resizable>
+            <maxHeight type="int">false</maxHeight>
+            <maxWidth type="int">false</maxWidth>
         </layout>
         <listeners>
             <onActionProperty type="">false</onActionProperty>

@@ -56,9 +56,5 @@ public interface GObject {
     public int getGMaxWidth();
     
     public void setGMaxWidth(int maxWidth);
-    
-    public boolean getGResizeable();
-    
-    public void setGResizeable(boolean resizeable);
 
 }
