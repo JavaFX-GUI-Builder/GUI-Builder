@@ -52,7 +52,7 @@ public class PropertyEditPane extends Pane {
     private GObject object;
 
     public PropertyEditPane() {
-        updateContents(new GButton(null));
+        updateContents(new GButton());
         this.getChildren().add(grid);
     }
 
@@ -124,7 +124,7 @@ public class PropertyEditPane extends Pane {
     /**
      * Updates the panel with the settings per component
      *
-     * @param componentName The currently selected Component name to fill the
+     * @param gObj The currently selected Component name to fill the
      * properties panel with the appropriate settings for.
      */
     public void updateContents(GObject gObj) {
