@@ -1,7 +1,5 @@
 package bdl.view;
 
-import bdl.Main;
-import bdl.controller.ViewListeners;
 import bdl.view.left.LeftPanel;
 import bdl.view.middle.MiddlePanel;
 import bdl.view.right.RightPanel;

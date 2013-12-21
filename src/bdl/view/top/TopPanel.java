@@ -1,10 +1,5 @@
 package bdl.view.top;
 
-import bdl.Main;
-import bdl.view.left.LeftPanel;
-import bdl.view.right.RightPanel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;

@@ -1,14 +1,11 @@
 package bdl.controller;
 
-import bdl.Main;
 import bdl.build.GObject;
 import bdl.build.GType;
 import bdl.build.scene.control.*;
 import bdl.build.scene.shape.GCircle;
 import bdl.build.scene.shape.GRectangle;
 import bdl.view.View;
-import bdl.view.left.LeftPanel;
-import bdl.view.right.RightPanel;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;

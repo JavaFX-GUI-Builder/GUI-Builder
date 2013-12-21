@@ -1,13 +1,9 @@
 package bdl.controller;
 
-import bdl.Main;
-import bdl.build.GObject;
 import bdl.view.View;
-import bdl.view.right.PropertyEditPane;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 

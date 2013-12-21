@@ -1,17 +1,7 @@
 package bdl.view.left;
 
-import bdl.Main;
-import bdl.controller.ViewListeners;
-import bdl.build.GObject;
 import bdl.build.GType;
-import bdl.build.scene.control.*;
-import bdl.build.scene.shape.GCircle;
-import bdl.build.scene.shape.GRectangle;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 public class LeftPanel extends SplitPane {
 

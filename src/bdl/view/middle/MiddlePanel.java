@@ -1,8 +1,5 @@
 package bdl.view.middle;
 
-import bdl.Main;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;

@@ -1,20 +1,11 @@
 package bdl;
 
 import bdl.controller.Controller;
-import bdl.controller.ViewListeners;
 import bdl.view.View;
-import bdl.view.left.LeftPanel;
-import bdl.view.middle.MiddlePanel;
-import bdl.view.right.RightPanel;
-import bdl.view.top.TopPanel;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
