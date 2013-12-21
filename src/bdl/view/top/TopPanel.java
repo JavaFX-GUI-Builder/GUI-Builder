@@ -12,65 +12,34 @@ import javafx.scene.control.MenuItem;
 
 public class TopPanel extends MenuBar {
 
+    public Menu menuFile;
+    public MenuItem mItmClose;
+    public MenuItem mItmFullScreen;
+
+    public Menu menuEdit;
+    public MenuItem mItmDelete;
+
+    public Menu menuView;
+    public CheckMenuItem mItmHistory;
+    public CheckMenuItem mItmHierarchy;
+
+    public Menu menuHelp;
+    public MenuItem mItmAbout;
+
     public TopPanel() {
-        Menu menuFile = new Menu("File");
+        menuFile = new Menu("File");
+        mItmClose = new MenuItem("Close");
+        mItmFullScreen = new MenuItem("Make Full Screen");
 
-        MenuItem mItmClose = new MenuItem("Close");
-        mItmClose.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Main.stage.close();
-            }
-        });
+        menuEdit = new Menu("Edit");
+        mItmDelete = new MenuItem("Delete");
 
-        final MenuItem mItmFullScreen = new MenuItem("Make Full Screen");
-        mItmFullScreen.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if (Main.stage.isFullScreen()) {
-                    Main.stage.setFullScreen(false);
-                    mItmFullScreen.setText("Make Full Screen");
-                } else {
-                    Main.stage.setFullScreen(true);
-                    mItmFullScreen.setText("Exit Full Screen");
-                }
-            }
-        });
+        menuView = new Menu("View");
+        mItmHistory = new CheckMenuItem("Show History");
+        mItmHierarchy = new CheckMenuItem("Show Hierarchy");
 
-        Menu menuEdit = new Menu("Edit");
-        MenuItem mItmDelete = new MenuItem("Delete");
-
-        Menu menuView = new Menu("View");
-        final CheckMenuItem mItmHistory = new CheckMenuItem("Show History");
-        final CheckMenuItem mItmHierarchy = new CheckMenuItem("Show Hierarchy");
-
-        mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (mItmHierarchy.isSelected()) {
-                    Main.leftPanel.getItems().add(LeftPanel.hierarchyPane);
-                    Main.leftPanel.setDividerPosition(0, 0.6);
-                } else {
-                    Main.leftPanel.getItems().remove(LeftPanel.hierarchyPane);
-                }
-            }
-        });
-
-        mItmHistory.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (mItmHistory.isSelected()) {
-                    Main.rightPanel.getItems().add(RightPanel.rightSplitPaneBottom);
-                    Main.rightPanel.setDividerPosition(0, 0.6);
-                } else {
-                    Main.rightPanel.getItems().remove(RightPanel.rightSplitPaneBottom);
-                }
-            }
-        });
-
-
-        Menu menuHelp = new Menu("Help");
-        MenuItem mItmAbout = new MenuItem("About");
+        menuHelp = new Menu("Help");
+        mItmAbout = new MenuItem("About");
 
         menuFile.getItems().addAll(mItmFullScreen, mItmClose);
         menuEdit.getItems().addAll(mItmDelete);

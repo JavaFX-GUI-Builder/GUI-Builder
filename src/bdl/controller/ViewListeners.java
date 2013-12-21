@@ -2,6 +2,7 @@ package bdl.controller;
 
 import bdl.Main;
 import bdl.build.GObject;
+import bdl.view.View;
 import bdl.view.right.PropertyEditPane;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -11,20 +12,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class ViewListeners {
-
-    private AnchorPane viewWindow;
     private Rectangle outline;
-    private PropertyEditPane pep = Main.rightPanel.pep;
 
     boolean isMousePressed = false;
 
-    public ViewListeners(AnchorPane viewWindow) {
-        this.viewWindow = viewWindow;
+    public ViewListeners(View view) {
         outline = new Rectangle();
         outline.setStrokeWidth(2);
         outline.setStroke(Color.BLUE);
         outline.setFill(null);
-        viewWindow.getChildren().add(outline);
+        view.middleTabPane.viewPane.getChildren().add(outline);
     }
 
     public void onMousePressed(Node node, MouseEvent mouseEvent) {
@@ -41,7 +38,6 @@ public class ViewListeners {
         outline.setLayoutY(nodeY - 4);
         outline.setWidth(nodeW + 8);
         outline.setHeight(nodeH + 8);
-        pep.updateContents((GObject) node);
     }
 
     double curX = 0, curY = 0;
@@ -53,7 +49,6 @@ public class ViewListeners {
             node.setLayoutY(y);
             outline.setLayoutX(x - 4);
             outline.setLayoutY(y - 4);
-            pep.updateContents((GObject) node);
         }
     }
 

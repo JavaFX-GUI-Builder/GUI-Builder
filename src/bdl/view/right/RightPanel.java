@@ -7,8 +7,9 @@ import javafx.scene.layout.AnchorPane;
 
 public class RightPanel extends SplitPane {
 
-    public static AnchorPane rightSplitPaneBottom;
-    public static PropertyEditPane pep;
+    public AnchorPane rightSplitPaneBottom;
+    public ScrollPane propertyScroll;
+    public PropertyEditPane pep;
 
     public RightPanel() {
         AnchorPane rightSplitPaneTop = new AnchorPane();
@@ -16,7 +17,7 @@ public class RightPanel extends SplitPane {
         //Begin right properties panel
         ComponentViewReader.parseSettings();
         pep = new PropertyEditPane();
-        ScrollPane propertyScroll = new ScrollPane();
+        propertyScroll = new ScrollPane();
         propertyScroll.setContent(pep);
         AnchorPane.setTopAnchor(propertyScroll, 0.0);
         AnchorPane.setBottomAnchor(propertyScroll, 0.0);
