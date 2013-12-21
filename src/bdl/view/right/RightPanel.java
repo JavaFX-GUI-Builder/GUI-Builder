@@ -1,6 +1,6 @@
 package bdl.view.right;
 
-import bdl.view.components.ComponentViewReader;
+import bdl.model.ComponentViewReader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;

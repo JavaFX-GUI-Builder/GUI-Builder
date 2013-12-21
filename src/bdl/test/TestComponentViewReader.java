@@ -1,5 +1,6 @@
-package bdl.view.components;
+package bdl.test;
 
+import bdl.model.ComponentViewReader;
 import bdl.view.right.PropertyEditPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,7 +10,7 @@ import javafx.stage.Stage;
  * A short test class to test the output of the parsed xml file.
  * @author Ben Goodwin
  */
-public class Test extends Application {
+public class TestComponentViewReader extends Application {
     
     @Override
     public void start(Stage primaryStage) {

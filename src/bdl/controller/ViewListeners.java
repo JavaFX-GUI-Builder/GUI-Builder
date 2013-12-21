@@ -1,5 +1,6 @@
-package bdl;
+package bdl.controller;
 
+import bdl.Main;
 import bdl.build.GObject;
 import bdl.view.right.PropertyEditPane;
 import javafx.geometry.Bounds;

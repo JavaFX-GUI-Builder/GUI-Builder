@@ -1,15 +1,8 @@
 package bdl.build.scene.control;
 
-import bdl.ViewListeners;
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.ToolBar;
-import javafx.scene.input.MouseEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GToolBar extends ToolBar implements GObject {
     private String fieldName;

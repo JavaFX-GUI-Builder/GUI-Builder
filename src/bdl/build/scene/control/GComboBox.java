@@ -1,12 +1,8 @@
 package bdl.build.scene.control;
 
-import bdl.ViewListeners;
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.input.MouseEvent;
 
 public class GComboBox extends ComboBox implements GObject{
     private String fieldName;

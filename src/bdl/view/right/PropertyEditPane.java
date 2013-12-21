@@ -2,8 +2,8 @@ package bdl.view.right;
 
 import bdl.build.GObject;
 import bdl.build.scene.control.GButton;
-import bdl.view.components.ComponentSettings;
-import bdl.view.components.ComponentViewReader;
+import bdl.model.ComponentSettings;
+import bdl.model.ComponentViewReader;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

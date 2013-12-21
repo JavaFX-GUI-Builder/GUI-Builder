@@ -1,4 +1,4 @@
-package bdl.view.components;
+package bdl.model;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,7 +72,7 @@ public class ComponentViewReader {
     public static void parseSettings() {
         File settings;
         try {
-            settings = new File("src/bdl/view/components/component-options.xml");
+            settings = new File("src/bdl/model/component-options.xml");
         } catch (Exception e) {
             System.out.println("Cannot find file specified.");
             settings = null;

@@ -4,7 +4,7 @@
  */
 package bdl.view.right;
 
-import bdl.view.components.ComponentSettings;
+import bdl.model.ComponentSettings;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;

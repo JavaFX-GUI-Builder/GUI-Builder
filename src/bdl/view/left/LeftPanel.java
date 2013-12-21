@@ -1,7 +1,7 @@
 package bdl.view.left;
 
 import bdl.Main;
-import bdl.ViewListeners;
+import bdl.controller.ViewListeners;
 import bdl.build.GObject;
 import bdl.build.GType;
 import bdl.build.scene.control.*;
