@@ -1,7 +1,6 @@
 package bdl.controller;
 
 import bdl.build.GObject;
-import bdl.build.GType;
 import bdl.build.javafx.scene.control.*;
 import bdl.build.javafx.scene.shape.GCircle;
 import bdl.build.javafx.scene.shape.GRectangle;

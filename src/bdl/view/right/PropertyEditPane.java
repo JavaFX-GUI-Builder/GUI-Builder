@@ -5,7 +5,7 @@ import bdl.model.ComponentSettings;
 import bdl.view.right.properties.BackwardsBooleanProperty;
 import bdl.view.right.properties.FieldName;
 import bdl.view.right.properties.StringProperty;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
