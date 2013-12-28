@@ -1,11 +1,17 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.image;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
 
-public class GComboBox extends ComboBox implements GObject{
+public class GImage extends Image implements GObject {
+
     private String fieldName;
+
+    public GImage(String s) {
+        super(s);
+    }
+
 
     @Override
     public String getFieldName() {
@@ -19,6 +25,6 @@ public class GComboBox extends ComboBox implements GObject{
 
     @Override
     public GType getType() {
-        return GType.ComboBox;
+        return GType.Image;
     }
 }

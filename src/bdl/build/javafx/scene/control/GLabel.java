@@ -1,11 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Label;
 
-public class GScrollPane extends ScrollPane implements GObject {
-
+public class GLabel extends Label implements GObject {
     private String fieldName;
 
     @Override
@@ -20,6 +19,6 @@ public class GScrollPane extends ScrollPane implements GObject {
 
     @Override
     public GType getType() {
-        return GType.Button;
+        return GType.Label;
     }
 }

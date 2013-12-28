@@ -1,10 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.image;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.Menu;
+import javafx.scene.image.ImageView;
 
-public class GMenu extends Menu implements GObject {
+public class GImageView extends ImageView implements GObject {
 
     private String fieldName;
 
@@ -20,6 +20,6 @@ public class GMenu extends Menu implements GObject {
 
     @Override
     public GType getType() {
-        return GType.Menu;
+        return GType.ImageView;
     }
 }

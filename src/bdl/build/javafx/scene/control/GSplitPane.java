@@ -1,10 +1,11 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.SplitPane;
 
-public class GToolBar extends ToolBar implements GObject {
+public class GSplitPane extends SplitPane implements GObject {
+
     private String fieldName;
 
     @Override
@@ -19,6 +20,6 @@ public class GToolBar extends ToolBar implements GObject {
 
     @Override
     public GType getType() {
-        return GType.ToolBar;
+        return GType.Button;
     }
 }

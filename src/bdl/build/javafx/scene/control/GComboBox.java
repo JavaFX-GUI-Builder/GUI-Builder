@@ -1,10 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ComboBox;
 
-public class GTextArea extends TextArea implements GObject {
+public class GComboBox extends ComboBox implements GObject{
     private String fieldName;
 
     @Override
@@ -19,6 +19,6 @@ public class GTextArea extends TextArea implements GObject {
 
     @Override
     public GType getType() {
-        return GType.TextArea;
+        return GType.ComboBox;
     }
 }

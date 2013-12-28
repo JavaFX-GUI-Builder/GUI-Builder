@@ -1,10 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.ListView;
+import javafx.scene.control.CheckBox;
 
-public class GListView extends ListView implements GObject {
+public class GCheckBox extends CheckBox implements GObject {
     private String fieldName;
 
     @Override
@@ -19,6 +19,6 @@ public class GListView extends ListView implements GObject {
 
     @Override
     public GType getType() {
-        return GType.ListView;
+        return GType.CheckBox;
     }
 }

@@ -1,10 +1,10 @@
-package bdl.build.scene.layout;
+package bdl.build.javafx.scene.shape;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 
-public class GAnchorPane extends AnchorPane implements GObject {
+public class GRectangle extends Rectangle implements GObject {
     private String fieldName;
 
     @Override
@@ -19,6 +19,6 @@ public class GAnchorPane extends AnchorPane implements GObject {
 
     @Override
     public GType getType() {
-        return GType.AnchorPane;
+        return GType.Rectangle;
     }
 }

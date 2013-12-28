@@ -1,6 +1,7 @@
 <components>
     <component>
         <type>Button</type>
+        <enabled>true</enabled>
         <package>javafx.scene.control</package>
         <layouttype>ControlLayout</layouttype>
         <icon>Button.png</icon>
@@ -29,7 +30,108 @@
         </properties>
     </component>
     <component>
+        <type>TextArea</type>
+        <enabled>true</enabled>
+        <package>javafx.scene.control</package>
+        <layouttype>ControlLayout</layouttype>
+        <icon>TextArea.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>TextField</type>
+        <enabled>true</enabled>
+        <package>javafx.scene.control</package>
+        <layouttype>ControlLayout</layouttype>
+        <icon>TextField.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>MenuBar</type>
+        <enabled>true</enabled>
+        <package>javafx.scene.control</package>
+        <layouttype>MenuLayout</layouttype>
+        <icon>MenuBar.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>Menu</type>
+        <enabled>true</enabled>
+        <package>javafx.scene.control</package>
+        <layouttype>Todo</layouttype>
+        <icon>Menu.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>SplitPane</type>
+        <enabled>false</enabled>
+        <package>javafx.scene.layout</package>
+        <layouttype>Todo</layouttype>
+        <icon>SplitPane.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>ListView</type>
+        <enabled>false</enabled>
+        <package>javafx.scene.layout</package>
+        <layouttype>Todo</layouttype>
+        <icon>ListView.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>ToolBar</type>
+        <enabled>false</enabled>
+        <package>javafx.scene.layout</package>
+        <layouttype>Todo</layouttype>
+        <icon>ToolBar.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>ComboBox</type>
+        <enabled>true</enabled>
+        <package>javafx.scene.control</package>
+        <layouttype>ControlLayout</layouttype>
+        <icon>ComboBox.png</icon>
+        <properties>
+            <property>
+                <name>Text</name>
+                <pseudotype>String</pseudotype>
+                <default>Checkbox</default>
+                <setter>setText</setter>
+                <getter>getText</getter>
+            </property>
+            <property>
+                <name>Enabled</name>
+                <pseudotype>BackwardsBoolean</pseudotype>
+                <default>true</default>
+                <setter>setDisabled</setter>
+                <getter>getDisabled</getter>
+            </property>
+            <property>
+                <name>Tooltip</name>
+                <pseudotype>PseudoTooltip</pseudotype>
+                <default></default>
+                <setter>setTooltip</setter>
+                <getter>getTooltip</getter>
+            </property>
+        </properties>
+    </component>
+    <component>
         <type>CheckBox</type>
+        <enabled>true</enabled>
         <package>javafx.scene.control</package>
         <layouttype>ControlLayout</layouttype>
         <icon>CheckBox.png</icon>
@@ -55,6 +157,76 @@
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
             </property>
+        </properties>
+    </component>
+    <component>
+        <type>Label</type>
+        <enabled>true</enabled>
+        <package>javafx.scene.control</package>
+        <layouttype>ControlLayout</layouttype>
+        <icon>Label.png</icon>
+        <properties>
+            <property>
+                <name>Text</name>
+                <pseudotype>String</pseudotype>
+                <default>Checkbox</default>
+                <setter>setText</setter>
+                <getter>getText</getter>
+            </property>
+            <property>
+                <name>Enabled</name>
+                <pseudotype>BackwardsBoolean</pseudotype>
+                <default>true</default>
+                <setter>setDisabled</setter>
+                <getter>getDisabled</getter>
+            </property>
+            <property>
+                <name>Tooltip</name>
+                <pseudotype>PseudoTooltip</pseudotype>
+                <default></default>
+                <setter>setTooltip</setter>
+                <getter>getTooltip</getter>
+            </property>
+        </properties>
+    </component>
+    <component>
+        <type>ImageView</type>
+        <enabled>false</enabled>
+        <package>javafx.scene.image</package>
+        <layouttype>ControlLayout</layouttype>
+        <icon>ImageView.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>AnchorPane</type>
+        <enabled>false</enabled>
+        <package>javafx.scene.layout</package>
+        <layouttype>Todo</layouttype>
+        <icon>AnchorPane.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>Circle</type>
+        <enabled>true</enabled>
+        <package>javafx.scene.shape</package>
+        <layouttype>ShapeLayout</layouttype>
+        <icon>Circle.png</icon>
+        <properties>
+
+        </properties>
+    </component>
+    <component>
+        <type>Rectangle</type>
+        <enabled>true</enabled>
+        <package>javafx.scene.shape</package>
+        <layouttype>ShapeLayout</layouttype>
+        <icon>Rectangle.png</icon>
+        <properties>
+
         </properties>
     </component>
 </components>

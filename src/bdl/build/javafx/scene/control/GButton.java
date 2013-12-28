@@ -1,10 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.Button;
 
-public class GMenuBar extends MenuBar implements GObject {
+public class GButton extends Button implements GObject {
 
     private String fieldName;
 
@@ -20,6 +20,6 @@ public class GMenuBar extends MenuBar implements GObject {
 
     @Override
     public GType getType() {
-        return GType.MenuBar;
+        return GType.Button;
     }
 }

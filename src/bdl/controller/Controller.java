@@ -2,9 +2,9 @@ package bdl.controller;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import bdl.build.scene.control.*;
-import bdl.build.scene.shape.GCircle;
-import bdl.build.scene.shape.GRectangle;
+import bdl.build.javafx.scene.control.*;
+import bdl.build.javafx.scene.shape.GCircle;
+import bdl.build.javafx.scene.shape.GRectangle;
 import bdl.view.View;
 import javafx.event.ActionEvent;
 import javafx.event.Event;

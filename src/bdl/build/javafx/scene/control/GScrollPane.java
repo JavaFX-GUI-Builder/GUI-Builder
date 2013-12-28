@@ -1,11 +1,11 @@
-package bdl.build.scene.control;
-
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 
-public class GMenuItem extends MenuItem implements GObject {
+public class GScrollPane extends ScrollPane implements GObject {
+
     private String fieldName;
 
     @Override
@@ -20,6 +20,6 @@ public class GMenuItem extends MenuItem implements GObject {
 
     @Override
     public GType getType() {
-        return GType.MenuItem;
+        return GType.Button;
     }
 }

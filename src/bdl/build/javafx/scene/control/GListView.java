@@ -1,11 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 
-public class GButton extends Button implements GObject {
-
+public class GListView extends ListView implements GObject {
     private String fieldName;
 
     @Override
@@ -20,6 +19,6 @@ public class GButton extends Button implements GObject {
 
     @Override
     public GType getType() {
-        return GType.Button;
+        return GType.ListView;
     }
 }

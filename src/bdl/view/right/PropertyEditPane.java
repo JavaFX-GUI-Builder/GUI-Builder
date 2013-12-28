@@ -1,28 +1,14 @@
 package bdl.view.right;
 
 import bdl.build.GObject;
-import bdl.build.scene.control.GButton;
-import bdl.model.Component;
 import bdl.model.ComponentSettings;
-import bdl.view.right.properties.ArmedProperty;
 import bdl.view.right.properties.BackwardsBooleanProperty;
 import bdl.view.right.properties.FieldName;
 import bdl.view.right.properties.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import java.util.ArrayList;
 
 /**
  *

@@ -1,10 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.shape;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.CheckBox;
+import javafx.scene.shape.Circle;
 
-public class GCheckBox extends CheckBox implements GObject {
+public class GCircle extends Circle implements GObject {
     private String fieldName;
 
     @Override
@@ -19,6 +19,6 @@ public class GCheckBox extends CheckBox implements GObject {
 
     @Override
     public GType getType() {
-        return GType.CheckBox;
+        return GType.Circle;
     }
 }

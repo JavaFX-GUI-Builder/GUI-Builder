@@ -1,10 +1,11 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.control;
+
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.MenuItem;
 
-public class GTextField extends TextField implements GObject {
+public class GMenuItem extends MenuItem implements GObject {
     private String fieldName;
 
     @Override
@@ -19,6 +20,6 @@ public class GTextField extends TextField implements GObject {
 
     @Override
     public GType getType() {
-        return GType.TextField;
+        return GType.MenuItem;
     }
 }

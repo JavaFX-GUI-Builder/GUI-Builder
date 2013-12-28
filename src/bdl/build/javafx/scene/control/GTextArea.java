@@ -1,10 +1,10 @@
-package bdl.build.scene.control;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
-public class GLabel extends Label implements GObject {
+public class GTextArea extends TextArea implements GObject {
     private String fieldName;
 
     @Override
@@ -19,6 +19,6 @@ public class GLabel extends Label implements GObject {
 
     @Override
     public GType getType() {
-        return GType.Label;
+        return GType.TextArea;
     }
 }

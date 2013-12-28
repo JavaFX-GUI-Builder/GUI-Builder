@@ -1,10 +1,11 @@
-package bdl.build.scene.shape;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.control.MenuBar;
 
-public class GRectangle extends Rectangle implements GObject {
+public class GMenuBar extends MenuBar implements GObject {
+
     private String fieldName;
 
     @Override
@@ -19,6 +20,6 @@ public class GRectangle extends Rectangle implements GObject {
 
     @Override
     public GType getType() {
-        return GType.Rectangle;
+        return GType.MenuBar;
     }
 }

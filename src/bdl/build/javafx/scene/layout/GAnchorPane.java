@@ -1,11 +1,10 @@
-package bdl.build.scene.image;
+package bdl.build.javafx.scene.layout;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
-public class GImageView extends ImageView implements GObject {
-
+public class GAnchorPane extends AnchorPane implements GObject {
     private String fieldName;
 
     @Override
@@ -20,6 +19,6 @@ public class GImageView extends ImageView implements GObject {
 
     @Override
     public GType getType() {
-        return GType.ImageView;
+        return GType.AnchorPane;
     }
 }

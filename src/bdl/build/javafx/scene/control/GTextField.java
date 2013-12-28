@@ -1,10 +1,10 @@
-package bdl.build.scene.shape;
+package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.build.GType;
-import javafx.scene.shape.Circle;
+import javafx.scene.control.TextField;
 
-public class GCircle extends Circle implements GObject {
+public class GTextField extends TextField implements GObject {
     private String fieldName;
 
     @Override
@@ -19,6 +19,6 @@ public class GCircle extends Circle implements GObject {
 
     @Override
     public GType getType() {
-        return GType.Circle;
+        return GType.TextField;
     }
 }
