@@ -1,6 +1,7 @@
 package bdl;
 
 import bdl.controller.Controller;
+import bdl.model.ComponentSettings;
 import bdl.view.View;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -18,7 +19,20 @@ public class Main extends Application {
         stage.setMinWidth(800);
         stage.setMinHeight(500);
 
-        final View view = new View();
+        //Allow user to specify their own file
+        String componentSettingsLocation = System.getProperty("bdl.guibuilder.componentSettings");
+        if (componentSettingsLocation == null) {
+            componentSettingsLocation = "src/bdl/model/component-options.xml";//Default file
+        }
+
+        ComponentSettings model = null;
+        try {
+             model = new ComponentSettings(componentSettingsLocation);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        final View view = new View(model);
         Controller controller = new Controller(view);
 
         Scene scene = new Scene(view, 1024, 600);

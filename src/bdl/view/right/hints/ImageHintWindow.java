@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bdl.view.right;
+package bdl.view.right.hints;
 
-import bdl.model.ComponentSettings;
+import bdl.model.Component;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class ImageHintWindow {
 
-    public ImageHintWindow(ComponentSettings.PropertyType p) {
+    public ImageHintWindow(Component.PropertyType p) {
         Stage s = new Stage();
         Pane pane = new Pane();
         VBox vb = new VBox();

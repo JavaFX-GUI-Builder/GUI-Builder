@@ -1,6 +1,5 @@
 package bdl.test;
 
-import bdl.model.ComponentViewReader;
 import bdl.view.right.PropertyEditPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -14,30 +13,30 @@ public class TestComponentViewReader extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        ComponentViewReader.parseSettings();
-//        for (ComponentSettings cse : ComponentViewReader.allComponents()) {
+//        ComponentSettings.parseSettings();
+//        for (Component cse : ComponentSettings.allComponents()) {
 //            System.out.println("Name: " + cse.getName());
 //            System.out.println("Properties: ");
-//            for (ComponentSettings.Properties p : cse.getProperties()) {
+//            for (Component.Properties p : cse.getProperties()) {
 //                if (p.getValue()) {
 //                    System.out.println("     " + p.getName());
 //                }
 //            }
 //            System.out.println("Layout: ");
-//            for (ComponentSettings.Layout p : cse.getLayout()) {
+//            for (Component.Layout p : cse.getLayout()) {
 //                if (p.getValue()) {
 //                    System.out.println("     " + p.getName());
 //                }
 //            }
 //            System.out.println("Listeners: ");
-//            for (ComponentSettings.Listeners p : cse.getListeners()) {
+//            for (Component.Listeners p : cse.getListeners()) {
 //                if (p.getValue()) {
 //                    System.out.println("     " + p.getName());
 //                }
 //            }
 //        }
         
-        primaryStage.setScene(new Scene(new PropertyEditPane()));
+//        primaryStage.setScene(new Scene(new PropertyEditPane()));
         primaryStage.show();
 
     }

@@ -1,6 +1,6 @@
 package bdl.view.right;
 
-import bdl.model.ComponentViewReader;
+import bdl.model.ComponentSettings;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
@@ -9,16 +9,15 @@ public class RightPanel extends SplitPane {
 
     public AnchorPane rightSplitPaneBottom;
     public ScrollPane propertyScroll;
-    public PropertyEditPane pep;
+    public PropertyEditPane propertyEditPane;
 
-    public RightPanel() {
+    public RightPanel(ComponentSettings componentSettings) {
         AnchorPane rightSplitPaneTop = new AnchorPane();
 
         //Begin right properties panel
-        ComponentViewReader.parseSettings();
-        pep = new PropertyEditPane();
+        propertyEditPane = new PropertyEditPane(componentSettings);
         propertyScroll = new ScrollPane();
-        propertyScroll.setContent(pep);
+        propertyScroll.setContent(propertyEditPane);
         AnchorPane.setTopAnchor(propertyScroll, 0.0);
         AnchorPane.setBottomAnchor(propertyScroll, 0.0);
         AnchorPane.setLeftAnchor(propertyScroll, 0.0);

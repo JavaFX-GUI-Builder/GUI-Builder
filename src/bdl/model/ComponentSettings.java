@@ -1,160 +1,145 @@
 package bdl.model;
 
+import org.w3c.dom.*;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
- * Component Settings stores editable values for components. Stores the settings
- * and properties, layout and listener options for each component that will be
- * used by the property editing panes to list the options available to edit for
- * each component. Will be initialised after the associated xml file has been
- * read by ComponenttViewReader.
+ * This class will read in the xml file that provides the configuration for
+ * every component that the GUI will support, and provides static methods to
+ * return all or individual settings per component
  *
  * @author Ben Goodwin
  */
 public class ComponentSettings {
 
-    private String name;
-    private List<Properties> properties = new ArrayList<>();
-    private List<Layout> layout = new ArrayList<>();
-    private List<Listeners> listeners = new ArrayList<>();
+    private Collection<Component> allComponents;
 
-    /**
-     * Returns a collection of Properties properties associated with the this
-     * component.
-     * 
-     * @return A collection of Properties objects associated with this component
-     */
-    public List<Properties> getProperties() {
-        return properties;
+    public ComponentSettings(String path) throws Exception {
+        allComponents = new ArrayList<>();
+        parseSettings(path);
     }
 
     /**
-     * Returns a collection of Layout properties associated with the this
-     * component.
-     * 
-     * @return A collection of Layout objects associated with this component
-     */
-    public List<Layout> getLayout() {
-        return layout;
-    }
-
-    /**
-     * Returns a collection of Listeners properties associated with the this
-     * component.
-     * 
-     * @return A collection of Listener objects associated with this component
-     */
-    public List<Listeners> getListeners() {
-        return listeners;
-    }
-
-    /**
-     * Returns the name of the component portrayed by this ComponentSettings
-     * 
-     * @return The name of the component portrayed by this ComponentSettings
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the name of the component to be represented
-     * 
-     * @param nodeValue The Component name to be represented
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Adds the given Properties into a new Properties object, then adds it to
-     * the collection
+     * Takes a name of a component and returns the associated Component
+     * object for it.
      *
-     * @param name Name of the property read from XML
-     * @param type Type of the property read from XML
-     * @param value Value (true or false) of the property read from XML
+     * @param componentName The name of the component to look up
+     * @return The Component file associated with that component
      */
-    public void addProperties(String name, String type, String value) {
-        properties.add(new Properties(name, type, value));
+    public Component getComponent(String componentName) {
+        for (Component cs : allComponents) {
+            if (cs.getName().equals(componentName)) {
+                return cs;
+            }
+        }
+        return null;
     }
 
     /**
-     * Adds the given Properties into a new Layout object, then adds it to the
-     * collection
+     * Returns all the components currently supported by the GUI as a collection
+     * of Component objects
      *
-     * @param name Name of the property read from XML
-     * @param type Type of the property read from XML
-     * @param value Value (true or false) of the property read from XML
+     * @return A collection of every component in it's Component state
      */
-    public void addLayout(String name, String type, String value) {
-        layout.add(new Layout(name, type, value));
+    public Collection<Component> getComponents() {
+        return allComponents;
     }
 
     /**
-     * Adds the given properties into a new Listener object, then adds it to the
-     * collection
+     * Returns all the names of components currently supported
      *
-     * @param name Name of the property read from XML
-     * @param type Type of the property read from XML
-     * @param value Value (true or false) of the property read from XML
+     * @return A collection of Strings of names of components supported
      */
-    public void addListeners(String name, String type, String value) {
-        listeners.add(new Listeners(name, type, value));
-    }
-    
-    /**
-     * Simple Properties object to store name, type, value.
-     * To be extended, not used, for code simplicity.
-     */
-    public class PropertyType {
-        private final String name;
-        private final String type;
-        private final boolean value;
-
-        public PropertyType(String name, String type, String value) {
-            this.name = name;
-            this.type = type;
-            this.value = Boolean.parseBoolean(value);
+    public Collection<String> getComponentNames() {
+        ArrayList<String> al = new ArrayList<>();
+        for (Component cs : allComponents) {
+            al.add(cs.getName());
         }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public boolean getValue() {
-            return value;
-        }
+        return al;
     }
 
     /**
-     * Simple Properties object to store name, type, value.
+     * Reads in the xml properties file located at
+     * bdl.view.components.component-options.xml and parses the file creating 
+     * a list of Component with all properties initialised.
      */
-    public class Properties extends ComponentSettings.PropertyType {
-        public Properties(String name, String type, String value) {
-            super(name, type, value);
+    private void parseSettings(String path) throws Exception {
+        File settings = new File(path);
+        if (!settings.exists()) {
+            throw new RuntimeException("File " + path + " does not exist, could not load ComponentSettings.");
         }
-    }
 
-    /**
-     * Simple Layout object to store name, type, value.
-     */
-    public class Layout extends ComponentSettings.PropertyType {
-        public Layout(String name, String type, String value) {
-            super(name, type, value);
-        }
-    }
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document d = db.parse(settings);
 
-    /**
-     * Simple Listeners object to store name, type, value.
-     */
-    public class Listeners extends ComponentSettings.PropertyType {
-        public Listeners(String name, String type, String value) {
-            super(name, type, value);
+
+        d.getDocumentElement().normalize();
+        Node root = d.getDocumentElement();
+        NodeList components = d.getDocumentElement().getElementsByTagName("component");
+        allComponents = new ArrayList<>();
+
+        for (int i = 0; i < components.getLength(); i++) {
+            Component cs = new Component();
+            NamedNodeMap nnm = components.item(i).getAttributes();
+            cs.setName(nnm.item(0).getNodeValue());
+
+            Element el = (Element) components.item(i);
+            NodeList properties = el.getElementsByTagName("properties").item(0).getChildNodes();
+            NodeList layout = el.getElementsByTagName("layout").item(0).getChildNodes();
+            NodeList listeners = el.getElementsByTagName("listeners").item(0).getChildNodes();
+
+            for (int j = 0; j < properties.getLength(); j++) {
+                if (properties.item(j).getNodeType() == Node.ELEMENT_NODE) {
+                    Node n = properties.item(j);
+                    String name, type, value;
+                    name = n.getNodeName();
+                    type = n.getAttributes().item(0).getNodeValue();
+                    value = n.getTextContent();
+                    if (name.equals("other")) {
+                        cs.addProperties(value, type, "true");
+                    } else {
+                        cs.addProperties(name, type, value);
+                    }
+                }
+            }
+
+            for (int j = 0; j < layout.getLength(); j++) {
+                if (layout.item(j).getNodeType() == Node.ELEMENT_NODE) {
+                    Node n = layout.item(j);
+                    String name, type, value;
+                    name = n.getNodeName();
+                    type = n.getAttributes().item(0).getNodeValue();
+                    value = n.getTextContent();
+                    if (name.equals("other")) {
+                        cs.addLayout(value, type, "true");
+                    } else {
+                        cs.addLayout(name, type, value);
+                    }
+                }
+            }
+
+            for (int j = 0; j < listeners.getLength(); j++) {
+                if (listeners.item(j).getNodeType() == Node.ELEMENT_NODE) {
+                    Node n = listeners.item(j);
+                    String name, type, value;
+                    name = n.getNodeName();
+                    type = n.getAttributes().item(0).getNodeValue();
+                    value = n.getTextContent();
+                    if (name.equals("other")) {
+                        cs.addListeners(value, type, "true");
+                    } else {
+                        cs.addListeners(name, type, value);
+                    }
+                }
+            }
+
+            allComponents.add(cs);
         }
     }
 }

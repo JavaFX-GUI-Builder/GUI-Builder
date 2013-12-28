@@ -1,5 +1,6 @@
 package bdl.controller;
 
+import bdl.build.GObject;
 import bdl.view.View;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -9,10 +10,12 @@ import javafx.scene.shape.Rectangle;
 
 public class ViewListeners {
     private Rectangle outline;
+    private View view;
 
     boolean isMousePressed = false;
 
     public ViewListeners(View view) {
+        this.view = view;
         outline = new Rectangle();
         outline.setStrokeWidth(2);
         outline.setStroke(Color.BLUE);
@@ -21,6 +24,7 @@ public class ViewListeners {
     }
 
     public void onMousePressed(Node node, MouseEvent mouseEvent) {
+        view.rightPanel.propertyEditPane.showProperties((GObject)node);
         isMousePressed = true;
         curX = mouseEvent.getX();
         curY = mouseEvent.getY();
