@@ -59,78 +59,78 @@ public class Controller {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getClickCount() == 2) {
-                    GType curType = view.leftPanel.leftList.getSelectionModel().getSelectedItem();
+                    String curType = view.leftPanel.leftList.getSelectionModel().getSelectedItem().getText();
                     if (curType != null) {
                         GObject newThing = null;
                         switch (curType) {
-                            case Button:
+                            case "Button":
                                 GButton newBtn = new GButton();
                                 newBtn.setText("Test");
                                 newBtn.setLayoutX(10);
                                 newBtn.setLayoutY(10);
                                 newThing = newBtn;
                                 break;
-                            case CheckBox:
+                            case "CheckBox":
                                 GCheckBox newChkBox = new GCheckBox();
                                 newChkBox.setLayoutX(10);
                                 newChkBox.setLayoutY(10);
                                 newThing = newChkBox;
                                 break;
-                            case ComboBox:
+                            case "ComboBox":
                                 GComboBox newCBox = new GComboBox();
                                 newCBox.setLayoutX(10);
                                 newCBox.setLayoutY(10);
                                 newThing = newCBox;
                                 break;
-                            case Label:
+                            case "Label":
                                 GLabel newLbl = new GLabel();
                                 newLbl.setLayoutX(10);
                                 newLbl.setLayoutY(10);
                                 newLbl.setText("Label");
                                 newThing = newLbl;
                                 break;
-                            case ListView:
+                            case "ListView":
                                 //Do nothing, don't want to deal with this just yet
                                 break;
-                            case Menu:
+                            case "Menu":
                                 //Can't add to AnchorPane
                                 break;
-                            case MenuBar:
+                            case "MenuBar":
                                 //Can't add to AnchorPane
                                 break;
-                            case MenuItem:
+                            case "MenuItem":
                                 //Can't add to AnchorPane
                                 break;
-                            case ScrollPane:
+                            case "ScrollPane":
                                 //Do nothing, don't want to deal with this just yet
                                 break;
-                            case SplitPane:
+                            case "SplitPane":
                                 //Do nothing, don't want to deal with this just yet
                                 break;
-                            case TextArea:
+                            case "TextArea":
                                 GTextArea newTxtArea = new GTextArea();
                                 newTxtArea.setText("Text Area Text!");
                                 newTxtArea.setLayoutX(10);
                                 newTxtArea.setLayoutY(10);
                                 newThing = newTxtArea;
                                 break;
-                            case TextField:
+                            case "TextField":
                                 GTextField newTxtField = new GTextField();
                                 newTxtField.setText("Text Field Text!");
                                 newTxtField.setLayoutX(10);
                                 newTxtField.setLayoutY(10);
                                 newThing = newTxtField;
                                 break;
-                            case ToolBar:
+                            case "ToolBar":
                                 GToolBar newToolBar = new GToolBar();
                                 newToolBar.setLayoutX(10);
                                 newToolBar.setLayoutY(10);
                                 newThing = newToolBar;
                                 break;
-                            case ImageView:
+                            case "ImageView":
                                 //Do nothing for the minute
                                 break;
-                            case Circle:
+                            case "Circle":
                                 GCircle newCircle = new GCircle();
                                 newCircle.setStrokeWidth(5);
                                 newCircle.setStroke(Color.RED);
@@ -140,7 +140,7 @@ public class Controller {
                                 newCircle.setLayoutY(50);
                                 newThing = newCircle;
                                 break;
-                            case Rectangle:
+                            case "Rectangle":
                                 GRectangle newRectangle = new GRectangle();
                                 newRectangle.setFill(Color.DARKORCHID);
                                 newRectangle.setWidth(100);

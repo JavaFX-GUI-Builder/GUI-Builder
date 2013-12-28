@@ -21,7 +21,6 @@ public class ComponentSettings {
     public ComponentSettings(String path) throws Exception {
         allComponents = new ArrayList<>();
         parseComponentSettings(path);
-        System.out.println("XXX");
     }
 
     /**

@@ -38,7 +38,7 @@ public class View extends AnchorPane {
         SplitPane mainContent = new SplitPane();
         rightPanel = new RightPanel(componentSettings);
 
-        leftPanel = new LeftPanel();
+        leftPanel = new LeftPanel(componentSettings);
 
         AnchorPane middleAnchorPane = new AnchorPane();
         middleTabPane = new MiddlePanel();
