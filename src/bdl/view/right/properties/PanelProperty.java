@@ -1,6 +1,6 @@
 package bdl.view.right.properties;
 
-public interface Property {
+public interface PanelProperty {
 
     public String getJavaCode();
 

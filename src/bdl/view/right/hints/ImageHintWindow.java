@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class ImageHintWindow {
 
-    public ImageHintWindow(Component.PropertyType p) {
+    public ImageHintWindow() {
         Stage s = new Stage();
         Pane pane = new Pane();
         VBox vb = new VBox();

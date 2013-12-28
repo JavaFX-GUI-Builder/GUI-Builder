@@ -8,6 +8,7 @@
         <properties>
             <property>
                 <name>Text</name>
+                <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
                 <default>Button</default>
                 <setter>setText</setter>
@@ -15,6 +16,7 @@
             </property>
             <property>
                 <name>Enabled</name>
+                <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
                 <setter>setDisabled</setter>
@@ -22,6 +24,7 @@
             </property>
             <property>
                 <name>Tooltip</name>
+                <enabled>true</enabled>
                 <pseudotype>PseudoTooltip</pseudotype>
                 <default></default>
                 <setter>setTooltip</setter>
@@ -108,6 +111,7 @@
         <properties>
             <property>
                 <name>Text</name>
+                <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
                 <default>Checkbox</default>
                 <setter>setText</setter>
@@ -115,6 +119,7 @@
             </property>
             <property>
                 <name>Enabled</name>
+                <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
                 <setter>setDisabled</setter>
@@ -122,6 +127,7 @@
             </property>
             <property>
                 <name>Tooltip</name>
+                <enabled>true</enabled>
                 <pseudotype>PseudoTooltip</pseudotype>
                 <default></default>
                 <setter>setTooltip</setter>
@@ -138,6 +144,7 @@
         <properties>
             <property>
                 <name>Text</name>
+                <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
                 <default>Checkbox</default>
                 <setter>setText</setter>
@@ -145,6 +152,7 @@
             </property>
             <property>
                 <name>Enabled</name>
+                <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
                 <setter>setDisabled</setter>
@@ -152,6 +160,7 @@
             </property>
             <property>
                 <name>Tooltip</name>
+                <enabled>true</enabled>
                 <pseudotype>PseudoTooltip</pseudotype>
                 <default></default>
                 <setter>setTooltip</setter>
@@ -168,6 +177,7 @@
         <properties>
             <property>
                 <name>Text</name>
+                <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
                 <default>Checkbox</default>
                 <setter>setText</setter>
@@ -175,6 +185,7 @@
             </property>
             <property>
                 <name>Enabled</name>
+                <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
                 <setter>setDisabled</setter>
@@ -182,6 +193,7 @@
             </property>
             <property>
                 <name>Tooltip</name>
+                <enabled>true</enabled>
                 <pseudotype>PseudoTooltip</pseudotype>
                 <default></default>
                 <setter>setTooltip</setter>

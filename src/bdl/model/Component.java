@@ -8,16 +8,15 @@ import java.util.List;
  * and properties, layout and listener options for each component that will be
  * used by the property editing panes to list the options available to edit for
  * each component. Will be initialised after the associated xml file has been
- * read by ComponenttViewReader.
- *
- * @author Ben Goodwin
+ * read by ComponentSettings.
  */
 public class Component {
 
-    private String name;
-    private List<Properties> properties = new ArrayList<>();
-    private List<Layout> layout = new ArrayList<>();
-    private List<Listeners> listeners = new ArrayList<>();
+    private String type;
+    private String packageName;
+    private String layoutType;
+    private String icon;
+    private List<Property> properties = new ArrayList<>();
 
     /**
      * Returns a collection of Properties properties associated with the this
@@ -25,28 +24,8 @@ public class Component {
      * 
      * @return A collection of Properties objects associated with this component
      */
-    public List<Properties> getProperties() {
+    public List<Property> getProperties() {
         return properties;
-    }
-
-    /**
-     * Returns a collection of Layout properties associated with the this
-     * component.
-     * 
-     * @return A collection of Layout objects associated with this component
-     */
-    public List<Layout> getLayout() {
-        return layout;
-    }
-
-    /**
-     * Returns a collection of Listeners properties associated with the this
-     * component.
-     * 
-     * @return A collection of Listener objects associated with this component
-     */
-    public List<Listeners> getListeners() {
-        return listeners;
     }
 
     /**
@@ -54,17 +33,41 @@ public class Component {
      * 
      * @return The name of the component portrayed by this Component
      */
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
     /**
      * Sets the name of the component to be represented
      * 
-     * @param name The Component name to be represented
+     * @param type The Component name to be represented
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public String getLayoutType() {
+        return layoutType;
+    }
+
+    public void setLayoutType(String layoutType) {
+        this.layoutType = layoutType;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     /**
@@ -72,89 +75,15 @@ public class Component {
      * the collection
      *
      * @param name Name of the property read from XML
+     * @param enabled Enabled (true or false) of the property read from XML
      * @param type Type of the property read from XML
-     * @param value Value (true or false) of the property read from XML
+     * @param defaultValue
+     * @param getter
+     * @param setter
      */
-    public void addProperties(String name, String type, String value) {
-        properties.add(new Properties(name, type, value));
+    public void addProperty(String name, String enabled, String type, String defaultValue, String getter, String setter) {
+        properties.add(new Property(name, enabled, type, defaultValue, getter, setter));
     }
 
-    /**
-     * Adds the given Properties into a new Layout object, then adds it to the
-     * collection
-     *
-     * @param name Name of the property read from XML
-     * @param type Type of the property read from XML
-     * @param value Value (true or false) of the property read from XML
-     */
-    public void addLayout(String name, String type, String value) {
-        layout.add(new Layout(name, type, value));
-    }
 
-    /**
-     * Adds the given properties into a new Listener object, then adds it to the
-     * collection
-     *
-     * @param name Name of the property read from XML
-     * @param type Type of the property read from XML
-     * @param value Value (true or false) of the property read from XML
-     */
-    public void addListeners(String name, String type, String value) {
-        listeners.add(new Listeners(name, type, value));
-    }
-    
-    /**
-     * Simple Properties object to store name, type, value.
-     * To be extended, not used, for code simplicity.
-     */
-    public class PropertyType {
-        private final String name;
-        private final String type;
-        private final boolean value;
-
-        public PropertyType(String name, String type, String value) {
-            this.name = name;
-            this.type = type;
-            this.value = Boolean.parseBoolean(value);
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public boolean getValue() {
-            return value;
-        }
-    }
-
-    /**
-     * Simple Properties object to store name, type, value.
-     */
-    public class Properties extends Component.PropertyType {
-        public Properties(String name, String type, String value) {
-            super(name, type, value);
-        }
-    }
-
-    /**
-     * Simple Layout object to store name, type, value.
-     */
-    public class Layout extends Component.PropertyType {
-        public Layout(String name, String type, String value) {
-            super(name, type, value);
-        }
-    }
-
-    /**
-     * Simple Listeners object to store name, type, value.
-     */
-    public class Listeners extends Component.PropertyType {
-        public Listeners(String name, String type, String value) {
-            super(name, type, value);
-        }
-    }
 }

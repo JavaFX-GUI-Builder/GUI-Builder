@@ -9,11 +9,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * This class will read in the xml file that provides the configuration for
+ * This class will parse the xml file that provides the configuration for
  * every component that the GUI will support, and provides static methods to
  * return all or individual settings per component
- *
- * @author Ben Goodwin
+
  */
 public class ComponentSettings {
 
@@ -21,7 +20,8 @@ public class ComponentSettings {
 
     public ComponentSettings(String path) throws Exception {
         allComponents = new ArrayList<>();
-        parseSettings(path);
+        parseComponentSettings(path);
+        System.out.println("XXX");
     }
 
     /**
@@ -29,12 +29,12 @@ public class ComponentSettings {
      * object for it.
      *
      * @param componentName The name of the component to look up
-     * @return The Component file associated with that component
+     * @return The Component file associated with that component or null if no component exists with the provided name
      */
     public Component getComponent(String componentName) {
-        for (Component cs : allComponents) {
-            if (cs.getName().equals(componentName)) {
-                return cs;
+        for (Component component : allComponents) {
+            if (component.getType().equals(componentName)) {
+                return component;
             }
         }
         return null;
@@ -58,7 +58,7 @@ public class ComponentSettings {
     public Collection<String> getComponentNames() {
         ArrayList<String> al = new ArrayList<>();
         for (Component cs : allComponents) {
-            al.add(cs.getName());
+            al.add(cs.getType());
         }
         return al;
     }
@@ -68,7 +68,7 @@ public class ComponentSettings {
      * bdl.view.components.component-options.xml and parses the file creating 
      * a list of Component with all properties initialised.
      */
-    private void parseSettings(String path) throws Exception {
+    private void parseComponentSettings(String path) throws Exception {
         File settings = new File(path);
         if (!settings.exists()) {
             throw new RuntimeException("File " + path + " does not exist, could not load ComponentSettings.");
@@ -78,68 +78,48 @@ public class ComponentSettings {
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document d = db.parse(settings);
 
+        Element root = d.getDocumentElement();
+        root.normalize();
 
-        d.getDocumentElement().normalize();
-        Node root = d.getDocumentElement();
-        NodeList components = d.getDocumentElement().getElementsByTagName("component");
-        allComponents = new ArrayList<>();
+        NodeList components = root.getElementsByTagName("component");
 
         for (int i = 0; i < components.getLength(); i++) {
-            Component cs = new Component();
-            NamedNodeMap nnm = components.item(i).getAttributes();
-            cs.setName(nnm.item(0).getNodeValue());
+            Component component = new Component();
+            boolean enabled = parseComponent(component, (Element)components.item(i));
+            if (enabled) allComponents.add(component);
+        }
+    }
 
-            Element el = (Element) components.item(i);
-            NodeList properties = el.getElementsByTagName("properties").item(0).getChildNodes();
-            NodeList layout = el.getElementsByTagName("layout").item(0).getChildNodes();
-            NodeList listeners = el.getElementsByTagName("listeners").item(0).getChildNodes();
+    private boolean parseComponent(Component component, Element element) {
+        if (!element.getElementsByTagName("enabled").item(0).getTextContent().equals("true")) {
+            return false;
+        }
 
-            for (int j = 0; j < properties.getLength(); j++) {
-                if (properties.item(j).getNodeType() == Node.ELEMENT_NODE) {
-                    Node n = properties.item(j);
-                    String name, type, value;
-                    name = n.getNodeName();
-                    type = n.getAttributes().item(0).getNodeValue();
-                    value = n.getTextContent();
-                    if (name.equals("other")) {
-                        cs.addProperties(value, type, "true");
-                    } else {
-                        cs.addProperties(name, type, value);
-                    }
-                }
-            }
+        component.setType(element.getElementsByTagName("type").item(0).getTextContent());
+        component.setPackageName(element.getElementsByTagName("package").item(0).getTextContent());
+        component.setLayoutType(element.getElementsByTagName("layouttype").item(0).getTextContent());
+        component.setIcon(element.getElementsByTagName("icon").item(0).getTextContent());
 
-            for (int j = 0; j < layout.getLength(); j++) {
-                if (layout.item(j).getNodeType() == Node.ELEMENT_NODE) {
-                    Node n = layout.item(j);
-                    String name, type, value;
-                    name = n.getNodeName();
-                    type = n.getAttributes().item(0).getNodeValue();
-                    value = n.getTextContent();
-                    if (name.equals("other")) {
-                        cs.addLayout(value, type, "true");
-                    } else {
-                        cs.addLayout(name, type, value);
-                    }
-                }
-            }
+        Element propertiesElement = (Element)element.getElementsByTagName("properties").item(0);
+        parseProperties(component, propertiesElement);
 
-            for (int j = 0; j < listeners.getLength(); j++) {
-                if (listeners.item(j).getNodeType() == Node.ELEMENT_NODE) {
-                    Node n = listeners.item(j);
-                    String name, type, value;
-                    name = n.getNodeName();
-                    type = n.getAttributes().item(0).getNodeValue();
-                    value = n.getTextContent();
-                    if (name.equals("other")) {
-                        cs.addListeners(value, type, "true");
-                    } else {
-                        cs.addListeners(name, type, value);
-                    }
-                }
-            }
+        return true;
+    }
 
-            allComponents.add(cs);
+    private void parseProperties(Component component, Element propertiesElement) {
+        NodeList properties = propertiesElement.getElementsByTagName("property");
+
+        for (int i = 0; i < properties.getLength(); i++) {
+            Element property = (Element)properties.item(i);
+
+            String name = property.getElementsByTagName("name").item(0).getTextContent();
+            String type = property.getElementsByTagName("enabled").item(0).getTextContent();
+            String enabled = property.getElementsByTagName("pseudotype").item(0).getTextContent();
+            String defaultValue = property.getElementsByTagName("default").item(0).getTextContent();
+            String getter = property.getElementsByTagName("getter").item(0).getTextContent();
+            String setter = property.getElementsByTagName("setter").item(0).getTextContent();
+
+            component.addProperty(name, type, enabled, defaultValue, getter, setter);
         }
     }
 }

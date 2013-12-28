@@ -10,10 +10,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-/**
- *
- * @author Ben Goodwin
- */
 public class PropertyEditPane extends GridPane {
 
     public PropertyEditPane(ComponentSettings componentSettings) {

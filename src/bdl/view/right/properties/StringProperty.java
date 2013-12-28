@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
 
-public class StringProperty extends GridPane implements Property {
+public class StringProperty extends GridPane implements PanelProperty {
 
     private GObject gObj;
     private String setter;

@@ -8,7 +8,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
-public class ArmedProperty extends GridPane implements Property {
+public class ArmedProperty extends GridPane implements PanelProperty {
 
     private GObject gObj;
     private CheckBox checkBox;

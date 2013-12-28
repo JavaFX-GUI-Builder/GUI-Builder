@@ -22,7 +22,7 @@ public class Main extends Application {
         //Allow user to specify their own file
         String componentSettingsLocation = System.getProperty("bdl.guibuilder.componentSettings");
         if (componentSettingsLocation == null) {
-            componentSettingsLocation = "src/bdl/model/component-options.xml";//Default file
+            componentSettingsLocation = "src/bdl/model/component-settings.xml";//Default file
         }
 
         ComponentSettings model = null;
