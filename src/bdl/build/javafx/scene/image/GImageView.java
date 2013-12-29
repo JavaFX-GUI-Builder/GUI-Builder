@@ -1,12 +1,16 @@
 package bdl.build.javafx.scene.image;
 
 import bdl.build.GObject;
-import bdl.build.GType;
+import bdl.model.ComponentSettings;
 import javafx.scene.image.ImageView;
 
 public class GImageView extends ImageView implements GObject {
-
     private String fieldName;
+    private ComponentSettings componentSettings;
+
+    public GImageView(ComponentSettings componentSettings) {
+        this.componentSettings = componentSettings;
+    }
 
     @Override
     public String getFieldName() {
@@ -19,7 +23,7 @@ public class GImageView extends ImageView implements GObject {
     }
 
     @Override
-    public GType getType() {
-        return GType.ImageView;
+    public ComponentSettings getComponentSettings() {
+        return componentSettings;
     }
 }

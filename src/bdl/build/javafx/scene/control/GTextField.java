@@ -1,11 +1,16 @@
 package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
-import bdl.build.GType;
+import bdl.model.ComponentSettings;
 import javafx.scene.control.TextField;
 
 public class GTextField extends TextField implements GObject {
     private String fieldName;
+    private ComponentSettings componentSettings;
+
+    public GTextField(ComponentSettings componentSettings) {
+        this.componentSettings = componentSettings;
+    }
 
     @Override
     public String getFieldName() {
@@ -18,7 +23,7 @@ public class GTextField extends TextField implements GObject {
     }
 
     @Override
-    public GType getType() {
-        return GType.TextField;
+    public ComponentSettings getComponentSettings() {
+        return componentSettings;
     }
 }

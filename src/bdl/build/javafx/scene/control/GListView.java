@@ -1,11 +1,16 @@
 package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
-import bdl.build.GType;
+import bdl.model.ComponentSettings;
 import javafx.scene.control.ListView;
 
 public class GListView extends ListView implements GObject {
     private String fieldName;
+    private ComponentSettings componentSettings;
+
+    public GListView(ComponentSettings componentSettings) {
+        this.componentSettings = componentSettings;
+    }
 
     @Override
     public String getFieldName() {
@@ -18,7 +23,7 @@ public class GListView extends ListView implements GObject {
     }
 
     @Override
-    public GType getType() {
-        return GType.ListView;
+    public ComponentSettings getComponentSettings() {
+        return componentSettings;
     }
 }

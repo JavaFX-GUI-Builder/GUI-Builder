@@ -1,11 +1,16 @@
 package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
-import bdl.build.GType;
+import bdl.model.ComponentSettings;
 import javafx.scene.control.ComboBox;
 
 public class GComboBox extends ComboBox implements GObject{
     private String fieldName;
+    private ComponentSettings componentSettings;
+
+    public GComboBox(ComponentSettings componentSettings) {
+        this.componentSettings = componentSettings;
+    }
 
     @Override
     public String getFieldName() {
@@ -18,7 +23,7 @@ public class GComboBox extends ComboBox implements GObject{
     }
 
     @Override
-    public GType getType() {
-        return GType.ComboBox;
+    public ComponentSettings getComponentSettings() {
+        return componentSettings;
     }
 }

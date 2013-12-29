@@ -4,6 +4,7 @@ import bdl.build.GObject;
 import bdl.build.javafx.scene.control.*;
 import bdl.build.javafx.scene.shape.GCircle;
 import bdl.build.javafx.scene.shape.GRectangle;
+import bdl.model.ComponentSettings;
 import bdl.view.View;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -58,31 +59,31 @@ public class Controller {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getClickCount() == 2) {
-                    String curType = view.leftPanel.leftList.getSelectionModel().getSelectedItem().getText();
-                    if (curType != null) {
+                    ComponentSettings componentSettings = view.leftPanel.leftList.getSelectionModel().getSelectedItem().getComponentSettings();
+                    if (componentSettings != null) {
                         GObject newThing = null;
-                        switch (curType) {
+                        switch (componentSettings.getType()) {
                             case "Button":
-                                GButton newBtn = new GButton();
+                                GButton newBtn = new GButton(componentSettings);
                                 newBtn.setText("Test");
                                 newBtn.setLayoutX(10);
                                 newBtn.setLayoutY(10);
                                 newThing = newBtn;
                                 break;
                             case "CheckBox":
-                                GCheckBox newChkBox = new GCheckBox();
+                                GCheckBox newChkBox = new GCheckBox(componentSettings);
                                 newChkBox.setLayoutX(10);
                                 newChkBox.setLayoutY(10);
                                 newThing = newChkBox;
                                 break;
                             case "ComboBox":
-                                GComboBox newCBox = new GComboBox();
+                                GComboBox newCBox = new GComboBox(componentSettings);
                                 newCBox.setLayoutX(10);
                                 newCBox.setLayoutY(10);
                                 newThing = newCBox;
                                 break;
                             case "Label":
-                                GLabel newLbl = new GLabel();
+                                GLabel newLbl = new GLabel(componentSettings);
                                 newLbl.setLayoutX(10);
                                 newLbl.setLayoutY(10);
                                 newLbl.setText("Label");
@@ -107,21 +108,21 @@ public class Controller {
                                 //Do nothing, don't want to deal with this just yet
                                 break;
                             case "TextArea":
-                                GTextArea newTxtArea = new GTextArea();
+                                GTextArea newTxtArea = new GTextArea(componentSettings);
                                 newTxtArea.setText("Text Area Text!");
                                 newTxtArea.setLayoutX(10);
                                 newTxtArea.setLayoutY(10);
                                 newThing = newTxtArea;
                                 break;
                             case "TextField":
-                                GTextField newTxtField = new GTextField();
+                                GTextField newTxtField = new GTextField(componentSettings);
                                 newTxtField.setText("Text Field Text!");
                                 newTxtField.setLayoutX(10);
                                 newTxtField.setLayoutY(10);
                                 newThing = newTxtField;
                                 break;
                             case "ToolBar":
-                                GToolBar newToolBar = new GToolBar();
+                                GToolBar newToolBar = new GToolBar(componentSettings);
                                 newToolBar.setLayoutX(10);
                                 newToolBar.setLayoutY(10);
                                 newThing = newToolBar;
@@ -130,7 +131,7 @@ public class Controller {
                                 //Do nothing for the minute
                                 break;
                             case "Circle":
-                                GCircle newCircle = new GCircle();
+                                GCircle newCircle = new GCircle(componentSettings);
                                 newCircle.setStrokeWidth(5);
                                 newCircle.setStroke(Color.RED);
                                 newCircle.setRadius(10);
@@ -140,7 +141,7 @@ public class Controller {
                                 newThing = newCircle;
                                 break;
                             case "Rectangle":
-                                GRectangle newRectangle = new GRectangle();
+                                GRectangle newRectangle = new GRectangle(componentSettings);
                                 newRectangle.setFill(Color.DARKORCHID);
                                 newRectangle.setWidth(100);
                                 newRectangle.setHeight(100);

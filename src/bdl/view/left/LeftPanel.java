@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 public class LeftPanel extends SplitPane {
 
     public TitledPane hierarchyPane;
-    public ListView<Label> leftList;
+    public ListView<ComponentMenuItem> leftList;
     public TreeItem<String> treeRoot;
     public TreeView<String> leftTreeView;
 
@@ -20,7 +20,7 @@ public class LeftPanel extends SplitPane {
         for (ComponentSettings componentSettings : componentSettingsStore.getComponents()) {
             String type = componentSettings.getType();
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/" + componentSettings.getIcon())));
-            leftList.getItems().add(new Label(type, icon));
+            leftList.getItems().add(new ComponentMenuItem(type, icon, componentSettings));
         }
 
 //        leftList.getItems().add(GType.Button);

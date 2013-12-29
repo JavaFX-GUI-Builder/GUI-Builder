@@ -1,35 +1,57 @@
 package bdl.view.right;
 
 import bdl.build.GObject;
+import bdl.model.ComponentSettings;
 import bdl.model.ComponentSettingsStore;
+import bdl.model.Property;
 import bdl.view.right.properties.BackwardsBooleanProperty;
 import bdl.view.right.properties.FieldName;
 import bdl.view.right.properties.StringProperty;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.lang.reflect.Constructor;
 
 public class PropertyEditPane extends GridPane {
 
     private ComponentSettingsStore componentSettingsStore;
 
     public PropertyEditPane(ComponentSettingsStore componentSettingsStore) {
+        //For reference, old properties panel: http://i.imgur.com/UBb7P4k.png
         this.componentSettingsStore = componentSettingsStore;
         add(new Label("No component selected."), 0, 0);
     }
 
     public void showProperties(GObject gObj) {
         int currentRow = 0;
-
         this.getChildren().clear();
+
+        ComponentSettings componentSettings = gObj.getComponentSettings();
 
         Label propertiesHeading = new Label("Properties:");
         propertiesHeading.setFont(Font.font(propertiesHeading.getFont().getFamily(), FontWeight.BOLD, propertiesHeading.getFont().getSize() + 0.5));
         add(propertiesHeading, 0, currentRow++);
         add(new FieldName(gObj), 0, currentRow++);
-        add(new StringProperty(gObj, "Text", "getText", "setText"), 0, currentRow++);
-        add(new BackwardsBooleanProperty(gObj, "Enabled", "isDisabled", "setDisable"), 0, currentRow++);
+
+        for (Property property : componentSettings.getProperties()) {
+            String type = property.getType();
+            try {
+                Class panelPropertyClass = Class.forName("bdl.view.right.properties." + type + "Property");
+                Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class);
+                Node node = (Node)constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter());
+                add(node, 0, currentRow++);
+            } catch (Exception e) {
+                System.out.println(type + "Property failed.");
+                e.printStackTrace();
+            }
+        }
+
+
+//        add(new StringProperty(gObj, "Text", "getText", "setText"), 0, currentRow++);
+//        add(new BackwardsBooleanProperty(gObj, "Enabled", "isDisabled", "setDisable"), 0, currentRow++);
 
     }
 

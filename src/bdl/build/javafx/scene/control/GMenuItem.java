@@ -2,11 +2,16 @@ package bdl.build.javafx.scene.control;
 
 
 import bdl.build.GObject;
-import bdl.build.GType;
+import bdl.model.ComponentSettings;
 import javafx.scene.control.MenuItem;
 
 public class GMenuItem extends MenuItem implements GObject {
     private String fieldName;
+    private ComponentSettings componentSettings;
+
+    public GMenuItem(ComponentSettings componentSettings) {
+        this.componentSettings = componentSettings;
+    }
 
     @Override
     public String getFieldName() {
@@ -19,7 +24,7 @@ public class GMenuItem extends MenuItem implements GObject {
     }
 
     @Override
-    public GType getType() {
-        return GType.MenuItem;
+    public ComponentSettings getComponentSettings() {
+        return componentSettings;
     }
 }

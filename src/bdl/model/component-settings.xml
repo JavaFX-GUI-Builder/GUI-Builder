@@ -20,12 +20,12 @@
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
                 <setter>setDisabled</setter>
-                <getter>getDisabled</getter>
+                <getter>isDisabled</getter>
             </property>
             <property>
                 <name>Tooltip</name>
                 <enabled>true</enabled>
-                <pseudotype>PseudoTooltip</pseudotype>
+                <pseudotype>Tooltip</pseudotype>
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
@@ -110,25 +110,17 @@
         <icon>ComboBox.png</icon>
         <properties>
             <property>
-                <name>Text</name>
-                <enabled>true</enabled>
-                <pseudotype>String</pseudotype>
-                <default>Checkbox</default>
-                <setter>setText</setter>
-                <getter>getText</getter>
-            </property>
-            <property>
                 <name>Enabled</name>
                 <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
                 <setter>setDisabled</setter>
-                <getter>getDisabled</getter>
+                <getter>isDisabled</getter>
             </property>
             <property>
                 <name>Tooltip</name>
                 <enabled>true</enabled>
-                <pseudotype>PseudoTooltip</pseudotype>
+                <pseudotype>Tooltip</pseudotype>
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
@@ -156,12 +148,12 @@
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
                 <setter>setDisabled</setter>
-                <getter>getDisabled</getter>
+                <getter>isDisabled</getter>
             </property>
             <property>
                 <name>Tooltip</name>
                 <enabled>true</enabled>
-                <pseudotype>PseudoTooltip</pseudotype>
+                <pseudotype>Tooltip</pseudotype>
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
@@ -189,12 +181,12 @@
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
                 <setter>setDisabled</setter>
-                <getter>getDisabled</getter>
+                <getter>isDisabled</getter>
             </property>
             <property>
                 <name>Tooltip</name>
                 <enabled>true</enabled>
-                <pseudotype>PseudoTooltip</pseudotype>
+                <pseudotype>Tooltip</pseudotype>
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>

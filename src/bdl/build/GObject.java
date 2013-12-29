@@ -1,5 +1,7 @@
 package bdl.build;
 
+import bdl.model.ComponentSettings;
+
 public interface GObject {
 
     /**
@@ -9,7 +11,7 @@ public interface GObject {
 
     public void setFieldName(String fieldName);
 
-    public GType getType();
+    public ComponentSettings getComponentSettings();
 
 
 }
