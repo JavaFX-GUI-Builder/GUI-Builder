@@ -19,7 +19,7 @@
                 <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
-                <setter>setDisabled</setter>
+                <setter>setDisable</setter>
                 <getter>isDisabled</getter>
             </property>
             <property>
@@ -114,7 +114,7 @@
                 <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
-                <setter>setDisabled</setter>
+                <setter>setDisable</setter>
                 <getter>isDisabled</getter>
             </property>
             <property>
@@ -147,7 +147,7 @@
                 <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
-                <setter>setDisabled</setter>
+                <setter>setDisable</setter>
                 <getter>isDisabled</getter>
             </property>
             <property>
@@ -180,7 +180,7 @@
                 <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
                 <default>true</default>
-                <setter>setDisabled</setter>
+                <setter>setDisable</setter>
                 <getter>isDisabled</getter>
             </property>
             <property>
