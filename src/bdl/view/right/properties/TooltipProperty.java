@@ -3,7 +3,10 @@ package bdl.view.right.properties;
 import bdl.build.GObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.*;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 
 public class TooltipProperty extends GridPane implements PanelProperty {
