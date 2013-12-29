@@ -1,6 +1,6 @@
 package bdl.view;
 
-import bdl.model.ComponentSettings;
+import bdl.model.ComponentSettingsStore;
 import bdl.view.left.LeftPanel;
 import bdl.view.middle.MiddlePanel;
 import bdl.view.right.RightPanel;
@@ -17,7 +17,7 @@ public class View extends AnchorPane {
     public RightPanel rightPanel;
     public MiddlePanel middleTabPane;
 
-    public View(ComponentSettings componentSettings) {
+    public View(ComponentSettingsStore componentSettingsStore) {
         //Begin Main panel
         BorderPane borderPane = new BorderPane();
         prefWidth(854);
@@ -36,9 +36,9 @@ public class View extends AnchorPane {
 
         //Begin MiddlePanel
         SplitPane mainContent = new SplitPane();
-        rightPanel = new RightPanel(componentSettings);
+        rightPanel = new RightPanel(componentSettingsStore);
 
-        leftPanel = new LeftPanel(componentSettings);
+        leftPanel = new LeftPanel(componentSettingsStore);
 
         AnchorPane middleAnchorPane = new AnchorPane();
         middleTabPane = new MiddlePanel();

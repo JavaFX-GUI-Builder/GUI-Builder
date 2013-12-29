@@ -1,7 +1,7 @@
 package bdl.view.right;
 
 import bdl.build.GObject;
-import bdl.model.ComponentSettings;
+import bdl.model.ComponentSettingsStore;
 import bdl.view.right.properties.BackwardsBooleanProperty;
 import bdl.view.right.properties.FieldName;
 import bdl.view.right.properties.StringProperty;
@@ -12,7 +12,10 @@ import javafx.scene.text.FontWeight;
 
 public class PropertyEditPane extends GridPane {
 
-    public PropertyEditPane(ComponentSettings componentSettings) {
+    private ComponentSettingsStore componentSettingsStore;
+
+    public PropertyEditPane(ComponentSettingsStore componentSettingsStore) {
+        this.componentSettingsStore = componentSettingsStore;
         add(new Label("No component selected."), 0, 0);
     }
 

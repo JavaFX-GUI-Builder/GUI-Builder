@@ -1,7 +1,7 @@
 package bdl;
 
 import bdl.controller.Controller;
-import bdl.model.ComponentSettings;
+import bdl.model.ComponentSettingsStore;
 import bdl.view.View;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -25,9 +25,9 @@ public class Main extends Application {
             componentSettingsLocation = "src/bdl/model/component-settings.xml";//Default file
         }
 
-        ComponentSettings model = null;
+        ComponentSettingsStore model = null;
         try {
-             model = new ComponentSettings(componentSettingsLocation);
+             model = new ComponentSettingsStore(componentSettingsLocation);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);

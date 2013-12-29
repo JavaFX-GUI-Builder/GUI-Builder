@@ -1,7 +1,7 @@
 package bdl.view.left;
 
-import bdl.model.Component;
 import bdl.model.ComponentSettings;
+import bdl.model.ComponentSettingsStore;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,13 +13,13 @@ public class LeftPanel extends SplitPane {
     public TreeItem<String> treeRoot;
     public TreeView<String> leftTreeView;
 
-    public LeftPanel(ComponentSettings componentSettings) {
+    public LeftPanel(ComponentSettingsStore componentSettingsStore) {
         //Begin left component list
         leftList = new ListView<>();
 
-        for (Component component : componentSettings.getComponents()) {
-            String type = component.getType();
-            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/" + component.getIcon())));
+        for (ComponentSettings componentSettings : componentSettingsStore.getComponents()) {
+            String type = componentSettings.getType();
+            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/" + componentSettings.getIcon())));
             leftList.getItems().add(new Label(type, icon));
         }
 
