@@ -220,7 +220,14 @@
         <layouttype>ShapeLayout</layouttype>
         <icon>Circle.png</icon>
         <properties>
-
+            <property>
+                <name>Fill</name>
+                <enabled>true</enabled>
+                <pseudotype>Color</pseudotype>
+                <default>#FF0000</default>
+                <setter>setFill</setter>
+                <getter>getFill</getter>
+            </property>
         </properties>
     </component>
     <component>
@@ -230,7 +237,14 @@
         <layouttype>ShapeLayout</layouttype>
         <icon>Rectangle.png</icon>
         <properties>
-
+            <property>
+                <name>Fill</name>
+                <enabled>true</enabled>
+                <pseudotype>Color</pseudotype>
+                <default>#FF0000</default>
+                <setter>setFill</setter>
+                <getter>getFill</getter>
+            </property>
         </properties>
     </component>
 </components>
