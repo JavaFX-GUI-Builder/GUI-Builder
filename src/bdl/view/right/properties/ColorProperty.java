@@ -17,17 +17,17 @@ public class ColorProperty extends GridPane implements PanelProperty {
     private String setter;
     private ColorPicker colorPicker;
 
-    public ColorProperty(final GObject gObj, String name, String getter, final String setter) {
+    public ColorProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue) {
         this.gObj = gObj;
         this.setter = setter;
 
         add(new Label(name + ":"), 0, 0);
         colorPicker = new ColorPicker();
 
-        Method method;
+        colorPicker.setValue(Color.web(defaultValue));//TODO - Handle bad defaultValue values
+
         try {
-            method = gObj.getClass().getMethod(getter);
-            colorPicker.setValue((Color) method.invoke(gObj));
+            setValue();
         } catch (Exception e) {
             e.printStackTrace();
             return;//TODO: Probably need some better behavior here.
@@ -39,17 +39,19 @@ public class ColorProperty extends GridPane implements PanelProperty {
         colorPicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Color color = colorPicker.getValue();
-                Method method;
                 try {
-                    method = gObj.getClass().getMethod(setter, Paint.class);
-                    method.invoke(gObj, color);
+                    setValue();
                 } catch (Exception e) {
                     e.printStackTrace();
                     return;//TODO: Probably need some better behavior here.
                 }
             }
         });
+    }
+
+    private void setValue() throws Exception {
+        Method method = gObj.getClass().getMethod(setter, Paint.class);
+        method.invoke(gObj, colorPicker.getValue());
     }
 
     @Override

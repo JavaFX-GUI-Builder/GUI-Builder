@@ -1,17 +1,16 @@
 package bdl.controller;
 
 import bdl.build.GObject;
-import bdl.build.javafx.scene.control.*;
-import bdl.build.javafx.scene.shape.GCircle;
-import bdl.build.javafx.scene.shape.GRectangle;
 import bdl.model.ComponentSettings;
 import bdl.view.View;
+import bdl.view.right.PropertyEditPane;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+
+import java.lang.reflect.Constructor;
 
 public class Controller {
 
@@ -62,94 +61,17 @@ public class Controller {
                     ComponentSettings componentSettings = view.leftPanel.leftList.getSelectionModel().getSelectedItem().getComponentSettings();
                     if (componentSettings != null) {
                         GObject newThing = null;
-                        switch (componentSettings.getType()) {
-                            case "Button":
-                                GButton newBtn = new GButton(componentSettings);
-                                newBtn.setText("Test");
-                                newBtn.setLayoutX(10);
-                                newBtn.setLayoutY(10);
-                                newThing = newBtn;
-                                break;
-                            case "CheckBox":
-                                GCheckBox newChkBox = new GCheckBox(componentSettings);
-                                newChkBox.setLayoutX(10);
-                                newChkBox.setLayoutY(10);
-                                newThing = newChkBox;
-                                break;
-                            case "ComboBox":
-                                GComboBox newCBox = new GComboBox(componentSettings);
-                                newCBox.setLayoutX(10);
-                                newCBox.setLayoutY(10);
-                                newThing = newCBox;
-                                break;
-                            case "Label":
-                                GLabel newLbl = new GLabel(componentSettings);
-                                newLbl.setLayoutX(10);
-                                newLbl.setLayoutY(10);
-                                newLbl.setText("Label");
-                                newThing = newLbl;
-                                break;
-                            case "ListView":
-                                //Do nothing, don't want to deal with this just yet
-                                break;
-                            case "Menu":
-                                //Can't add to AnchorPane
-                                break;
-                            case "MenuBar":
-                                //Can't add to AnchorPane
-                                break;
-                            case "MenuItem":
-                                //Can't add to AnchorPane
-                                break;
-                            case "ScrollPane":
-                                //Do nothing, don't want to deal with this just yet
-                                break;
-                            case "SplitPane":
-                                //Do nothing, don't want to deal with this just yet
-                                break;
-                            case "TextArea":
-                                GTextArea newTxtArea = new GTextArea(componentSettings);
-                                newTxtArea.setText("Text Area Text!");
-                                newTxtArea.setLayoutX(10);
-                                newTxtArea.setLayoutY(10);
-                                newThing = newTxtArea;
-                                break;
-                            case "TextField":
-                                GTextField newTxtField = new GTextField(componentSettings);
-                                newTxtField.setText("Text Field Text!");
-                                newTxtField.setLayoutX(10);
-                                newTxtField.setLayoutY(10);
-                                newThing = newTxtField;
-                                break;
-                            case "ToolBar":
-                                GToolBar newToolBar = new GToolBar(componentSettings);
-                                newToolBar.setLayoutX(10);
-                                newToolBar.setLayoutY(10);
-                                newThing = newToolBar;
-                                break;
-                            case "ImageView":
-                                //Do nothing for the minute
-                                break;
-                            case "Circle":
-                                GCircle newCircle = new GCircle(componentSettings);
-                                newCircle.setStrokeWidth(5);
-                                newCircle.setStroke(Color.RED);
-                                newCircle.setRadius(10);
-                                newCircle.setFill(Color.PINK);
-                                newCircle.setLayoutX(50);
-                                newCircle.setLayoutY(50);
-                                newThing = newCircle;
-                                break;
-                            case "Rectangle":
-                                GRectangle newRectangle = new GRectangle(componentSettings);
-                                newRectangle.setFill(Color.DARKORCHID);
-                                newRectangle.setWidth(100);
-                                newRectangle.setHeight(100);
-                                newRectangle.setLayoutX(100);
-                                newRectangle.setLayoutY(100);
-                                newThing = newRectangle;
-                                break;
+
+                        try {
+                            Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
+                            Constructor constructor = panelPropertyClass.getConstructor(ComponentSettings.class);
+                            newThing = (GObject)constructor.newInstance(componentSettings);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
+                        //Sets the default settings on the gObject and creates the property edit pane
+                        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing);
 
                         //Could be null, e.g. ListView or ScrollPane
                         if (newThing != null) {
@@ -158,8 +80,8 @@ public class Controller {
                             newNode.setOnMousePressed(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
-                                    viewListeners.onMouseClicked(newNode);
                                     viewListeners.onMousePressed(newNode, mouseEvent);
+                                    view.rightPanel.propertyScroll.setContent(propertyEditPane);
                                 }
                             });
                             newNode.setOnMouseReleased(new EventHandler<MouseEvent>() {

@@ -15,24 +15,17 @@ public class TooltipProperty extends GridPane implements PanelProperty {
     private TextField textField;
     private Control control;
 
-    public TooltipProperty (final GObject gObj, String name, String getter, String setter) {
+    public TooltipProperty (final GObject gObj, String name, String getter, String setter, String defaultValue) {
         this.gObj = gObj;
 
         add(new Label(name + ":"), 0, 0);
         textField = new TextField();
 
-        try {
-            control = (Control) gObj;
-        } catch (Exception e) {
-            //May not extend Control
-            e.printStackTrace();
-            return;//TODO: Probably need some better behavior here.
-        }
+        textField.setText(defaultValue);
 
-        Tooltip tooltip = control.getTooltip();
-        String tooltipText = "";
-        if (tooltip != null) tooltipText = tooltip.getText();
-        textField.setText(tooltipText);
+        control = (Control) gObj;
+
+        setValue();
 
         add(textField, 1, 0);
 
@@ -41,10 +34,16 @@ public class TooltipProperty extends GridPane implements PanelProperty {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
                 if (!aBoolean2) {
-                    control.setTooltip(new Tooltip(textField.getText()));
+                    setValue();
                 }
             }
         });
+    }
+
+    private void setValue() {
+        if (!textField.getText().isEmpty()) {
+            control.setTooltip(new Tooltip(textField.getText()));
+        }
     }
 
     @Override

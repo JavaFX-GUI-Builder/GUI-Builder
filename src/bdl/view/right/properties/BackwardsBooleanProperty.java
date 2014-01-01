@@ -15,17 +15,17 @@ public class BackwardsBooleanProperty extends GridPane implements PanelProperty 
     private String setter;
     private CheckBox checkBox;
 
-    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter) {
+    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue) {
         this.gObj = gObj;
         this.setter = setter;
 
         add(new Label(name + ":"), 0, 0);
         checkBox = new CheckBox();
 
-        Method method;
+        checkBox.setSelected(Boolean.parseBoolean(defaultValue));//TODO - Handle bad defaultValue values
+
         try {
-            method = gObj.getClass().getMethod(getter);
-            checkBox.setSelected(!(Boolean) method.invoke(gObj));
+            setValue();
         } catch (Exception e) {
             e.printStackTrace();
             return;//TODO: Probably need some better behavior here.
@@ -37,16 +37,19 @@ public class BackwardsBooleanProperty extends GridPane implements PanelProperty 
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
-                Method method;
                 try {
-                    method = gObj.getClass().getMethod(setter, boolean.class);
-                    method.invoke(gObj, !aBoolean2);
+                    setValue();
                 } catch (Exception e) {
                     e.printStackTrace();
                     return;//TODO: Probably need some better behavior here.
                 }
             }
         });
+    }
+
+    private void setValue() throws Exception {
+        Method method = gObj.getClass().getMethod(setter, boolean.class);
+        method.invoke(gObj, !checkBox.isSelected());
     }
 
     @Override

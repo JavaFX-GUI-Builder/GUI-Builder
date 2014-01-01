@@ -24,7 +24,6 @@ public class ViewListeners {
     }
 
     public void onMousePressed(Node node, MouseEvent mouseEvent) {
-        view.rightPanel.propertyEditPane.showProperties((GObject)node);
         isMousePressed = true;
         curX = mouseEvent.getX();
         curY = mouseEvent.getY();
@@ -54,9 +53,5 @@ public class ViewListeners {
 
     public void onMouseReleased(Node node, MouseEvent mouseEvent) {
         isMousePressed = false;
-    }
-
-    public void onMouseClicked(Node node) {
-
     }
 }

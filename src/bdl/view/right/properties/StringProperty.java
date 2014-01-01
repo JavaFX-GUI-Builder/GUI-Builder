@@ -15,17 +15,17 @@ public class StringProperty extends GridPane implements PanelProperty {
     private String setter;
     private TextField textField;
 
-    public StringProperty(final GObject gObj, String name, String getter, final String setter) {
+    public StringProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue) {
         this.gObj = gObj;
         this.setter = setter;
 
         add(new Label(name + ":"), 0, 0);
         textField = new TextField();
 
-        Method method;
+        textField.setText(defaultValue);
+
         try {
-            method = gObj.getClass().getMethod(getter);
-            textField.setText((String)method.invoke(gObj));
+            setValue();
         } catch (Exception e) {
             e.printStackTrace();
             return;//TODO: Probably need some better behavior here.
@@ -38,16 +38,19 @@ public class StringProperty extends GridPane implements PanelProperty {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
                 if (!aBoolean2) {
-                    Method method;
                     try {
-                        method = gObj.getClass().getMethod(setter, String.class);
-                        method.invoke(gObj, textField.getText());
+                        setValue();
                     } catch (Exception e) {
                         return;//TODO: Probably need some better behavior here.
                     }
                 }
             }
         });
+    }
+
+    private void setValue() throws Exception {
+        Method method = gObj.getClass().getMethod(setter, String.class);
+        method.invoke(gObj, textField.getText());
     }
 
     @Override

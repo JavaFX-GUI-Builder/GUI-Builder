@@ -30,6 +30,22 @@
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
             </property>
+            <property>
+                <name>Layout X (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutX</setter>
+                <getter>getLayoutX</getter>
+            </property>
+            <property>
+                <name>Layout Y (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutY</setter>
+                <getter>getLayoutY</getter>
+            </property>
         </properties>
     </component>
     <component>
@@ -39,7 +55,30 @@
         <layouttype>ControlLayout</layouttype>
         <icon>TextArea.png</icon>
         <properties>
-
+            <property>
+                <name>Text</name>
+                <enabled>true</enabled>
+                <pseudotype>String</pseudotype>
+                <default>Text Area Text!</default>
+                <setter>setText</setter>
+                <getter>getText</getter>
+            </property>
+            <property>
+                <name>Layout X (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutX</setter>
+                <getter>getLayoutX</getter>
+            </property>
+            <property>
+                <name>Layout Y (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutY</setter>
+                <getter>getLayoutY</getter>
+            </property>
         </properties>
     </component>
     <component>
@@ -49,12 +88,35 @@
         <layouttype>ControlLayout</layouttype>
         <icon>TextField.png</icon>
         <properties>
-
+            <property>
+                <name>Text</name>
+                <enabled>true</enabled>
+                <pseudotype>String</pseudotype>
+                <default>Text Field Text!</default>
+                <setter>setText</setter>
+                <getter>getText</getter>
+            </property>
+            <property>
+                <name>Layout X (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutX</setter>
+                <getter>getLayoutX</getter>
+            </property>
+            <property>
+                <name>Layout Y (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutY</setter>
+                <getter>getLayoutY</getter>
+            </property>
         </properties>
     </component>
     <component>
         <type>MenuBar</type>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <package>javafx.scene.control</package>
         <layouttype>MenuLayout</layouttype>
         <icon>MenuBar.png</icon>
@@ -64,7 +126,7 @@
     </component>
     <component>
         <type>Menu</type>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <package>javafx.scene.control</package>
         <layouttype>Todo</layouttype>
         <icon>Menu.png</icon>
@@ -125,6 +187,22 @@
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
             </property>
+            <property>
+                <name>Layout X (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutX</setter>
+                <getter>getLayoutX</getter>
+            </property>
+            <property>
+                <name>Layout Y (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutY</setter>
+                <getter>getLayoutY</getter>
+            </property>
         </properties>
     </component>
     <component>
@@ -158,6 +236,22 @@
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
             </property>
+            <property>
+                <name>Layout X (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutX</setter>
+                <getter>getLayoutX</getter>
+            </property>
+            <property>
+                <name>Layout Y (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutY</setter>
+                <getter>getLayoutY</getter>
+            </property>
         </properties>
     </component>
     <component>
@@ -171,7 +265,7 @@
                 <name>Text</name>
                 <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
-                <default>Checkbox</default>
+                <default>Label text!</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
             </property>
@@ -190,6 +284,22 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
+            </property>
+            <property>
+                <name>Layout X (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutX</setter>
+                <getter>getLayoutX</getter>
+            </property>
+            <property>
+                <name>Layout Y (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setLayoutY</setter>
+                <getter>getLayoutY</getter>
             </property>
         </properties>
     </component>
@@ -228,6 +338,46 @@
                 <setter>setFill</setter>
                 <getter>getFill</getter>
             </property>
+            <property>
+                <name>Stroke</name>
+                <enabled>true</enabled>
+                <pseudotype>Color</pseudotype>
+                <default>#00FF00</default>
+                <setter>setStroke</setter>
+                <getter>getStroke</getter>
+            </property>
+            <property>
+                <name>Stroke Width</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>5</default>
+                <setter>setStrokeWidth</setter>
+                <getter>getStrokeWidth</getter>
+            </property>
+            <property>
+                <name>Radius</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>10</default>
+                <setter>setRadius</setter>
+                <getter>getRadius</getter>
+            </property>
+            <property>
+                <name>Layout X (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>100</default>
+                <setter>setLayoutX</setter>
+                <getter>getLayoutX</getter>
+            </property>
+            <property>
+                <name>Layout Y (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>100</default>
+                <setter>setLayoutY</setter>
+                <getter>getLayoutY</getter>
+            </property>
         </properties>
     </component>
     <component>
@@ -244,6 +394,54 @@
                 <default>#FF0000</default>
                 <setter>setFill</setter>
                 <getter>getFill</getter>
+            </property>
+            <property>
+                <name>Stroke</name>
+                <enabled>true</enabled>
+                <pseudotype>Color</pseudotype>
+                <default>#00FF00</default>
+                <setter>setStroke</setter>
+                <getter>getStroke</getter>
+            </property>
+            <property>
+                <name>Stroke Width</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>0</default>
+                <setter>setStrokeWidth</setter>
+                <getter>getStrokeWidth</getter>
+            </property>
+            <property>
+                <name>Layout X (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>100</default>
+                <setter>setLayoutX</setter>
+                <getter>getLayoutX</getter>
+            </property>
+            <property>
+                <name>Layout Y (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>100</default>
+                <setter>setLayoutY</setter>
+                <getter>getLayoutY</getter>
+            </property>
+            <property>
+                <name>Width (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>100</default>
+                <setter>setWidth</setter>
+                <getter>getWidth</getter>
+            </property>
+            <property>
+                <name>Height (Temp)</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>100</default>
+                <setter>setHeight</setter>
+                <getter>getHeight</getter>
             </property>
         </properties>
     </component>

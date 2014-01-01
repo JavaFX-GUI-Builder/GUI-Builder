@@ -14,7 +14,7 @@ public class ArmedProperty extends GridPane implements PanelProperty {
     private CheckBox checkBox;
     private ButtonBase buttonBase;
 
-    public ArmedProperty (final GObject gObj, String name, String getter, String setter) {
+    public ArmedProperty (final GObject gObj, String name, String getter, String setter, String defaultValue) {
         this.gObj = gObj;
 
         add(new Label(name + ":"), 0, 0);
@@ -28,7 +28,8 @@ public class ArmedProperty extends GridPane implements PanelProperty {
             return;//TODO: Probably need some better behavior here.
         }
 
-        checkBox.setSelected(buttonBase.isArmed());
+        checkBox.setSelected(Boolean.parseBoolean(defaultValue));//TODO - Handle bad defaultValue values
+        if (!checkBox.isSelected()) ((ButtonBase)gObj).disarm();
 
         add(checkBox, 1, 0);
 
