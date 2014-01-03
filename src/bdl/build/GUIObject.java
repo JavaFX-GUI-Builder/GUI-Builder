@@ -1,5 +1,7 @@
 package bdl.build;
 
-public class GUIObject {
+import javafx.scene.layout.AnchorPane;
+
+public class GUIObject extends AnchorPane {
 
 }

@@ -1,7 +1,9 @@
 package bdl.view.middle;
 
+import bdl.build.GUIObject;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 
 public class MiddlePanel extends TabPane {
@@ -11,6 +13,8 @@ public class MiddlePanel extends TabPane {
     public Tab previewTab;
 
     public AnchorPane viewPane;
+    public AnchorPane phoneyViewPane;
+    public TextArea codePane;
 
     public MiddlePanel() {
         setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -21,9 +25,19 @@ public class MiddlePanel extends TabPane {
 
         getTabs().addAll(viewTab, codeTab, previewTab);
 
-        viewPane = new AnchorPane();
+        phoneyViewPane = new AnchorPane();
+        viewPane = new GUIObject();
+        AnchorPane.setBottomAnchor(viewPane, 0.0);
+        AnchorPane.setTopAnchor(viewPane, 0.0);
+        AnchorPane.setRightAnchor(viewPane, 0.0);
+        AnchorPane.setLeftAnchor(viewPane, 0.0);
+        phoneyViewPane.getChildren().add(viewPane);
 
-        viewTab.setContent(viewPane);
+        codePane = new TextArea();
+        codePane.setEditable(false);
+
+        viewTab.setContent(phoneyViewPane);
+        codeTab.setContent(codePane);
     }
 
 }

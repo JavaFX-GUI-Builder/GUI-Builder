@@ -4,6 +4,7 @@ import bdl.build.GObject;
 import bdl.model.ComponentSettings;
 import bdl.view.View;
 import bdl.view.right.PropertyEditPane;
+import bdl.view.right.properties.PanelProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -43,6 +44,23 @@ public class Controller {
         //End TopPanel
 
         //Start MiddlePanel
+
+        view.middleTabPane.codeTab.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if (view.middleTabPane.codeTab.isSelected()) {
+                    StringBuilder code = new StringBuilder();
+                    for (Node node : view.middleTabPane.viewPane.getChildren()) {
+                        GObject gObj = (GObject) node;
+                        for (PanelProperty property : gObj.getPanelProperties()) {
+                            code.append(property.getJavaCode());
+                        }
+                        code.append('\n');
+                    }
+                    view.middleTabPane.codePane.setText(code.toString());
+                }
+            }
+        });
         view.middleTabPane.previewTab.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {

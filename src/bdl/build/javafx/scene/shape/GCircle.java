@@ -1,10 +1,14 @@
 package bdl.build.javafx.scene.shape;
 
 import bdl.build.GObject;
+import bdl.view.right.properties.PanelProperty;
 import javafx.scene.shape.Circle;
+
+import java.util.List;
 
 public class GCircle extends Circle implements GObject {
     private String fieldName;
+    private List<PanelProperty> properties;
 
     @Override
     public String getFieldName() {
@@ -14,5 +18,15 @@ public class GCircle extends Circle implements GObject {
     @Override
     public void setFieldName(String fieldName) {
         this.fieldName = fieldName;
+    }
+
+    @Override
+    public void setPanelProperties(List<PanelProperty> properties) {
+        this.properties = properties;
+    }
+
+    @Override
+    public List<PanelProperty> getPanelProperties() {
+        return properties;
     }
 }

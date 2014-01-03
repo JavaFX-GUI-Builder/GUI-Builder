@@ -55,7 +55,7 @@ public class BackwardsBooleanProperty extends GridPane implements PanelProperty 
     @Override
     public String getJavaCode() {
         //TODO
-        return "";
+        return gObj.getFieldName() + "." + setter + " - todo...\n";//TODO
     }
 
 

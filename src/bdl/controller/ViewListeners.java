@@ -1,6 +1,5 @@
 package bdl.controller;
 
-import bdl.build.GObject;
 import bdl.view.View;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -20,7 +19,7 @@ public class ViewListeners {
         outline.setStrokeWidth(2);
         outline.setStroke(Color.BLUE);
         outline.setFill(null);
-        view.middleTabPane.viewPane.getChildren().add(outline);
+        view.middleTabPane.phoneyViewPane.getChildren().add(outline);
     }
 
     public void onMousePressed(Node node, MouseEvent mouseEvent) {

@@ -52,7 +52,7 @@ public class TooltipProperty extends GridPane implements PanelProperty {
         String tooltipText = "";
         if (tooltip != null) {
             tooltipText = tooltip.getText();
-            return gObj.getFieldName() + ".setTooltip(new Tooltip(" + tooltipText + "));\n";
+            return gObj.getFieldName() + ".setTooltip(new Tooltip(\"" + tooltipText + "\"));\n";
         } else {
             return "";
         }

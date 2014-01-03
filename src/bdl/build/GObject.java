@@ -1,6 +1,9 @@
 package bdl.build;
 
 import bdl.model.ComponentSettings;
+import bdl.view.right.properties.PanelProperty;
+
+import java.util.List;
 
 public interface GObject {
 
@@ -10,5 +13,9 @@ public interface GObject {
     public String getFieldName();
 
     public void setFieldName(String fieldName);
+
+    public void setPanelProperties(List<PanelProperty> properties);
+
+    public List<PanelProperty> getPanelProperties();
 
 }
