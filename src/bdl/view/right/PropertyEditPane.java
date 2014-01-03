@@ -14,15 +14,13 @@ import java.lang.reflect.Constructor;
 
 public class PropertyEditPane extends GridPane {
 
-    public PropertyEditPane(GObject gObj) {
+    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings) {
         //For reference, old properties panel: http://i.imgur.com/UBb7P4k.png
         if (gObj == null) {
             add(new Label("No component selected."), 0, 0);
         } else {
             int currentRow = 0;
             this.getChildren().clear();
-
-            ComponentSettings componentSettings = gObj.getComponentSettings();
 
             Label propertiesHeading = new Label("Properties:");
             propertiesHeading.setFont(Font.font(propertiesHeading.getFont().getFamily(), FontWeight.BOLD, propertiesHeading.getFont().getSize() + 0.5));

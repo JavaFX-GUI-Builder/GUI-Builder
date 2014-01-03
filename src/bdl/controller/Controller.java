@@ -64,14 +64,14 @@ public class Controller {
 
                         try {
                             Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
-                            Constructor constructor = panelPropertyClass.getConstructor(ComponentSettings.class);
-                            newThing = (GObject)constructor.newInstance(componentSettings);
+                            Constructor constructor = panelPropertyClass.getConstructor();
+                            newThing = (GObject)constructor.newInstance();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
                         //Sets the default settings on the gObject and creates the property edit pane
-                        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing);
+                        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings);
 
                         //Could be null, e.g. ListView or ScrollPane
                         if (newThing != null) {

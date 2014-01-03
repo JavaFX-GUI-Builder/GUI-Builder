@@ -11,7 +11,4 @@ public interface GObject {
 
     public void setFieldName(String fieldName);
 
-    public ComponentSettings getComponentSettings();
-
-
 }
