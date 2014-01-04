@@ -13,7 +13,7 @@ public class MiddlePanel extends TabPane {
     public Tab previewTab;
 
     public AnchorPane viewPane;
-    public AnchorPane phoneyViewPane;
+    public AnchorPane viewPaneDecorator;
     public TextArea codePane;
 
     public MiddlePanel() {
@@ -25,18 +25,18 @@ public class MiddlePanel extends TabPane {
 
         getTabs().addAll(viewTab, codeTab, previewTab);
 
-        phoneyViewPane = new AnchorPane();
+        viewPaneDecorator = new AnchorPane();
         viewPane = new GUIObject();
         AnchorPane.setBottomAnchor(viewPane, 0.0);
         AnchorPane.setTopAnchor(viewPane, 0.0);
         AnchorPane.setRightAnchor(viewPane, 0.0);
         AnchorPane.setLeftAnchor(viewPane, 0.0);
-        phoneyViewPane.getChildren().add(viewPane);
+        viewPaneDecorator.getChildren().add(viewPane);
 
         codePane = new TextArea();
         codePane.setEditable(false);
 
-        viewTab.setContent(phoneyViewPane);
+        viewTab.setContent(viewPaneDecorator);
         codeTab.setContent(codePane);
     }
 

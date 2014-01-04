@@ -19,7 +19,7 @@ public class ViewListeners {
         outline.setStrokeWidth(2);
         outline.setStroke(Color.BLUE);
         outline.setFill(null);
-        view.middleTabPane.phoneyViewPane.getChildren().add(outline);
+        view.middleTabPane.viewPaneDecorator.getChildren().add(outline);
     }
 
     public void onMousePressed(Node node, MouseEvent mouseEvent) {
