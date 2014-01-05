@@ -12,10 +12,14 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 
 public class Controller {
 
+    private final ArrayList<String> fieldNames;
+
     public Controller(final View view) {
+        fieldNames = new ArrayList<>();
 
         //Start Top Panel
         view.topPanel.mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
@@ -44,7 +48,6 @@ public class Controller {
         //End TopPanel
 
         //Start MiddlePanel
-
         view.middleTabPane.codeTab.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
@@ -69,7 +72,9 @@ public class Controller {
                 }
             }
         });
+        //End MiddlePanel
 
+        //Start LeftPanel
         final ViewListeners viewListeners = new ViewListeners(view);
 
         view.leftPanel.leftList.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -89,7 +94,7 @@ public class Controller {
                         }
 
                         //Sets the default settings on the gObject and creates the property edit pane
-                        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings);
+                        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames);
 
                         //Could be null, e.g. ListView or ScrollPane
                         if (newThing != null) {
@@ -122,8 +127,7 @@ public class Controller {
                 }
             }
         });
-        //End MiddlePanel
-
+        //End LeftPanel
 
 
     }

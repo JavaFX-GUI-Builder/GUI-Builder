@@ -14,7 +14,7 @@ public class RightPanel extends SplitPane {
         AnchorPane rightSplitPaneTop = new AnchorPane();
 
         //Begin right properties panel
-        propertyEditPane = new PropertyEditPane(null, null);
+        propertyEditPane = new PropertyEditPane(null, null, null);
         propertyScroll = new ScrollPane();
         propertyScroll.setContent(propertyEditPane);
         AnchorPane.setTopAnchor(propertyScroll, 0.0);

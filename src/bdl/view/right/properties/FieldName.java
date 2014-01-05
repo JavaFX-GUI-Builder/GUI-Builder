@@ -10,12 +10,26 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
+
 public class FieldName extends GridPane {
 
-    public FieldName(final GObject gObj) {
+    private ArrayList<String> fieldNames;
+
+    public FieldName(final GObject gObj, ArrayList<String> fieldNames, String type) {
         add(new Label("Field Name:"), 0, 0);
         final TextField textField = new FieldNameTextField();
-        textField.setText(gObj.getFieldName());
+        this.fieldNames = fieldNames;
+
+        //Set default field name
+        type = type.substring(0, 1).toLowerCase() + type.substring(1);
+        int count = 1;
+        while (fieldNames.contains(type + count)) {
+            count++;
+        }
+        textField.setText(type + count);
+        gObj.setFieldName(type + count);
+        fieldNames.add(type + count);
 
         add(textField, 1, 0);
 
@@ -120,8 +134,8 @@ public class FieldName extends GridPane {
                     return false;
                 }
                 //Must not cause a duplicate of another field name
-                if (true) {
-                    //TODO Implement this
+                if (fieldNames.contains(potentialNewText)) {
+                    return false;
                 }
                 //Finally, must not cause a reserved word
                 for (int i = 0; i < reservedWords.length; i++){
@@ -129,6 +143,8 @@ public class FieldName extends GridPane {
                         return false;
                     }
                 }
+                fieldNames.remove(getText());
+                fieldNames.add(potentialNewText);
             }
             return true;//Text passed the above checks
         }

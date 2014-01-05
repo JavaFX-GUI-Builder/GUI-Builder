@@ -17,7 +17,7 @@ import java.util.List;
 
 public class PropertyEditPane extends GridPane {
 
-    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings) {
+    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings, ArrayList<String> fieldNames) {
         //For reference, old properties panel: http://i.imgur.com/UBb7P4k.png
         if (gObj == null) {
             add(new Label("No component selected."), 0, 0);
@@ -28,7 +28,7 @@ public class PropertyEditPane extends GridPane {
             Label propertiesHeading = new Label("Properties:");
             propertiesHeading.setFont(Font.font(propertiesHeading.getFont().getFamily(), FontWeight.BOLD, propertiesHeading.getFont().getSize() + 0.5));
             add(propertiesHeading, 0, currentRow++);
-            add(new FieldName(gObj), 0, currentRow++);
+            add(new FieldName(gObj, fieldNames, componentSettings.getType()), 0, currentRow++);
 
             List<PanelProperty> panelPropertyList = new ArrayList<>();
             for (Property property : componentSettings.getProperties()) {
