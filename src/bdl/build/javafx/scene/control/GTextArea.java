@@ -10,6 +10,10 @@ public class GTextArea extends TextArea implements GObject {
     private String fieldName;
     private List<PanelProperty> properties;
 
+    public GTextArea() {
+        setEditable(false);//Prevent changes to text
+    }
+
     @Override
     public String getFieldName() {
         return fieldName;

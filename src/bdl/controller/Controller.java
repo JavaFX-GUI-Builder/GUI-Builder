@@ -100,20 +100,20 @@ public class Controller {
                         if (newThing != null) {
                             final Node newNode = (Node)newThing;
 
-                            newNode.setOnMousePressed(new EventHandler<MouseEvent>() {
+                            newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     viewListeners.onMousePressed(newNode, mouseEvent);
                                     view.rightPanel.propertyScroll.setContent(propertyEditPane);
                                 }
                             });
-                            newNode.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                            newNode.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     viewListeners.onMouseReleased(newNode, mouseEvent);
                                 }
                             });
-                            newNode.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                            newNode.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     viewListeners.onMouseDragged(newNode, mouseEvent);

@@ -33,6 +33,8 @@ public class MiddlePanel extends TabPane {
         AnchorPane.setLeftAnchor(viewPane, 0.0);
         viewPaneDecorator.getChildren().add(viewPane);
 
+        viewPane.setStyle("-fx-opacity: 1;");//TODO - We could use this to prevent Node interactions
+
         codePane = new TextArea();
         codePane.setEditable(false);
 

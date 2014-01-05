@@ -29,4 +29,9 @@ public class GCheckBox extends CheckBox implements GObject {
     public List<PanelProperty> getPanelProperties() {
         return properties;
     }
+
+    @Override
+    public void fire() {
+        //Prevents the checkbox from being checked/unchecked if you click on it
+    }
 }

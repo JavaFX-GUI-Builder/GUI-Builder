@@ -10,6 +10,10 @@ public class GTextField extends TextField implements GObject {
     private String fieldName;
     private List<PanelProperty> properties;
 
+    public GTextField() {
+        setEditable(false);
+    }
+
     @Override
     public String getFieldName() {
         return fieldName;

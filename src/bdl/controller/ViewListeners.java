@@ -18,7 +18,9 @@ public class ViewListeners {
         outline = new Rectangle();
         outline.setStrokeWidth(2);
         outline.setStroke(Color.BLUE);
-        outline.setFill(null);
+        outline.setFill(Color.TRANSPARENT);
+        outline.setMouseTransparent(true);
+        outline.setStyle("-fx-opacity: 1;");//Could use this to make a light grey foreground
         view.middleTabPane.viewPaneDecorator.getChildren().add(outline);
     }
 

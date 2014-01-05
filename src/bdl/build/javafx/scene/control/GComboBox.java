@@ -29,4 +29,9 @@ public class GComboBox extends ComboBox implements GObject{
     public List<PanelProperty> getPanelProperties() {
         return properties;
     }
+
+    @Override
+    public void show() {
+        //Prevents the menu from showing if you click on it
+    }
 }
