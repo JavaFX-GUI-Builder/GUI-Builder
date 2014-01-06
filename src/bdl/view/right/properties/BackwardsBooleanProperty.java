@@ -54,8 +54,7 @@ public class BackwardsBooleanProperty extends GridPane implements PanelProperty 
 
     @Override
     public String getJavaCode() {
-        //TODO
-        return gObj.getFieldName() + "." + setter + " - todo...\n";//TODO
+        return gObj.getFieldName() + "." + setter + "(" + !checkBox.isSelected() + ");\n";
     }
 
 

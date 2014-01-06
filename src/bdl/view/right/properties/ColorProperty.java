@@ -56,7 +56,7 @@ public class ColorProperty extends GridPane implements PanelProperty {
 
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + "." + setter + " - todo...\n";//TODO
+        return gObj.getFieldName() + "." + setter + "(Color.web(\"" + colorPicker.getValue().toString() + "\"));\n";
     }
 
 }

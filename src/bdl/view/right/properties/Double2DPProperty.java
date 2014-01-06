@@ -64,7 +64,7 @@ public class Double2DPProperty extends GridPane implements PanelProperty {
 
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + "." + setter + " - todo...\n";//TODO
+        return gObj.getFieldName() + "." + setter + "(" + textField.getText() + ");\n";
     }
 
 }
