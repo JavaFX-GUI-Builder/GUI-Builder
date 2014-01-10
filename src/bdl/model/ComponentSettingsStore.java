@@ -103,6 +103,9 @@ public class ComponentSettingsStore {
 
         Element propertiesElement = (Element)element.getElementsByTagName("properties").item(0);
         parseProperties(componentSettings, propertiesElement);
+        
+        Element listenerElement = (Element)element.getElementsByTagName("listeners").item(0);
+        parseListeners(componentSettings, listenerElement);
 
         return true;
     }
@@ -121,6 +124,20 @@ public class ComponentSettingsStore {
             String setter = property.getElementsByTagName("setter").item(0).getTextContent();
 
             componentSettings.addProperty(name, type, enabled, defaultValue, getter, setter);
+        }
+    }
+    
+    private void parseListeners(ComponentSettings componentSettings, Element listenerElement) {
+        NodeList listeners = listenerElement.getElementsByTagName("listener");
+
+        for (int i = 0; i < listeners.getLength(); i++) {
+            Element listener = (Element)listeners.item(i);
+
+            String name = listener.getElementsByTagName("name").item(0).getTextContent();
+            String method = listener.getElementsByTagName("method").item(0).getTextContent();
+            String event = listener.getElementsByTagName("event").item(0).getTextContent();
+
+            componentSettings.addListenerHint(name, method, event);
         }
     }
 }

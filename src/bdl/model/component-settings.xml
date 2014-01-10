@@ -47,6 +47,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>onAction</name>
+                <method>setOnAction</method>
+                <event>ActionEvent</event>
+            </listener>
+        </listeners>
     </component>
     <component>
         <type>TextArea</type>
@@ -80,6 +87,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>keyTyped</name>
+                <method>setOnKeyTyped</method>
+                <event>KeyEvent</event>
+            </listener>
+        </listeners>
     </component>
     <component>
         <type>TextField</type>
@@ -113,6 +127,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>keyTyped</name>
+                <method>setOnKeyTyped</method>
+                <event>KeyEvent</event>
+            </listener>
+        </listeners>
     </component>
     <component>
         <type>MenuBar</type>
@@ -121,8 +142,9 @@
         <layouttype>MenuLayout</layouttype>
         <icon>MenuBar.png</icon>
         <properties>
-
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>Menu</type>
@@ -131,8 +153,9 @@
         <layouttype>Todo</layouttype>
         <icon>Menu.png</icon>
         <properties>
-
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>SplitPane</type>
@@ -141,8 +164,9 @@
         <layouttype>Todo</layouttype>
         <icon>SplitPane.png</icon>
         <properties>
-
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>ListView</type>
@@ -151,8 +175,9 @@
         <layouttype>Todo</layouttype>
         <icon>ListView.png</icon>
         <properties>
-
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>ToolBar</type>
@@ -163,6 +188,8 @@
         <properties>
 
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>ComboBox</type>
@@ -204,6 +231,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>onAction</name>
+                <method>setOnAction</method>
+                <event>ActionEvent</event>
+            </listener>
+        </listeners>
     </component>
     <component>
         <type>CheckBox</type>
@@ -253,6 +287,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>onAction</name>
+                <method>setOnAction</method>
+                <event>ActionEvent</event>
+            </listener>
+        </listeners>
     </component>
     <component>
         <type>Label</type>
@@ -302,6 +343,8 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>ImageView</type>
@@ -312,6 +355,8 @@
         <properties>
 
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>AnchorPane</type>
@@ -322,6 +367,8 @@
         <properties>
 
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>Circle</type>
@@ -379,6 +426,8 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+        </listeners>
     </component>
     <component>
         <type>Rectangle</type>
@@ -444,8 +493,10 @@
                 <getter>getHeight</getter>
             </property>
         </properties>
+        <listeners>
+        </listeners>
     </component>
-        <component>
+    <component>
         <type>PasswordField</type>
         <enabled>true</enabled>
         <package>javafx.scene.control</package>
@@ -477,6 +528,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>keyTyped</name>
+                <method>setOnKeyTyped</method>
+                <event>KeyEvent</event>
+            </listener>
+        </listeners>
     </component>
     <component>
         <type>ColorPicker</type>
@@ -518,6 +576,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>onAction</name>
+                <method>setOnAction</method>
+                <event>ActionEvent</event>
+            </listener>
+        </listeners>
     </component>
     <component>
         <type>RadioButton</type>
@@ -567,6 +632,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>onAction</name>
+                <method>setOnAction</method>
+                <event>ActionEvent</event>
+            </listener>
+        </listeners>
     </component>
     <component>
         <type>Hyperlink</type>
@@ -616,6 +688,13 @@
                 <getter>getLayoutY</getter>
             </property>
         </properties>
+        <listeners>
+            <listener>
+                <name>onAction</name>
+                <method>setOnAction</method>
+                <event>ActionEvent</event>
+            </listener>
+        </listeners>
     </component>
 </components>
 

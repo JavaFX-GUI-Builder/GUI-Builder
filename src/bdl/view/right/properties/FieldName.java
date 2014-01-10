@@ -12,12 +12,12 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-public class FieldName extends GridPane {
+public class FieldName {
 
     private ArrayList<String> fieldNames;
 
-    public FieldName(final GObject gObj, ArrayList<String> fieldNames, String type) {
-        add(new Label("Field Name:"), 0, 0);
+    public FieldName(final GObject gObj, ArrayList<String> fieldNames, String type, GridPane gp, int row) {
+        gp.add(new Label("Field Name:"), 0, row);
         final TextField textField = new FieldNameTextField();
         this.fieldNames = fieldNames;
 
@@ -31,7 +31,7 @@ public class FieldName extends GridPane {
         gObj.setFieldName(type + count);
         fieldNames.add(type + count);
 
-        add(textField, 1, 0);
+        gp.add(textField, 1, row);
 
         //Upon losing focus, save to the GObject
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {

@@ -11,17 +11,17 @@ import javafx.scene.paint.Paint;
 
 import java.lang.reflect.Method;
 
-public class ColorProperty extends GridPane implements PanelProperty {
+public class ColorProperty implements PanelProperty {
 
     private GObject gObj;
     private String setter;
     private ColorPicker colorPicker;
 
-    public ColorProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue) {
+    public ColorProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row) {
         this.gObj = gObj;
         this.setter = setter;
 
-        add(new Label(name + ":"), 0, 0);
+        gp.add(new Label(name + ":"), 0, row);
         colorPicker = new ColorPicker();
 
         colorPicker.setValue(Color.web(defaultValue));//TODO - Handle bad defaultValue values
@@ -33,7 +33,7 @@ public class ColorProperty extends GridPane implements PanelProperty {
             return;//TODO: Probably need some better behavior here.
         }
 
-        add(colorPicker, 1, 0);
+        gp.add(colorPicker, 1, row);
 
         //On action, save to the GObject
         colorPicker.setOnAction(new EventHandler<ActionEvent>() {

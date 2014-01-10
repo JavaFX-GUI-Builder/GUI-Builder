@@ -9,16 +9,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 
-public class TooltipProperty extends GridPane implements PanelProperty {
+public class TooltipProperty implements PanelProperty {
 
     private GObject gObj;
     private TextField textField;
     private Control control;
 
-    public TooltipProperty (final GObject gObj, String name, String getter, String setter, String defaultValue) {
+    public TooltipProperty (final GObject gObj, String name, String getter, String setter, String defaultValue, GridPane gp, int row) {
         this.gObj = gObj;
 
-        add(new Label(name + ":"), 0, 0);
+        gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
 
         textField.setText(defaultValue);
@@ -27,7 +27,7 @@ public class TooltipProperty extends GridPane implements PanelProperty {
 
         setValue();
 
-        add(textField, 1, 0);
+        gp.add(textField, 1, row);
 
         //Upon losing focus, save to the GObject
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {

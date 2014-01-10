@@ -9,17 +9,17 @@ import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
 
-public class BackwardsBooleanProperty extends GridPane implements PanelProperty {
+public class BackwardsBooleanProperty implements PanelProperty {
 
     private GObject gObj;
     private String setter;
     private CheckBox checkBox;
 
-    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue) {
+    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row) {
         this.gObj = gObj;
         this.setter = setter;
 
-        add(new Label(name + ":"), 0, 0);
+        gp.add(new Label(name + ":"), 0, row);
         checkBox = new CheckBox();
 
         checkBox.setSelected(Boolean.parseBoolean(defaultValue));//TODO - Handle bad defaultValue values
@@ -31,7 +31,7 @@ public class BackwardsBooleanProperty extends GridPane implements PanelProperty 
             return;//TODO: Probably need some better behavior here.
         }
 
-        add(checkBox, 1, 0);
+        gp.add(checkBox, 1, row);
 
         //Upon change, save to the GObject
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {

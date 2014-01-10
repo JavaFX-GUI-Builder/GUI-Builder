@@ -8,16 +8,16 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
-public class ArmedProperty extends GridPane implements PanelProperty {
+public class ArmedProperty implements PanelProperty {
 
     private GObject gObj;
     private CheckBox checkBox;
     private ButtonBase buttonBase;
 
-    public ArmedProperty (final GObject gObj, String name, String getter, String setter, String defaultValue) {
+    public ArmedProperty (final GObject gObj, String name, String getter, String setter, String defaultValue, GridPane gp, int row) {
         this.gObj = gObj;
 
-        add(new Label(name + ":"), 0, 0);
+        gp.add(new Label(name + ":"), 0, row);
         checkBox = new CheckBox();
 
         try {
@@ -31,7 +31,7 @@ public class ArmedProperty extends GridPane implements PanelProperty {
         checkBox.setSelected(Boolean.parseBoolean(defaultValue));//TODO - Handle bad defaultValue values
         if (!checkBox.isSelected()) ((ButtonBase)gObj).disarm();
 
-        add(checkBox, 1, 0);
+        gp.add(checkBox, 1, row);
 
         //Upon change, save to the GObject
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {

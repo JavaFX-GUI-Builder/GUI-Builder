@@ -9,17 +9,17 @@ import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
 
-public class StringProperty extends GridPane implements PanelProperty {
+public class StringProperty implements PanelProperty {
 
     private GObject gObj;
     private String setter;
     private TextField textField;
 
-    public StringProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue) {
+    public StringProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row) {
         this.gObj = gObj;
         this.setter = setter;
 
-        add(new Label(name + ":"), 0, 0);
+        gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
 
         textField.setText(defaultValue);
@@ -31,7 +31,7 @@ public class StringProperty extends GridPane implements PanelProperty {
             return;//TODO: Probably need some better behavior here.
         }
 
-        add(textField, 1, 0);
+        gp.add(textField, 1, row);
 
         //Upon losing focus, save to the GObject
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {

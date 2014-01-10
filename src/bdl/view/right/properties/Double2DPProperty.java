@@ -9,26 +9,26 @@ import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
 
-public class Double2DPProperty extends GridPane implements PanelProperty {
+public class Double2DPProperty implements PanelProperty {
 
     private GObject gObj;
     private String setter;
     private String getter;
     private TextField textField;
 
-    public Double2DPProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue) {
+    public Double2DPProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row) {
         this.gObj = gObj;
         this.setter = setter;
         this.getter = getter;
 
-        add(new Label(name + ":"), 0, 0);
+        gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
 
         textField.setText("" + Double.parseDouble(defaultValue));//TODO - Handle bad defaultValue values
 
         setValue();
 
-        add(textField, 1, 0);
+        gp.add(textField, 1, row);
 
         //Upon losing focus, save to the GObject
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
