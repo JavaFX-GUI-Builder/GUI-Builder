@@ -27,6 +27,6 @@ public class ListenerHintProperty implements PanelProperty {
 
     @Override
     public String getJavaCode() {
-        return null;
+        return "";
     }
 }

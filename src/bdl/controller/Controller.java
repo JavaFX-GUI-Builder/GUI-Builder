@@ -1,8 +1,10 @@
 package bdl.controller;
 
+import bdl.build.CodeGenerator;
 import bdl.build.GObject;
 import bdl.model.ComponentSettings;
 import bdl.view.View;
+import bdl.view.left.ComponentMenuItem;
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
 import javafx.event.ActionEvent;
@@ -13,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller {
 
@@ -52,15 +55,13 @@ public class Controller {
             @Override
             public void handle(Event event) {
                 if (view.middleTabPane.codeTab.isSelected()) {
-                    StringBuilder code = new StringBuilder();
-                    for (Node node : view.middleTabPane.viewPane.getChildren()) {
-                        GObject gObj = (GObject) node;
-                        for (PanelProperty property : gObj.getPanelProperties()) {
-                            code.append(property.getJavaCode());
-                        }
-                        code.append('\n');
+                    HashMap<String, String> imports = new HashMap<>();
+                    for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
+                        ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
+                        imports.put(componentSettings.getType(), componentSettings.getPackageName());
                     }
-                    view.middleTabPane.codePane.setText(code.toString());
+                    String code = CodeGenerator.generateCode(view.middleTabPane.viewPane, imports);
+                    view.middleTabPane.codePane.setText(code);
                 }
             }
         });

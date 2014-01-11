@@ -12,7 +12,7 @@ public class MiddlePanel extends TabPane {
     public Tab codeTab;
     public Tab previewTab;
 
-    public AnchorPane viewPane;
+    public GUIObject viewPane;
     public AnchorPane viewPaneDecorator;
     public TextArea codePane;
 
