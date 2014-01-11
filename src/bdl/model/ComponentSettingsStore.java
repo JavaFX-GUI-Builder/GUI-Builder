@@ -117,13 +117,13 @@ public class ComponentSettingsStore {
             Element property = (Element)properties.item(i);
 
             String name = property.getElementsByTagName("name").item(0).getTextContent();
-            String type = property.getElementsByTagName("enabled").item(0).getTextContent();
-            String enabled = property.getElementsByTagName("pseudotype").item(0).getTextContent();
+            String enabled = property.getElementsByTagName("enabled").item(0).getTextContent();
+            String type = property.getElementsByTagName("pseudotype").item(0).getTextContent();
             String defaultValue = property.getElementsByTagName("default").item(0).getTextContent();
             String getter = property.getElementsByTagName("getter").item(0).getTextContent();
             String setter = property.getElementsByTagName("setter").item(0).getTextContent();
 
-            componentSettings.addProperty(name, type, enabled, defaultValue, getter, setter);
+            componentSettings.addProperty(name, enabled, type, defaultValue, getter, setter);
         }
     }
     
