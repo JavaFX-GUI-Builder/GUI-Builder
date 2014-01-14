@@ -100,7 +100,8 @@ public class CodeGenerator {
                 .append("import javafx.scene.Parent;\n")
                 .append("import javafx.scene.layout.AnchorPane;\n")
                 .append("import javafx.stage.Stage;\n")
-                .append("import javafx.scene.paint.Color;\n\n");
+                .append("import javafx.scene.paint.Color;\n")
+                .append("import javafx.scene.control.Tooltip;\n\n");
         for (String s : imports) {
             importsString.append(s);
         }
