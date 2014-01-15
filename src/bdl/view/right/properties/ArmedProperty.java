@@ -54,7 +54,7 @@ public class ArmedProperty implements PanelProperty {
         if (buttonBase.isArmed()) {
             return "";
         } else {
-            return gObj.getFieldName() + ".disarm();\n";
+            return gObj.getFieldName() + ".disarm();";
         }
     }
 }

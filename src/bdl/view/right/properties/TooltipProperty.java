@@ -52,7 +52,7 @@ public class TooltipProperty implements PanelProperty {
         String tooltipText = "";
         if (tooltip != null) {
             tooltipText = tooltip.getText();
-            return gObj.getFieldName() + ".setTooltip(new Tooltip(\"" + tooltipText + "\"));\n";
+            return gObj.getFieldName() + ".setTooltip(new Tooltip(\"" + tooltipText + "\"));";
         } else {
             return "";
         }

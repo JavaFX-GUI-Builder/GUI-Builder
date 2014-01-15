@@ -81,6 +81,6 @@ public class LayoutProperty implements PanelProperty {
     @Override
     public String getJavaCode() {
         return gObj.getFieldName() + ".setLayoutX(" + node.getLayoutX() + ");\n" +
-                gObj.getFieldName() + ".setLayoutY(" + node.getLayoutY() + ");\n";
+                gObj.getFieldName() + ".setLayoutY(" + node.getLayoutY() + ");";
     }
 }

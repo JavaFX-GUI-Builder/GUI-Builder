@@ -56,7 +56,7 @@ public class ColorProperty implements PanelProperty {
 
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + "." + setter + "(Color.web(\"" + colorPicker.getValue().toString() + "\"));\n";
+        return gObj.getFieldName() + "." + setter + "(Color.web(\"" + colorPicker.getValue().toString() + "\"));";
     }
 
 }

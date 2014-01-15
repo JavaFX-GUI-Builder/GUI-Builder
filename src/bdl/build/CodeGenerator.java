@@ -50,7 +50,7 @@ public class CodeGenerator {
             for (PanelProperty property : gObj.getPanelProperties()) {
                 String javaCode = property.getJavaCode();
                 if (!javaCode.isEmpty()) {
-                    code.append("        ").append(javaCode);
+                    code.append("        ").append(javaCode.replace("\n", "\n        ")).append("\n");
                 }
             }
             code.append('\n');
