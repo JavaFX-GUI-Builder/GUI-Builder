@@ -8,11 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
-import java.util.regex.Matcher;
-import javafx.event.EventHandler;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.InputMethodTextRun;
-import javafx.scene.input.KeyEvent;
 
 public class StringProperty implements PanelProperty {
 
@@ -51,34 +46,6 @@ public class StringProperty implements PanelProperty {
                 }
             }
         });
-        
-        textField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-                textField.setText(Matcher.quoteReplacement(t1));
-            }
-        });
-        
-        
-        
-//        textField.setOnKeyTyped(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent t) {
-//                if(t.getCharacter().equals("\"")) {
-//                    t.consume();
-//                }
-//            }   
-//        });
-        
-//        textField.setOnInputMethodTextChanged(new EventHandler<InputMethodEvent>() {
-//            @Override
-//            public void handle(InputMethodEvent t) {
-//                for(InputMethodTextRun imtr : t.getComposed()) {
-//                    imtr.getText().replaceAll("\"", "");
-//                }
-//            }
-//            
-//        });
     }
 
     private void setValue() throws Exception {
@@ -88,6 +55,6 @@ public class StringProperty implements PanelProperty {
 
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + "." + setter + "(\"" + textField.getText() + "\");\n";
+        return gObj.getFieldName() + "." + setter + "(\"" + textField.getText() + "\");";
     }
 }

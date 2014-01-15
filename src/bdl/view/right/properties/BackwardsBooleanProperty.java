@@ -54,7 +54,7 @@ public class BackwardsBooleanProperty implements PanelProperty {
 
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + "." + setter + "(" + !checkBox.isSelected() + ");\n";
+        return gObj.getFieldName() + "." + setter + "(" + !checkBox.isSelected() + ");";
     }
 
 

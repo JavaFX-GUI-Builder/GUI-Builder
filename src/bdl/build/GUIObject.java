@@ -9,6 +9,6 @@ public class GUIObject extends AnchorPane {
     }
 
     public String getClassName() {
-        return "JavaFXApplication6";
+        return "GUI";
     }
 }

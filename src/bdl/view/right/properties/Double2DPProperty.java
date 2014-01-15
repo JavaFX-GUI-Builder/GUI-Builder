@@ -64,7 +64,7 @@ public class Double2DPProperty implements PanelProperty {
 
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + "." + setter + "(" + textField.getText() + ");\n";
+        return gObj.getFieldName() + "." + setter + "(" + textField.getText() + ");";
     }
 
 }
