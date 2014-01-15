@@ -7,6 +7,14 @@
         <icon>Button.png</icon>
         <properties>
             <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
+            <property>
                 <name>Text</name>
                 <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
@@ -30,22 +38,6 @@
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
             </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
-            </property>
         </properties>
         <listeners>
             <listener>
@@ -63,28 +55,20 @@
         <icon>TextArea.png</icon>
         <properties>
             <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
+            <property>
                 <name>Text</name>
                 <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
                 <default>Text Area Text!</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
-            </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
             </property>
         </properties>
         <listeners>
@@ -103,28 +87,20 @@
         <icon>TextField.png</icon>
         <properties>
             <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
+            <property>
                 <name>Text</name>
                 <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
                 <default>Text Field Text!</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
-            </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
             </property>
         </properties>
         <listeners>
@@ -199,6 +175,14 @@
         <icon>ComboBox.png</icon>
         <properties>
             <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
+            <property>
                 <name>Enabled</name>
                 <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
@@ -213,22 +197,6 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
-            </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
             </property>
         </properties>
         <listeners>
@@ -246,6 +214,14 @@
         <layouttype>ControlLayout</layouttype>
         <icon>CheckBox.png</icon>
         <properties>
+            <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
             <property>
                 <name>Text</name>
                 <enabled>true</enabled>
@@ -270,22 +246,6 @@
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
             </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
-            </property>
         </properties>
         <listeners>
             <listener>
@@ -302,6 +262,14 @@
         <layouttype>ControlLayout</layouttype>
         <icon>Label.png</icon>
         <properties>
+            <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
             <property>
                 <name>Text</name>
                 <enabled>true</enabled>
@@ -325,22 +293,6 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
-            </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
             </property>
         </properties>
         <listeners>
@@ -378,6 +330,14 @@
         <icon>Circle.png</icon>
         <properties>
             <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
+            <property>
                 <name>Fill</name>
                 <enabled>true</enabled>
                 <pseudotype>Color</pseudotype>
@@ -409,22 +369,6 @@
                 <setter>setRadius</setter>
                 <getter>getRadius</getter>
             </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>100</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>100</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
-            </property>
         </properties>
         <listeners>
         </listeners>
@@ -436,6 +380,14 @@
         <layouttype>ShapeLayout</layouttype>
         <icon>Rectangle.png</icon>
         <properties>
+            <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
             <property>
                 <name>Fill</name>
                 <enabled>true</enabled>
@@ -459,22 +411,6 @@
                 <default>0</default>
                 <setter>setStrokeWidth</setter>
                 <getter>getStrokeWidth</getter>
-            </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>100</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>100</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
             </property>
             <property>
                 <name>Width (Temp)</name>
@@ -504,28 +440,20 @@
         <icon>PasswordField.png</icon>
         <properties>
             <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
+            <property>
                 <name>Text</name>
                 <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
                 <default>Password</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
-            </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
             </property>
         </properties>
         <listeners>
@@ -544,6 +472,14 @@
         <icon>ColorPicker.png</icon>
         <properties>
             <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
+            <property>
                 <name>Enabled</name>
                 <enabled>true</enabled>
                 <pseudotype>BackwardsBoolean</pseudotype>
@@ -558,22 +494,6 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
-            </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
             </property>
         </properties>
         <listeners>
@@ -591,6 +511,14 @@
         <layouttype>ControlLayout</layouttype>
         <icon>RadioButton.png</icon>
         <properties>
+            <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
             <property>
                 <name>Text</name>
                 <enabled>true</enabled>
@@ -615,22 +543,6 @@
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
             </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
-            </property>
         </properties>
         <listeners>
             <listener>
@@ -648,10 +560,18 @@
         <icon>Hyperlink.png</icon>
         <properties>
             <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+            </property>
+            <property>
                 <name>Text</name>
                 <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
-                <default>Button</default>
+                <default>Hyperlink</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
             </property>
@@ -670,22 +590,6 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
-            </property>
-            <property>
-                <name>Layout X (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutX</setter>
-                <getter>getLayoutX</getter>
-            </property>
-            <property>
-                <name>Layout Y (Temp)</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>10</default>
-                <setter>setLayoutY</setter>
-                <getter>getLayoutY</getter>
             </property>
         </properties>
         <listeners>
