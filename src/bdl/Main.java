@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -18,6 +19,7 @@ public class Main extends Application {
     public void start(final Stage stage) throws Exception {
         stage.setMinWidth(800);
         stage.setMinHeight(500);
+        stage.getIcons().add(new Image("file:icons/BlueJ_64.png"));
 
         //Allow user to specify their own file
         String componentSettingsLocation = System.getProperty("bdl.guibuilder.componentSettings");
