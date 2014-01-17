@@ -15,7 +15,7 @@ public class TooltipProperty implements PanelProperty {
     private TextField textField;
     private Control control;
 
-    public TooltipProperty (final GObject gObj, String name, String getter, String setter, String defaultValue, GridPane gp, int row) {
+    public TooltipProperty(final GObject gObj, String name, String getter, String setter, String defaultValue, GridPane gp, int row) {
         this.gObj = gObj;
 
         gp.add(new Label(name + ":"), 0, row);
@@ -34,6 +34,7 @@ public class TooltipProperty implements PanelProperty {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
                 if (!aBoolean2) {
+                    textField.setText(StringSanitizer.sanitize(textField.getText()));
                     setValue();
                 }
             }
