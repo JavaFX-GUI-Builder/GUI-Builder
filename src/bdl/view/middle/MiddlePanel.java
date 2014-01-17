@@ -37,20 +37,20 @@ public class MiddlePanel extends TabPane {
         
         viewPane = new GUIObject();
         viewPane.setStyle("-fx-background-color:#FFFFFF;");
-        viewPane.setMinWidth(800);
-        viewPane.setMinHeight(600);
-        viewPane.setMaxWidth(800);
-        viewPane.setMaxHeight(600);
+        viewPane.setMinWidth(600);
+        viewPane.setMinHeight(400);
+        viewPane.setMaxWidth(600);
+        viewPane.setMaxHeight(400);
         
         scroll = new ScrollPane();
         
         viewPaneDecorator = new AnchorPane();
         viewPaneDecorator.getChildren().add(viewPane);
 
-        viewPaneDecorator.setMinWidth(800);
-        viewPaneDecorator.setMinHeight(600);
-        viewPaneDecorator.setMaxWidth(800);
-        viewPaneDecorator.setMaxHeight(600);
+        viewPaneDecorator.setMinWidth(600);
+        viewPaneDecorator.setMinHeight(400);
+        viewPaneDecorator.setMaxWidth(600);
+        viewPaneDecorator.setMaxHeight(400);
 
         Rectangle rect = new Rectangle();
         rect.widthProperty().bind(viewPaneDecorator.widthProperty());
