@@ -30,6 +30,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import javafx.scene.shape.Circle;
 
 public class Controller {
 
@@ -103,7 +104,9 @@ public class Controller {
 
                     //Compile class
                     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-                    if (compiler == null) throw new RuntimeException("Jar could not be created as Java version requires javac.");
+                    if (compiler == null) {
+                        throw new RuntimeException("Jar could not be created as Java version requires javac.");
+                    }
                     StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 
                     Iterable<? extends JavaFileObject> compilationUnits1 =
@@ -153,7 +156,7 @@ public class Controller {
                         try {
                             Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                             Constructor constructor = panelPropertyClass.getConstructor();
-                            newThing = (GObject)constructor.newInstance();
+                            newThing = (GObject) constructor.newInstance();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -163,7 +166,7 @@ public class Controller {
 
                         //Could be null, e.g. ListView or ScrollPane
                         if (newThing != null) {
-                            final Node newNode = (Node)newThing;
+                            final Node newNode = (Node) newThing;
 
                             newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                                 @Override
@@ -186,6 +189,14 @@ public class Controller {
                             });
 
                             view.middleTabPane.viewPane.getChildren().add(newNode);
+                            if (newNode instanceof Circle) {
+                                newNode.setLayoutX((newNode.getLayoutBounds().getWidth() / 2) + 4);
+                                newNode.setLayoutY((newNode.getLayoutBounds().getWidth() / 2) + 4);
+                            }
+                            else {
+                                newNode.setLayoutX(newNode.getLayoutX() + 4);
+                                newNode.setLayoutY(newNode.getLayoutY() + 4);
+                            }
                         }
                     }
                     view.leftPanel.leftList.getSelectionModel().select(-1);
@@ -196,5 +207,4 @@ public class Controller {
 
 
     }
-
 }

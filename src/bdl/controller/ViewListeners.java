@@ -29,8 +29,8 @@ public class ViewListeners {
         isMousePressed = true;
         curX = mouseEvent.getX();
         curY = mouseEvent.getY();
-        double nodeX = node.getLayoutX();
-        double nodeY = node.getLayoutY();
+        double nodeX = node.getLayoutX() + 50;
+        double nodeY = node.getLayoutY() + 50;
         Bounds bounds = node.getLayoutBounds();
         double nodeW = bounds.getWidth();
         double nodeH = bounds.getHeight();
@@ -60,15 +60,15 @@ public class ViewListeners {
             double nodeW = bounds.getWidth();
             double nodeH = bounds.getHeight();
             if (node instanceof Circle) {
-                outline.setLayoutX(x - 4 - (nodeW / 2));
-                outline.setLayoutY(y - 4 - (nodeH / 2));
+                outline.setLayoutX(x + 50 - 4 - (nodeW / 2));
+                outline.setLayoutY(y + 50 - 4 - (nodeH / 2));
             } else if (node instanceof Rectangle) {
                 Rectangle r = (Rectangle) node;
-                outline.setLayoutX(x - 4 - (r.getStrokeWidth() / 2));
-                outline.setLayoutY(y - 4 - (r.getStrokeWidth() / 2));
+                outline.setLayoutX(x + 50 - 4 - (r.getStrokeWidth() / 2));
+                outline.setLayoutY(y + 50 - 4 - (r.getStrokeWidth() / 2));
             } else {
-                outline.setLayoutX(x - 4);
-                outline.setLayoutY(y - 4);
+                outline.setLayoutX(x + 50 - 4);
+                outline.setLayoutY(y + 50 - 4);
             }
         }
     }
