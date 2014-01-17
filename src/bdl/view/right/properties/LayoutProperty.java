@@ -18,21 +18,22 @@ public class LayoutProperty implements PanelProperty {
     public LayoutProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row) {
         this.node = (Node)gObj;
         this.gObj = gObj;
+        int row1 = row;
+        int row2 = row + 1;
 
-        GridPane gridPane = new GridPane();
-        GridPane.setColumnSpan(gridPane, 2);
-        gp.add(gridPane, 0, row);
-
-        gridPane.add(new Label("LayoutX:"), 0, 0);
-        gridPane.add(new Label("LayoutY:"), 0, 1);
+        Label lx = new Label("LayoutX:");
+        Label ly = new Label("LayoutY:");
+        
+        gp.add(lx, 0, row1);
+        gp.add(ly, 0, row2);
         layoutX = new TextField();
         layoutY = new TextField();
 
         layoutX.setText("" + node.getLayoutX());
         layoutY.setText("" + node.getLayoutY());
 
-        gridPane.add(layoutX, 1, 0);
-        gridPane.add(layoutY, 1, 1);
+        gp.add(layoutX, 1, row1);
+        gp.add(layoutY, 1, row2);
 
         node.layoutXProperty().addListener(new ChangeListener<Number>() {
             @Override

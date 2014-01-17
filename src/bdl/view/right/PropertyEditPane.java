@@ -5,9 +5,9 @@ import bdl.model.ComponentSettings;
 import bdl.model.ListenerHint;
 import bdl.model.Property;
 import bdl.view.right.properties.FieldName;
+import bdl.view.right.properties.LayoutProperty;
 import bdl.view.right.properties.ListenerHintProperty;
 import bdl.view.right.properties.PanelProperty;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -39,6 +39,9 @@ public class PropertyEditPane extends GridPane {
                     Class panelPropertyClass = Class.forName("bdl.view.right.properties." + type + "Property");
                     Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, GridPane.class, int.class);
                     PanelProperty panelProperty = (PanelProperty)constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getDefaultValue(), this, currentRow++);
+                    if(panelProperty instanceof LayoutProperty) {
+                        currentRow++;
+                    }
                     panelPropertyList.add(panelProperty);
                 } catch (Exception e) {
                     System.out.println(type + "Property failed.");
