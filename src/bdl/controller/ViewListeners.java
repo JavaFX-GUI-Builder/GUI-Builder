@@ -29,8 +29,8 @@ public class ViewListeners {
         isMousePressed = true;
         curX = mouseEvent.getX();
         curY = mouseEvent.getY();
-        double nodeX = node.getLayoutX() + 50;
-        double nodeY = node.getLayoutY() + 50;
+        double nodeX = node.getLayoutX();
+        double nodeY = node.getLayoutY();
         Bounds bounds = node.getLayoutBounds();
         double nodeW = bounds.getWidth();
         double nodeH = bounds.getHeight();
@@ -45,8 +45,8 @@ public class ViewListeners {
             outline.setLayoutX(nodeX - 4);
             outline.setLayoutY(nodeY - 4);
         }
-        outline.setWidth(nodeW + 10); // Don't ask. Its to do with the one pixel border on the scrollpanel
-        outline.setHeight(nodeH + 10); // I think...
+        outline.setWidth(nodeW + 8); 
+        outline.setHeight(nodeH + 8); 
     }
     double curX = 0, curY = 0;
 
@@ -61,15 +61,15 @@ public class ViewListeners {
             double nodeW = bounds.getWidth();
             double nodeH = bounds.getHeight();
             if (node instanceof Circle) {
-                outline.setLayoutX(x + 50 - 4 - (nodeW / 2));
-                outline.setLayoutY(y + 50 - 4 - (nodeH / 2));
+                outline.setLayoutX(x - 4 - (nodeW / 2));
+                outline.setLayoutY(y - 4 - (nodeH / 2));
             } else if (node instanceof Rectangle) {
                 Rectangle r = (Rectangle) node;
-                outline.setLayoutX(x + 50 - 4 - (r.getStrokeWidth() / 2));
-                outline.setLayoutY(y + 50 - 4 - (r.getStrokeWidth() / 2));
+                outline.setLayoutX(x - 4 - (r.getStrokeWidth() / 2));
+                outline.setLayoutY(y - 4 - (r.getStrokeWidth() / 2));
             } else {
-                outline.setLayoutX(x + 50 - 4);
-                outline.setLayoutY(y + 50 - 4);
+                outline.setLayoutX(x - 4);
+                outline.setLayoutY(y - 4);
             }
         }
     }
