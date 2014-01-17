@@ -58,6 +58,7 @@ public class View extends AnchorPane {
         AnchorPane.setBottomAnchor(leftPanel, 0.0);
         leftPanel.setDividerPosition(0, 0.6);
         leftPanel.setMinWidth(225);
+        leftAnchorPane.setMaxWidth(225);
         leftAnchorPane.getChildren().add(leftPanel);
         //End LeftPanel
 
@@ -70,6 +71,7 @@ public class View extends AnchorPane {
         rightPanel.setOrientation(Orientation.VERTICAL);
         rightPanel.setDividerPositions(0.6);
         rightPanel.setMinWidth(225);
+        rightAnchorPane.setMaxWidth(225);
         rightAnchorPane.getChildren().add(rightPanel);
         //End RightPanel
 
