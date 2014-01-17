@@ -1,6 +1,7 @@
 package bdl.view.middle;
 
 import bdl.build.GUIObject;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -37,11 +38,19 @@ public class MiddlePanel extends TabPane {
         AnchorPane.setLeftAnchor(blankPane, 0.0);
         viewPane = new GUIObject();
         viewPane.setStyle("-fx-background-color:#FFFFFF;");
-        AnchorPane.setBottomAnchor(viewPane, 50.0);
-        AnchorPane.setTopAnchor(viewPane, 50.0);
-        AnchorPane.setRightAnchor(viewPane, 50.0);
-        AnchorPane.setLeftAnchor(viewPane, 50.0);
-        viewPaneDecorator.getChildren().addAll(blankPane, viewPane);
+        viewPane.setMinWidth(800);
+        viewPane.setMinHeight(600);
+        viewPane.setMaxWidth(800);
+        viewPane.setMaxHeight(600);
+        ScrollPane scroll = new ScrollPane();
+        AnchorPane.setBottomAnchor(scroll, 50.0);
+        AnchorPane.setTopAnchor(scroll, 50.0);
+        AnchorPane.setRightAnchor(scroll, 50.0);
+        AnchorPane.setLeftAnchor(scroll, 50.0);
+        scroll.setContent(viewPane);
+        scroll.setMaxWidth(800);
+        scroll.setMaxHeight(600);
+        viewPaneDecorator.getChildren().addAll(blankPane, scroll);
 
         //viewPane.setStyle("-fx-opacity: 1;");//TODO - We could use this to prevent Node interactions
 

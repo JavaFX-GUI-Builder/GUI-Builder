@@ -45,8 +45,8 @@ public class ViewListeners {
             outline.setLayoutX(nodeX - 4);
             outline.setLayoutY(nodeY - 4);
         }
-        outline.setWidth(nodeW + 8);
-        outline.setHeight(nodeH + 8);
+        outline.setWidth(nodeW + 10); // Don't ask. Its to do with the one pixel border on the scrollpanel
+        outline.setHeight(nodeH + 10); // I think...
     }
     double curX = 0, curY = 0;
 
