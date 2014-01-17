@@ -1,6 +1,7 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -14,6 +15,7 @@ public class LayoutProperty implements PanelProperty {
     private Node node;
     private TextField layoutX;
     private TextField layoutY;
+    private DecimalFormat format = new DecimalFormat("#.##");
 
     public LayoutProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row) {
         this.node = (Node)gObj;
@@ -29,8 +31,8 @@ public class LayoutProperty implements PanelProperty {
         layoutX = new TextField();
         layoutY = new TextField();
 
-        layoutX.setText("" + node.getLayoutX());
-        layoutY.setText("" + node.getLayoutY());
+        layoutX.setText(format.format(node.getLayoutX()));
+        layoutY.setText(format.format(node.getLayoutY()));
 
         gp.add(layoutX, 1, row1);
         gp.add(layoutY, 1, row2);
@@ -38,13 +40,13 @@ public class LayoutProperty implements PanelProperty {
         node.layoutXProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                layoutX.setText("" + number2);
+                layoutX.setText(format.format(number2));
             }
         });
         node.layoutYProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-                layoutY.setText("" + number2);
+                layoutY.setText(format.format(number2));
             }
         });
 
@@ -58,7 +60,7 @@ public class LayoutProperty implements PanelProperty {
                         node.setLayoutX(value);
                     } catch (Exception e) {
                         //Reset value
-                        layoutX.setText("" + node.getLayoutX());
+                        layoutX.setText(format.format(node.getLayoutX()));
                     }
                 }
             }
@@ -72,7 +74,7 @@ public class LayoutProperty implements PanelProperty {
                         node.setLayoutY(value);
                     } catch (Exception e) {
                         //Reset value
-                        layoutY.setText("" + node.getLayoutY());
+                        layoutY.setText(format.format(node.getLayoutY()));
                     }
                 }
             }

@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 
 public class Double1DPProperty implements PanelProperty {
 
@@ -15,6 +16,7 @@ public class Double1DPProperty implements PanelProperty {
     private String setter;
     private String getter;
     private TextField textField;
+    private DecimalFormat format = new DecimalFormat("#.##");
 
     public Double1DPProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row) {
         this.gObj = gObj;
@@ -24,7 +26,7 @@ public class Double1DPProperty implements PanelProperty {
         gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
 
-        textField.setText("" + Double.parseDouble(defaultValue));//TODO - Handle bad defaultValue values
+        textField.setText(format.format(Double.parseDouble(defaultValue))); //TODO - Handle bad defaultValue values
 
         setValue();
 
@@ -43,8 +45,8 @@ public class Double1DPProperty implements PanelProperty {
 
     private void setValue() {
         try {
-            double dValue = (double)((int)(0.5+(Double.parseDouble(textField.getText()) * 10)))/10;
-            textField.setText("" + dValue);
+            double dValue = (double) ((int) (0.5 + (Double.parseDouble(textField.getText()) * 10))) / 10;
+            textField.setText(format.format(dValue));
 
             Method method = gObj.getClass().getMethod(setter, double.class);
             method.invoke(gObj, dValue);
@@ -53,7 +55,7 @@ public class Double1DPProperty implements PanelProperty {
             Method method;
             try {
                 method = gObj.getClass().getMethod(getter);
-                textField.setText("" + (Double)method.invoke(gObj));
+                textField.setText(format.format((Double) method.invoke(gObj)));
             } catch (Exception ee) {
                 e.printStackTrace();
             }
@@ -65,5 +67,4 @@ public class Double1DPProperty implements PanelProperty {
     public String getJavaCode() {
         return gObj.getFieldName() + "." + setter + "(" + textField.getText() + ");";
     }
-
 }
