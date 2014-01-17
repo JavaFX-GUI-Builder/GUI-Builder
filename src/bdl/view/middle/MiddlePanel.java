@@ -53,18 +53,20 @@ public class MiddlePanel extends TabPane {
         AnchorPane.setTopAnchor(viewPaneDecorator, 50.0);
         AnchorPane.setRightAnchor(viewPaneDecorator, 50.0);
         AnchorPane.setLeftAnchor(viewPaneDecorator, 50.0);
+        viewPaneDecorator.getChildren().add(viewPane);
         
         scroll.setContent(viewPane);
         scroll.setMaxWidth(800);
         scroll.setMaxHeight(600);
-        blankPane.getChildren().addAll(viewPaneDecorator, scroll);
+        scroll.setContent(blankPane);
+        blankPane.getChildren().addAll(viewPaneDecorator);
 
         //viewPane.setStyle("-fx-opacity: 1;");//TODO - We could use this to prevent Node interactions
 
         codePane = new TextArea();
         codePane.setEditable(false);
 
-        viewTab.setContent(blankPane);
+        viewTab.setContent(scroll);
         codeTab.setContent(codePane);
     }
 
