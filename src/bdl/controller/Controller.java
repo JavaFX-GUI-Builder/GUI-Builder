@@ -37,6 +37,7 @@ public class Controller {
     private final ArrayList<String> fieldNames;
 
     public Controller(final View view) {
+        final ViewListeners viewListeners = new ViewListeners(view);
         fieldNames = new ArrayList<>();
 
         //Start Top Panel
@@ -66,6 +67,15 @@ public class Controller {
         //End TopPanel
 
         //Start MiddlePanel
+        view.middleTabPane.viewPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null));
+                viewListeners.resetOutline();
+                mouseEvent.consume();
+            }
+        });
+
         view.middleTabPane.codeTab.setOnSelectionChanged(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
@@ -143,8 +153,6 @@ public class Controller {
         //End MiddlePanel
 
         //Start LeftPanel
-        final ViewListeners viewListeners = new ViewListeners(view);
-
         view.leftPanel.leftList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -173,18 +181,21 @@ public class Controller {
                                 public void handle(MouseEvent mouseEvent) {
                                     viewListeners.onMousePressed(newNode, mouseEvent);
                                     view.rightPanel.propertyScroll.setContent(propertyEditPane);
+                                    mouseEvent.consume();
                                 }
                             });
                             newNode.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     viewListeners.onMouseReleased(newNode, mouseEvent);
+                                    mouseEvent.consume();
                                 }
                             });
                             newNode.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
                                     viewListeners.onMouseDragged(newNode, mouseEvent);
+                                    mouseEvent.consume();
                                 }
                             });
 

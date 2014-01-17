@@ -26,6 +26,7 @@ public class ViewListeners {
     }
 
     public void onMousePressed(Node node, MouseEvent mouseEvent) {
+        outline.setVisible(true);
         isMousePressed = true;
         curX = mouseEvent.getX();
         curY = mouseEvent.getY();
@@ -72,6 +73,10 @@ public class ViewListeners {
                 outline.setLayoutY(y - 4);
             }
         }
+    }
+
+    public void resetOutline() {
+        outline.setVisible(false);
     }
 
     public void onMouseReleased(Node node, MouseEvent mouseEvent) {
