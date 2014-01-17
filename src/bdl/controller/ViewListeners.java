@@ -52,6 +52,7 @@ public class ViewListeners {
 
     public void onMouseDragged(Node node, MouseEvent mouseEvent) {
         if (isMousePressed) {
+
             double x = node.getLayoutX() + (mouseEvent.getX() - curX);
             double y = node.getLayoutY() + (mouseEvent.getY() - curY);
             node.setLayoutX(x);

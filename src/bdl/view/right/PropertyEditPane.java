@@ -26,8 +26,10 @@ public class PropertyEditPane extends GridPane {
         } else {
             int currentRow = 0;
             this.getChildren().clear();
+            this.setMaxWidth(200);
 
             Label propertiesHeading = new Label("Properties:");
+            propertiesHeading.setMinWidth(90);
             propertiesHeading.setFont(Font.font(propertiesHeading.getFont().getFamily(), FontWeight.BOLD, propertiesHeading.getFont().getSize() + 0.5));
             add(propertiesHeading, 0, currentRow++);
             new FieldName(gObj, fieldNames, componentSettings.getType(), this, currentRow++);
