@@ -30,6 +30,9 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Bounds;
 import javafx.scene.shape.Circle;
 
 public class Controller {
@@ -175,7 +178,14 @@ public class Controller {
                         //Could be null, e.g. ListView or ScrollPane
                         if (newThing != null) {
                             final Node newNode = (Node) newThing;
-
+                            
+                            newNode.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
+                                @Override
+                                public void changed(ObservableValue<? extends Bounds> ov, Bounds t, Bounds t1) {
+                                    viewListeners.redraw(newNode);
+                                }
+                            });
+                            
                             newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
@@ -213,6 +223,8 @@ public class Controller {
                     view.leftPanel.leftList.getSelectionModel().select(-1);
                 }
             }
+
+            
         });
         //End LeftPanel
 

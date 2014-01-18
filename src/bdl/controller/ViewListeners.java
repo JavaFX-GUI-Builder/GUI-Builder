@@ -78,6 +78,28 @@ public class ViewListeners {
     public void resetOutline() {
         outline.setVisible(false);
     }
+    
+    public void redraw(Node node) {
+        outline.setVisible(true);
+        double nodeX = node.getLayoutX();
+        double nodeY = node.getLayoutY();
+        Bounds bounds = node.getLayoutBounds();
+        double nodeW = bounds.getWidth();
+        double nodeH = bounds.getHeight();
+        if (node instanceof Circle) {
+            outline.setLayoutX(nodeX - 4 - (nodeW / 2));
+            outline.setLayoutY(nodeY - 4 - (nodeH / 2));
+        } else if (node instanceof Rectangle) {
+            Rectangle r = (Rectangle) node;
+            outline.setLayoutX(nodeX - 4 - (r.getStrokeWidth() / 2));
+            outline.setLayoutY(nodeY - 4 - (r.getStrokeWidth() / 2));
+        } else {
+            outline.setLayoutX(nodeX - 4);
+            outline.setLayoutY(nodeY - 4);
+        }
+        outline.setWidth(nodeW + 8); 
+        outline.setHeight(nodeH + 8); 
+    }
 
     public void onMouseReleased(Node node, MouseEvent mouseEvent) {
         isMousePressed = false;
