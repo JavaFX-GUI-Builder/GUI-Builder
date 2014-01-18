@@ -1,5 +1,6 @@
 package bdl.view.right.properties;
 
+import bdl.view.right.hints.ListenerHintWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -16,11 +17,10 @@ public class ListenerHintProperty implements PanelProperty {
         gp.add(new Label(name + ":"), 0, row);
         gp.add(button, 1, row);
 
-        //Upon losing focus, save to the GObject
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                System.out.println(text); //TODO - Add pop-up window of text
+                new ListenerHintWindow(text);
             }
         });
     }

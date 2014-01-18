@@ -6,8 +6,6 @@ import bdl.model.ComponentSettings;
 import bdl.view.View;
 import bdl.view.left.ComponentMenuItem;
 import bdl.view.right.PropertyEditPane;
-import bdl.view.right.properties.PanelProperty;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
