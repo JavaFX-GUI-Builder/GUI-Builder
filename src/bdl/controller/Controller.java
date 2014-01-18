@@ -186,6 +186,20 @@ public class Controller {
                                 }
                             });
                             
+                            newNode.layoutXProperty().addListener(new ChangeListener<Number>() {
+                                @Override
+                                public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
+                                    viewListeners.redraw(newNode);
+                                }
+                            });
+                            
+                            newNode.layoutYProperty().addListener(new ChangeListener<Number>() {
+                                @Override
+                                public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
+                                    viewListeners.redraw(newNode);
+                                }
+                            });
+                            
                             newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
