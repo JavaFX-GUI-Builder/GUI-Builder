@@ -9,6 +9,9 @@ import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class Double2DPProperty implements PanelProperty {
 
@@ -37,6 +40,15 @@ public class Double2DPProperty implements PanelProperty {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
                 if (!aBoolean2) {
+                    setValue();
+                }
+            }
+        });
+        
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
                     setValue();
                 }
             }

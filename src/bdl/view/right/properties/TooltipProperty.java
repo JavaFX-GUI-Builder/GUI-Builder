@@ -3,10 +3,13 @@ package bdl.view.right.properties;
 import bdl.build.GObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
 public class TooltipProperty implements PanelProperty {
@@ -34,6 +37,16 @@ public class TooltipProperty implements PanelProperty {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
                 if (!aBoolean2) {
+                    textField.setText(StringSanitizer.sanitize(textField.getText()));
+                    setValue();
+                }
+            }
+        });
+
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
                     textField.setText(StringSanitizer.sanitize(textField.getText()));
                     setValue();
                 }

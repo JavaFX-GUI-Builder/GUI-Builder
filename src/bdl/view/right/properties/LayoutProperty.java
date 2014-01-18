@@ -4,9 +4,12 @@ import bdl.build.GObject;
 import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
 public class LayoutProperty implements PanelProperty {
@@ -69,6 +72,36 @@ public class LayoutProperty implements PanelProperty {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
                 if (!aBoolean2) {
+                    try {
+                        double value = Double.parseDouble(layoutY.getText());
+                        node.setLayoutY(value);
+                    } catch (Exception e) {
+                        //Reset value
+                        layoutY.setText(format.format(node.getLayoutY()));
+                    }
+                }
+            }
+        });
+        
+        layoutX.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
+                    try {
+                        double value = Double.parseDouble(layoutX.getText());
+                        node.setLayoutX(value);
+                    } catch (Exception e) {
+                        //Reset value
+                        layoutX.setText(format.format(node.getLayoutX()));
+                    }
+                }
+            }
+        });
+        
+        layoutY.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
                     try {
                         double value = Double.parseDouble(layoutY.getText());
                         node.setLayoutY(value);
