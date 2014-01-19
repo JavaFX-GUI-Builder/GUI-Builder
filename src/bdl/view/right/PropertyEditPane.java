@@ -1,6 +1,7 @@
 package bdl.view.right;
 
 import bdl.build.GObject;
+import bdl.build.GUIObject;
 import bdl.model.ComponentSettings;
 import bdl.model.ListenerHint;
 import bdl.model.Property;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class PropertyEditPane extends GridPane {
 
-    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings, ArrayList<String> fieldNames) {
+    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings, ArrayList<String> fieldNames, GUIObject guiObject) {
         //For reference, old properties panel: http://i.imgur.com/UBb7P4k.png
         if (gObj == null) {
             add(new Label("No component selected."), 0, 0);
@@ -54,7 +55,7 @@ public class PropertyEditPane extends GridPane {
                 String name = lhint.getName();
                 String text = lhint.getText();
                 try {
-                    PanelProperty panelProperty = (PanelProperty)new ListenerHintProperty(name, text, this, currentRow++);
+                    PanelProperty panelProperty = new ListenerHintProperty(gObj, guiObject, name, text, this, currentRow++);
                     panelPropertyList.add(panelProperty);
                 } catch (Exception e) {
                     System.out.println(name + "Listener failed.");

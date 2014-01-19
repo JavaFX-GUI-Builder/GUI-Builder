@@ -71,7 +71,7 @@ public class Controller {
         view.middleTabPane.viewPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null));
+                view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null, null));
                 viewListeners.resetOutline();
                 mouseEvent.consume();
             }
@@ -171,7 +171,7 @@ public class Controller {
                         }
 
                         //Sets the default settings on the gObject and creates the property edit pane
-                        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames);
+                        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane);
 
                         //Could be null, e.g. ListView or ScrollPane
                         if (newThing != null) {
