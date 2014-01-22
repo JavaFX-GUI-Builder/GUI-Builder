@@ -8,9 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 public class StringProperty implements PanelProperty {
     
@@ -42,21 +39,6 @@ public class StringProperty implements PanelProperty {
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
                 if (!aBoolean2) {
                     try {
-                        textField.setText(StringSanitizer.sanitize(textField.getText()));
-                        setValue();
-                    } catch (Exception e) {
-                        return;//TODO: Probably need some better behavior here.
-                    }
-                }
-            }
-        });
-        
-        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent ke) {
-                if (ke.getCode().equals(KeyCode.ENTER)) {
-                    try {
-                        textField.setText(StringSanitizer.sanitize(textField.getText()));
                         setValue();
                     } catch (Exception e) {
                         return;//TODO: Probably need some better behavior here.
@@ -73,6 +55,6 @@ public class StringProperty implements PanelProperty {
     
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + "." + setter + "(\"" + textField.getText() + "\");";
+        return gObj.getFieldName() + "." + setter + "(\"" + textField.getText().replace("\\", "\\\\").replace("\"", "\\\"") + "\");";
     }
 }
