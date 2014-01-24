@@ -29,4 +29,9 @@ public class GButton extends Button implements GObject {
     public List<PanelProperty> getPanelProperties() {
         return properties;
     }
+    
+    @Override
+    public String toString() {
+        return fieldName;
+    }
 }

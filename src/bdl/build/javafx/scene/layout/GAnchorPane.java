@@ -29,4 +29,9 @@ public class GAnchorPane extends AnchorPane implements GObject {
     public List<PanelProperty> getPanelProperties() {
         return properties;
     }
+    
+    @Override
+    public String toString() {
+        return fieldName;
+    }
 }

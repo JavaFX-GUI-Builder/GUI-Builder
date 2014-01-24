@@ -38,8 +38,6 @@ public class View extends AnchorPane {
         SplitPane mainContent = new SplitPane();
         rightPanel = new RightPanel();
 
-        leftPanel = new LeftPanel(componentSettingsStore);
-
         AnchorPane middleAnchorPane = new AnchorPane();
         middleTabPane = new MiddlePanel();
         AnchorPane.setTopAnchor(middleTabPane, 0.0);
@@ -50,6 +48,7 @@ public class View extends AnchorPane {
         //End MiddlePanel
 
         //Begin LeftPanel
+        leftPanel = new LeftPanel(componentSettingsStore, this);
         AnchorPane leftAnchorPane = new AnchorPane();
         leftPanel.setOrientation(Orientation.VERTICAL);
         AnchorPane.setLeftAnchor(leftPanel, 0.0);
@@ -81,5 +80,4 @@ public class View extends AnchorPane {
         borderPane.setCenter(mainContent);
 
     }
-
 }

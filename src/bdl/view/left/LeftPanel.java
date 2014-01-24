@@ -3,6 +3,8 @@ package bdl.view.left;
 import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
 import bdl.model.ComponentSettingsStore;
+import bdl.view.View;
+import bdl.view.hierarchy.HierarchyPane;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,7 +16,7 @@ public class LeftPanel extends SplitPane {
     public TreeItem<String> treeRoot;
     public TreeView<String> leftTreeView;
 
-    public LeftPanel(ComponentSettingsStore componentSettingsStore) {
+    public LeftPanel(ComponentSettingsStore componentSettingsStore, View view) {
         //Begin left component list
         leftList = new ListView<>();
 
@@ -43,17 +45,10 @@ public class LeftPanel extends SplitPane {
         //End left component list
 
         //Begin left hierarchy panel
-        treeRoot = new TreeItem<>("AnchorPane");
-        treeRoot.setExpanded(true);
-        treeRoot.getChildren().add(new TreeItem<>("Button"));
-        treeRoot.getChildren().add(new TreeItem<>("Button"));
-        treeRoot.getChildren().add(new TreeItem<>("Button"));
-        treeRoot.getChildren().add(new TreeItem<>("Button"));
-
-        leftTreeView = new TreeView<>(treeRoot);
-
-        hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), leftTreeView);
+        hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), new HierarchyPane(view));
         hierarchyPane.setCollapsible(false);
+        hierarchyPane.setMinWidth(205);
+        hierarchyPane.setMaxWidth(205);
         //End left hierarchy panel
 
         getItems().addAll(leftList);
