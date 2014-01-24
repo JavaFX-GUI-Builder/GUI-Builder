@@ -2,6 +2,7 @@ package bdl.view.right.properties;
 
 import bdl.build.GObject;
 import bdl.build.GUIObject;
+import bdl.lang.LabelGrabber;
 import bdl.view.right.hints.ListenerHintWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,7 +12,7 @@ import javafx.scene.layout.GridPane;
 
 public class ListenerHintProperty implements PanelProperty {
 
-    private Button button = new Button("Hint");
+    private Button button = new Button(LabelGrabber.getLabel("hint.button.text"));
 
     public ListenerHintProperty (final GObject gObj, final GUIObject guiObject, String name, final String text, GridPane gp, int row) {
         gp.add(new Label(name + ":"), 0, row);

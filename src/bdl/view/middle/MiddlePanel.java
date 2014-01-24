@@ -1,6 +1,7 @@
 package bdl.view.middle;
 
 import bdl.build.GUIObject;
+import bdl.lang.LabelGrabber;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -26,9 +27,9 @@ public class MiddlePanel extends TabPane {
     public MiddlePanel() {
         setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        viewTab = new Tab("    Editor View    ");
-        codeTab = new Tab("    Code View    ");
-        previewTab = new Tab("    Preview GUI    ");
+        viewTab = new Tab("    " + LabelGrabber.getLabel("editor.view.tab") + "    ");
+        codeTab = new Tab("    " + LabelGrabber.getLabel("code.view.tab") + "    ");
+        previewTab = new Tab("    " + LabelGrabber.getLabel("preview.gui.tab") + "    ");
 
         getTabs().addAll(viewTab, codeTab, previewTab);
 

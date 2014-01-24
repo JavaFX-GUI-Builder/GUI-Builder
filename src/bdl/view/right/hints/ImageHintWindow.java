@@ -1,5 +1,6 @@
 package bdl.view.right.hints;
 
+import bdl.lang.LabelGrabber;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -20,7 +21,7 @@ public class ImageHintWindow {
         s.resizableProperty().setValue(false);
         Scene sc = new Scene(pane, 400, 200);
         s.setScene(sc);
-        Label l = new Label("This code template is for suggestion only");
+        Label l = new Label(LabelGrabber.getLabel("hint.template.warning"));
         TextArea ta = new TextArea();
         ta.setEditable(false);
         ta.setText(".setGraphic(new Image(**FILELOCATION**));");

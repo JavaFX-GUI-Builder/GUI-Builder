@@ -1,6 +1,7 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.lang.LabelGrabber;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -17,7 +18,7 @@ public class FieldName {
     private ArrayList<String> fieldNames;
 
     public FieldName(final GObject gObj, ArrayList<String> fieldNames, String type, GridPane gp, int row) {
-        gp.add(new Label("Field Name:"), 0, row);
+        gp.add(new Label(LabelGrabber.getLabel("field.name.text") + ":"), 0, row);
         final TextField textField = new FieldNameTextField();
         this.fieldNames = fieldNames;
 

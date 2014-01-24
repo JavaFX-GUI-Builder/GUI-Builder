@@ -2,6 +2,7 @@ package bdl.view.right;
 
 import bdl.build.GObject;
 import bdl.build.GUIObject;
+import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
 import bdl.model.ListenerHint;
 import bdl.model.Property;
@@ -23,13 +24,13 @@ public class PropertyEditPane extends GridPane {
     public PropertyEditPane(GObject gObj, ComponentSettings componentSettings, ArrayList<String> fieldNames, GUIObject guiObject) {
         //For reference, old properties panel: http://i.imgur.com/UBb7P4k.png
         if (gObj == null) {
-            add(new Label("No component selected."), 0, 0);
+            add(new Label(LabelGrabber.getLabel("no.component.text")), 0, 0);
         } else {
             int currentRow = 0;
             this.getChildren().clear();
             this.setMaxWidth(200);
 
-            Label propertiesHeading = new Label("Properties:");
+            Label propertiesHeading = new Label(LabelGrabber.getLabel("properties.text") + ":");
             propertiesHeading.setMinWidth(90);
             propertiesHeading.setFont(Font.font(propertiesHeading.getFont().getFamily(), FontWeight.BOLD, propertiesHeading.getFont().getSize() + 0.5));
             add(propertiesHeading, 0, currentRow++);

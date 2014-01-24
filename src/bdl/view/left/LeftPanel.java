@@ -1,5 +1,6 @@
 package bdl.view.left;
 
+import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
 import bdl.model.ComponentSettingsStore;
 import javafx.scene.control.*;
@@ -51,7 +52,7 @@ public class LeftPanel extends SplitPane {
 
         leftTreeView = new TreeView<>(treeRoot);
 
-        hierarchyPane = new TitledPane("Hierarchy", leftTreeView);
+        hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), leftTreeView);
         hierarchyPane.setCollapsible(false);
         //End left hierarchy panel
 

@@ -2,6 +2,7 @@ package bdl.controller;
 
 import bdl.build.CodeGenerator;
 import bdl.build.GObject;
+import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
 import bdl.view.View;
 import bdl.view.left.ComponentMenuItem;
@@ -34,8 +35,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Circle;
 
@@ -150,8 +149,8 @@ public class Controller {
                     }
 
                     //Delete created files
-                    new File(view.middleTabPane.viewPane.getClassName() + ".java").delete();
-                    new File(view.middleTabPane.viewPane.getClassName() + ".class").delete();
+                    //new File(view.middleTabPane.viewPane.getClassName() + ".java").delete();
+                    //new File(view.middleTabPane.viewPane.getClassName() + ".class").delete();
 
                     view.middleTabPane.getSelectionModel().select(0);
                 }
@@ -232,7 +231,7 @@ public class Controller {
                                 public void handle(MouseEvent t) {
                                     if (t.getButton().equals(MouseButton.SECONDARY)) {
                                         ContextMenu popUp = new ContextMenu();
-                                        MenuItem button = new MenuItem("Delete Node");
+                                        MenuItem button = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
                                         popUp.getItems().add(button);
                                         popUp.show(newNode, Side.RIGHT, 0, 0);
                                         button.setOnAction(new EventHandler<ActionEvent>() {

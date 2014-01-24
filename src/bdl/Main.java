@@ -1,6 +1,7 @@
 package bdl;
 
 import bdl.controller.Controller;
+import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettingsStore;
 import bdl.view.View;
 import javafx.application.Application;
@@ -20,6 +21,7 @@ public class Main extends Application {
         stage.setMinWidth(800);
         stage.setMinHeight(500);
         stage.getIcons().add(new Image("file:src/bdl/icons/BlueJ_Orange_64.png"));
+        new LabelGrabber();
 
         //Allow user to specify their own file
         String componentSettingsLocation = System.getProperty("bdl.guibuilder.componentSettings");
@@ -39,7 +41,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(view, 1024, 600);
 
-        stage.setTitle("GUI Builder");
+        stage.setTitle(LabelGrabber.getLabel("default.gui.title"));
         stage.setScene(scene);
 
         //Handlers that require access to the Stage
@@ -54,10 +56,10 @@ public class Main extends Application {
             public void handle(ActionEvent actionEvent) {
                 if (stage.isFullScreen()) {
                     stage.setFullScreen(false);
-                    view.topPanel.mItmFullScreen.setText("Make Full Screen");
+                    view.topPanel.mItmFullScreen.setText(LabelGrabber.getLabel("fullscreen.enable.text"));
                 } else {
                     stage.setFullScreen(true);
-                    view.topPanel.mItmFullScreen.setText("Exit Full Screen");
+                    view.topPanel.mItmFullScreen.setText(LabelGrabber.getLabel("fullscreen.disable.text"));
                 }
             }
         });

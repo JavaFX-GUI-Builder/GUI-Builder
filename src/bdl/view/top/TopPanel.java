@@ -1,5 +1,6 @@
 package bdl.view.top;
 
+import bdl.lang.LabelGrabber;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -22,19 +23,19 @@ public class TopPanel extends MenuBar {
     public MenuItem mItmAbout;
 
     public TopPanel() {
-        menuFile = new Menu("File");
-        mItmClose = new MenuItem("Close");
-        mItmFullScreen = new MenuItem("Make Full Screen");
+        menuFile = new Menu(LabelGrabber.getLabel("menu.file"));
+        mItmClose = new MenuItem(LabelGrabber.getLabel("menu.file.close"));
+        mItmFullScreen = new MenuItem(LabelGrabber.getLabel("fullscreen.enable.text"));
 
-        menuEdit = new Menu("Edit");
-        mItmDelete = new MenuItem("Delete");
+        menuEdit = new Menu(LabelGrabber.getLabel("menu.edit"));
+        mItmDelete = new MenuItem(LabelGrabber.getLabel("menu.edit.delete"));
 
-        menuView = new Menu("View");
-        mItmHistory = new CheckMenuItem("Show History");
-        mItmHierarchy = new CheckMenuItem("Show Hierarchy");
+        menuView = new Menu(LabelGrabber.getLabel("menu.view"));
+        mItmHistory = new CheckMenuItem(LabelGrabber.getLabel("menu.view.history"));
+        mItmHierarchy = new CheckMenuItem(LabelGrabber.getLabel("menu.view.hierarchy"));
 
-        menuHelp = new Menu("Help");
-        mItmAbout = new MenuItem("About");
+        menuHelp = new Menu(LabelGrabber.getLabel("menu.help"));
+        mItmAbout = new MenuItem(LabelGrabber.getLabel("menu.help.about"));
 
         menuFile.getItems().addAll(mItmFullScreen, mItmClose);
         menuEdit.getItems().addAll(mItmDelete);
