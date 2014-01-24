@@ -31,6 +31,12 @@ import java.util.HashMap;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Bounds;
+import javafx.geometry.Side;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Circle;
 
 public class Controller {
@@ -176,28 +182,28 @@ public class Controller {
                         //Could be null, e.g. ListView or ScrollPane
                         if (newThing != null) {
                             final Node newNode = (Node) newThing;
-                            
+
                             newNode.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
                                 @Override
                                 public void changed(ObservableValue<? extends Bounds> ov, Bounds t, Bounds t1) {
                                     viewListeners.redraw(newNode);
                                 }
                             });
-                            
+
                             newNode.layoutXProperty().addListener(new ChangeListener<Number>() {
                                 @Override
                                 public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
                                     viewListeners.redraw(newNode);
                                 }
                             });
-                            
+
                             newNode.layoutYProperty().addListener(new ChangeListener<Number>() {
                                 @Override
                                 public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
                                     viewListeners.redraw(newNode);
                                 }
                             });
-                            
+
                             newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent mouseEvent) {
@@ -221,12 +227,31 @@ public class Controller {
                                 }
                             });
 
+                            newNode.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent t) {
+                                    if (t.getButton().equals(MouseButton.SECONDARY)) {
+                                        ContextMenu popUp = new ContextMenu();
+                                        MenuItem button = new MenuItem("Delete Node");
+                                        popUp.getItems().add(button);
+                                        popUp.show(newNode, Side.RIGHT, 0, 0);
+                                        button.setOnAction(new EventHandler<ActionEvent>() {
+                                            @Override
+                                            public void handle(ActionEvent t) {
+                                                view.middleTabPane.viewPane.getChildren().remove(newNode);
+                                                view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null, null));
+                                                viewListeners.resetOutline();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
                             view.middleTabPane.viewPane.getChildren().add(newNode);
                             if (newNode instanceof Circle) {
                                 newNode.setLayoutX((newNode.getLayoutBounds().getWidth() / 2) + 4);
                                 newNode.setLayoutY((newNode.getLayoutBounds().getWidth() / 2) + 4);
-                            }
-                            else {
+                            } else {
                                 newNode.setLayoutX(newNode.getLayoutX() + 4);
                                 newNode.setLayoutY(newNode.getLayoutY() + 4);
                             }
@@ -235,8 +260,6 @@ public class Controller {
                     view.leftPanel.leftList.getSelectionModel().select(-1);
                 }
             }
-
-            
         });
         //End LeftPanel
 
