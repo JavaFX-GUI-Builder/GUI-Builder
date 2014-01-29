@@ -5,6 +5,7 @@ fullscreen.disable.text=Exit Full Screen
 hint.button.text=Hint
 menu.file=File
 menu.file.close=Close
+menu.file.open=Open File
 menu.edit=Edit
 menu.edit.delete=Delete
 menu.view=View

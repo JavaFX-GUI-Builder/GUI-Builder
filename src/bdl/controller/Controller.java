@@ -10,8 +10,11 @@ import bdl.view.right.PropertyEditPane;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.tools.JavaCompiler;
@@ -47,6 +50,45 @@ public class Controller {
         fieldNames = new ArrayList<>();
 
         //Start Top Panel
+        view.topPanel.mItmLoadFile.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FileChooser fileChooser = new FileChooser();
+                FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
+                fileChooser.getExtensionFilters().add(filter);
+
+                File file = fileChooser.showOpenDialog(view.getStage());
+
+                try {
+                    Parent parent = FXMLLoader.load(file.toURI().toURL());
+
+                    for (Node node : parent.getChildrenUnmodifiable()) {
+
+                        for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
+                            ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
+                            try {
+                                Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
+                                Class parentClass = componentClass.getSuperclass();
+                                if (parentClass.isInstance(node)) {
+                                    Constructor constructor = componentClass.getConstructor();
+                                    GObject newThing = (GObject) constructor.newInstance();
+                                    newThing.setFieldName(node.getId());
+
+                                    addGObject(newThing, componentSettings, view, viewListeners, node);
+
+                                    break;
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         view.topPanel.mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
@@ -76,7 +118,7 @@ public class Controller {
         view.middleTabPane.viewPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null, null));
+                view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null, null, null));
                 viewListeners.resetOutline();
                 mouseEvent.consume();
             }
@@ -149,8 +191,8 @@ public class Controller {
                     }
 
                     //Delete created files
-                    //new File(view.middleTabPane.viewPane.getClassName() + ".java").delete();
-                    //new File(view.middleTabPane.viewPane.getClassName() + ".class").delete();
+                    new File(view.middleTabPane.viewPane.getClassName() + ".java").delete();
+                    new File(view.middleTabPane.viewPane.getClassName() + ".class").delete();
 
                     view.middleTabPane.getSelectionModel().select(0);
                 }
@@ -175,86 +217,8 @@ public class Controller {
                             e.printStackTrace();
                         }
 
-                        //Sets the default settings on the gObject and creates the property edit pane
-                        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane);
+                        addGObject(newThing, componentSettings, view, viewListeners, null);
 
-                        //Could be null, e.g. ListView or ScrollPane
-                        if (newThing != null) {
-                            final Node newNode = (Node) newThing;
-
-                            newNode.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
-                                @Override
-                                public void changed(ObservableValue<? extends Bounds> ov, Bounds t, Bounds t1) {
-                                    viewListeners.redraw(newNode);
-                                }
-                            });
-
-                            newNode.layoutXProperty().addListener(new ChangeListener<Number>() {
-                                @Override
-                                public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                                    viewListeners.redraw(newNode);
-                                }
-                            });
-
-                            newNode.layoutYProperty().addListener(new ChangeListener<Number>() {
-                                @Override
-                                public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                                    viewListeners.redraw(newNode);
-                                }
-                            });
-
-                            newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    viewListeners.onMousePressed(newNode, mouseEvent);
-                                    view.rightPanel.propertyScroll.setContent(propertyEditPane);
-                                    mouseEvent.consume();
-                                }
-                            });
-                            newNode.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    viewListeners.onMouseReleased(newNode, mouseEvent);
-                                    mouseEvent.consume();
-                                }
-                            });
-                            newNode.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    viewListeners.onMouseDragged(newNode, mouseEvent);
-                                    mouseEvent.consume();
-                                }
-                            });
-
-                            newNode.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent t) {
-                                    if (t.getButton().equals(MouseButton.SECONDARY)) {
-                                        ContextMenu popUp = new ContextMenu();
-                                        MenuItem button = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
-                                        popUp.getItems().add(button);
-                                        popUp.show(newNode, Side.RIGHT, 0, 0);
-                                        button.setOnAction(new EventHandler<ActionEvent>() {
-                                            @Override
-                                            public void handle(ActionEvent t) {
-                                                view.middleTabPane.viewPane.getChildren().remove(newNode);
-                                                view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null, null));
-                                                viewListeners.resetOutline();
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-
-                            view.middleTabPane.viewPane.getChildren().add(newNode);
-                            if (newNode instanceof Circle) {
-                                newNode.setLayoutX((newNode.getLayoutBounds().getWidth() / 2) + 4);
-                                newNode.setLayoutY((newNode.getLayoutBounds().getWidth() / 2) + 4);
-                            } else {
-                                newNode.setLayoutX(newNode.getLayoutX() + 4);
-                                newNode.setLayoutY(newNode.getLayoutY() + 4);
-                            }
-                        }
                     }
                     view.leftPanel.leftList.getSelectionModel().select(-1);
                 }
@@ -263,5 +227,88 @@ public class Controller {
         //End LeftPanel
 
 
+    }
+
+    private void addGObject(GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode) {
+        //Sets the default settings on the gObject and creates the property edit pane
+        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode);
+
+        final Node newNode = (Node) newThing;
+
+        newNode.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> ov, Bounds t, Bounds t1) {
+                viewListeners.redraw(newNode);
+            }
+        });
+
+        newNode.layoutXProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
+                viewListeners.redraw(newNode);
+            }
+        });
+
+        newNode.layoutYProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
+                viewListeners.redraw(newNode);
+            }
+        });
+
+        newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                viewListeners.onMousePressed(newNode, mouseEvent);
+                view.rightPanel.propertyScroll.setContent(propertyEditPane);
+                mouseEvent.consume();
+            }
+        });
+        newNode.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                viewListeners.onMouseReleased(newNode, mouseEvent);
+                mouseEvent.consume();
+            }
+        });
+        newNode.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                viewListeners.onMouseDragged(newNode, mouseEvent);
+                mouseEvent.consume();
+            }
+        });
+
+        newNode.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                if (t.getButton().equals(MouseButton.SECONDARY)) {
+                    ContextMenu popUp = new ContextMenu();
+                    MenuItem button = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
+                    popUp.getItems().add(button);
+                    popUp.show(newNode, Side.RIGHT, 0, 0);
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent t) {
+                            view.middleTabPane.viewPane.getChildren().remove(newNode);
+                            view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null, null, null));
+                            viewListeners.resetOutline();
+                        }
+                    });
+                }
+            }
+        });
+
+        view.middleTabPane.viewPane.getChildren().add(newNode);
+
+        if (settingsNode == null) {
+            if (newNode instanceof Circle) {
+                newNode.setLayoutX((newNode.getLayoutBounds().getWidth() / 2) + 4);
+                newNode.setLayoutY((newNode.getLayoutBounds().getWidth() / 2) + 4);
+            } else {
+                newNode.setLayoutX(newNode.getLayoutX() + 4);
+                newNode.setLayoutY(newNode.getLayoutY() + 4);
+            }
+        }
     }
 }

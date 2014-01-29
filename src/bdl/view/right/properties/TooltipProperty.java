@@ -3,6 +3,7 @@ package bdl.view.right.properties;
 import bdl.build.GObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,11 +16,19 @@ public class TooltipProperty implements PanelProperty {
     private TextField textField;
     private Control control;
 
-    public TooltipProperty(final GObject gObj, String name, String getter, String setter, String defaultValue, GridPane gp, int row) {
+    public TooltipProperty(final GObject gObj, String name, String getter, String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.gObj = gObj;
 
         gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
+
+        //Grab value from settingsNode if given
+        if (settingsNode != null) {
+            Tooltip tooltip = ((Control)settingsNode).getTooltip();
+            if (tooltip != null) {
+                defaultValue = tooltip.getText();
+            }
+        }
 
         textField.setText(defaultValue);
 

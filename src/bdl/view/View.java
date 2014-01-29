@@ -9,6 +9,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class View extends AnchorPane {
 
@@ -17,7 +18,11 @@ public class View extends AnchorPane {
     public RightPanel rightPanel;
     public MiddlePanel middleTabPane;
 
-    public View(ComponentSettingsStore componentSettingsStore) {
+    private Stage stage;
+
+    public View(ComponentSettingsStore componentSettingsStore, Stage stage) {
+        this.stage = stage;
+
         //Begin Main panel
         BorderPane borderPane = new BorderPane();
         prefWidth(854);
@@ -79,5 +84,9 @@ public class View extends AnchorPane {
 
         borderPane.setCenter(mainContent);
 
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

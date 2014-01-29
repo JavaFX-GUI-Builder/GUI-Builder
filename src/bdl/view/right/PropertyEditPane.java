@@ -10,6 +10,7 @@ import bdl.view.right.properties.FieldName;
 import bdl.view.right.properties.LayoutProperty;
 import bdl.view.right.properties.ListenerHintProperty;
 import bdl.view.right.properties.PanelProperty;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class PropertyEditPane extends GridPane {
 
-    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings, ArrayList<String> fieldNames, GUIObject guiObject) {
+    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings, ArrayList<String> fieldNames, GUIObject guiObject, Node settingsNode) {
         //For reference, old properties panel: http://i.imgur.com/UBb7P4k.png
         if (gObj == null) {
             add(new Label(LabelGrabber.getLabel("no.component.text")), 0, 0);
@@ -41,8 +42,8 @@ public class PropertyEditPane extends GridPane {
                 String type = property.getType();
                 try {
                     Class panelPropertyClass = Class.forName("bdl.view.right.properties." + type + "Property");
-                    Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, GridPane.class, int.class);
-                    PanelProperty panelProperty = (PanelProperty)constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getDefaultValue(), this, currentRow++);
+                    Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, GridPane.class, int.class, Node.class);
+                    PanelProperty panelProperty = (PanelProperty)constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getDefaultValue(), this, currentRow++, settingsNode);
                     if(panelProperty instanceof LayoutProperty) {
                         currentRow++;
                     }

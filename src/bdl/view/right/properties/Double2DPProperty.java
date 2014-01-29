@@ -3,6 +3,7 @@ package bdl.view.right.properties;
 import bdl.build.GObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -21,13 +22,26 @@ public class Double2DPProperty implements PanelProperty {
     private TextField textField;
     private DecimalFormat format = new DecimalFormat("#.##");
 
-    public Double2DPProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row) {
+    public Double2DPProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.gObj = gObj;
         this.setter = setter;
         this.getter = getter;
 
         gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
+
+        //Grab value from settingsNode if given
+        if (settingsNode != null) {
+            try {
+                Method method = settingsNode.getClass().getMethod(getter);
+                String value = (String) method.invoke(settingsNode);
+                if (value != null) {
+                    defaultValue = value;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         textField.setText(format.format(Double.parseDouble(defaultValue)));//TODO - Handle bad defaultValue values
 

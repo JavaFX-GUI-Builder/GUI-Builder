@@ -20,7 +20,7 @@ public class LayoutProperty implements PanelProperty {
     private TextField layoutY;
     private DecimalFormat format = new DecimalFormat("#.##");
 
-    public LayoutProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row) {
+    public LayoutProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.node = (Node)gObj;
         this.gObj = gObj;
         int row1 = row;
@@ -33,6 +33,12 @@ public class LayoutProperty implements PanelProperty {
         gp.add(ly, 0, row2);
         layoutX = new TextField();
         layoutY = new TextField();
+
+        //Grab value from settingsNode if given
+        if (settingsNode != null) {
+            node.setLayoutX(settingsNode.getLayoutX());
+            node.setLayoutY(settingsNode.getLayoutY());
+        }
 
         layoutX.setText(format.format(node.getLayoutX()));
         layoutY.setText(format.format(node.getLayoutY()));

@@ -11,6 +11,7 @@ public class TopPanel extends MenuBar {
     public Menu menuFile;
     public MenuItem mItmClose;
     public MenuItem mItmFullScreen;
+    public MenuItem mItmLoadFile;
 
     public Menu menuEdit;
     public MenuItem mItmDelete;
@@ -26,6 +27,7 @@ public class TopPanel extends MenuBar {
         menuFile = new Menu(LabelGrabber.getLabel("menu.file"));
         mItmClose = new MenuItem(LabelGrabber.getLabel("menu.file.close"));
         mItmFullScreen = new MenuItem(LabelGrabber.getLabel("fullscreen.enable.text"));
+        mItmLoadFile = new MenuItem(LabelGrabber.getLabel("menu.file.open"));
 
         menuEdit = new Menu(LabelGrabber.getLabel("menu.edit"));
         mItmDelete = new MenuItem(LabelGrabber.getLabel("menu.edit.delete"));
@@ -37,7 +39,7 @@ public class TopPanel extends MenuBar {
         menuHelp = new Menu(LabelGrabber.getLabel("menu.help"));
         mItmAbout = new MenuItem(LabelGrabber.getLabel("menu.help.about"));
 
-        menuFile.getItems().addAll(mItmFullScreen, mItmClose);
+        menuFile.getItems().addAll(mItmLoadFile, mItmFullScreen, mItmClose);
         menuEdit.getItems().addAll(mItmDelete);
         menuView.getItems().addAll(mItmHierarchy, mItmHistory);
         menuHelp.getItems().addAll(mItmAbout);

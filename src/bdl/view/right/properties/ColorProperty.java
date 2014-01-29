@@ -3,6 +3,7 @@ package bdl.view.right.properties;
 import bdl.build.GObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -17,12 +18,25 @@ public class ColorProperty implements PanelProperty {
     private String setter;
     private ColorPicker colorPicker;
 
-    public ColorProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row) {
+    public ColorProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.gObj = gObj;
         this.setter = setter;
 
         gp.add(new Label(name + ":"), 0, row);
         colorPicker = new ColorPicker();
+
+        //Grab value from settingsNode if given
+        if (settingsNode != null) {
+            try {
+                Method method = settingsNode.getClass().getMethod(getter);
+                String value = method.invoke(settingsNode).toString();
+                if (value != null) {
+                    defaultValue = value;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         colorPicker.setValue(Color.web(defaultValue));//TODO - Handle bad defaultValue values
 

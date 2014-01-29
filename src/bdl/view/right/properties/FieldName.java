@@ -22,15 +22,21 @@ public class FieldName {
         final TextField textField = new FieldNameTextField();
         this.fieldNames = fieldNames;
 
-        //Set default field name
-        type = type.substring(0, 1).toLowerCase() + type.substring(1);
-        int count = 1;
-        while (fieldNames.contains(type + count)) {
-            count++;
+        // Grab the fieldname if already set (which is the case when loading from FXML).
+        if (gObj.getFieldName() != null) {
+            textField.setText(gObj.getFieldName());
+            fieldNames.add(gObj.getFieldName());
+        } else {
+            //Set default field name
+            type = type.substring(0, 1).toLowerCase() + type.substring(1);
+            int count = 1;
+            while (fieldNames.contains(type + count)) {
+                count++;
+            }
+            textField.setText(type + count);
+            gObj.setFieldName(type + count);
+            fieldNames.add(type + count);
         }
-        textField.setText(type + count);
-        gObj.setFieldName(type + count);
-        fieldNames.add(type + count);
 
         gp.add(textField, 1, row);
 

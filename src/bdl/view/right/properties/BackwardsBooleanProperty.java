@@ -3,6 +3,7 @@ package bdl.view.right.properties;
 import bdl.build.GObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -15,12 +16,25 @@ public class BackwardsBooleanProperty implements PanelProperty {
     private String setter;
     private CheckBox checkBox;
 
-    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row) {
+    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.gObj = gObj;
         this.setter = setter;
 
         gp.add(new Label(name + ":"), 0, row);
         checkBox = new CheckBox();
+
+        //Grab value from settingsNode if given
+        if (settingsNode != null) {
+            try {
+                Method method = settingsNode.getClass().getMethod(getter);
+                String value = Boolean.toString(!((Boolean)method.invoke(settingsNode)));
+                if (value != null) {
+                    defaultValue = value;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         checkBox.setSelected(Boolean.parseBoolean(defaultValue));//TODO - Handle bad defaultValue values
 
