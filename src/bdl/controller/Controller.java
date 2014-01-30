@@ -120,7 +120,7 @@ public class Controller {
         view.middleTabPane.viewPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null, null, null));
+                view.rightPanel.propertyScroll.setContent(new PropertyEditPane());
                 viewListeners.resetOutline();
                 mouseEvent.consume();
             }
@@ -293,7 +293,7 @@ public class Controller {
                         @Override
                         public void handle(ActionEvent t) {
                             view.middleTabPane.viewPane.getChildren().remove(newNode);
-                            view.rightPanel.propertyScroll.setContent(new PropertyEditPane(null, null, null, null, null));
+                            view.rightPanel.propertyScroll.setContent(new PropertyEditPane());
                             viewListeners.resetOutline();
                         }
                     });
