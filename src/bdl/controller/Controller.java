@@ -53,6 +53,8 @@ public class Controller {
         view.topPanel.mItmLoadFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                view.middleTabPane.viewPane.getChildren().clear();
+
                 FileChooser fileChooser = new FileChooser();
                 FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
                 fileChooser.getExtensionFilters().add(filter);
