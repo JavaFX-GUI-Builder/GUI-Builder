@@ -64,6 +64,8 @@ public class Controller {
                 try {
                     Parent parent = FXMLLoader.load(file.toURI().toURL());
 
+                    GUIHelper.setBounds(view.middleTabPane.viewPane, view.middleTabPane.viewPaneDecorator, parent.prefWidth(0), parent.prefHeight(0));
+
                     for (Node node : parent.getChildrenUnmodifiable()) {
 
                         for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
