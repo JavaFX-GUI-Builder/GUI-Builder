@@ -8,11 +8,11 @@ import java.util.HashSet;
 
 public class CodeGenerator {
 
-    public static String generateCode(GUIObject guiObject, HashMap<String, String> allImports) {
+    public static String generateJavaCode(GUIObject guiObject, HashMap<String, String> allImports) {
 
         StringBuilder code = new StringBuilder();
 
-        code.append(getImports(guiObject, allImports)).append('\n');//Add imports
+        code.append(getJavaImports(guiObject, allImports)).append('\n');//Add imports
 
         code.append("public class ").append(guiObject.getClassName()).append(" extends Application {\n\n");//Open class tag
 
@@ -86,7 +86,42 @@ public class CodeGenerator {
         return code.toString();
     }
 
-    private static String getImports(GUIObject guiObject, HashMap<String, String> allImports) {
+    public static String generateFXMLCode(GUIObject guiObject, HashMap<String, String> allImports) {
+
+        StringBuilder code = new StringBuilder();
+        code.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n");
+
+        code.append(getFXMLImports(guiObject, allImports)).append('\n');
+
+        code.append("<AnchorPane id=\"");
+        code.append(guiObject.getClassName());
+        code.append("\" prefWidth=\"");
+        code.append(guiObject.getGUIWidth());
+        code.append("\" prefHeight=\"");
+        code.append(guiObject.getGUIHeight());
+        code.append("\" xmlns:fx=\"http://javafx.com/fxml/1\" xmlns=\"http://javafx.com/javafx/2.2\">\n");
+        code.append("    <children>\n");
+
+        for (Node node : guiObject.getChildren()) {
+            String nodeClass = node.getClass().getSuperclass().getSimpleName();
+            code.append("        <").append(nodeClass);
+            GObject gObj = (GObject) node;
+            code.append(" fx:id=\"").append(gObj.getFieldName()).append("\" ");
+            for (PanelProperty property : gObj.getPanelProperties()) {
+                String fxmlCode = property.getFXMLCode();
+                if (!fxmlCode.isEmpty()) {
+                    code.append(fxmlCode).append(' ');
+                }
+            }
+            code.append("/>\n");
+        }
+
+        code.append("    </children>\n");
+        code.append("</AnchorPane>");
+        return code.toString();
+    }
+
+    private static String getJavaImports(GUIObject guiObject, HashMap<String, String> allImports) {
         HashSet<String> imports = new HashSet<>();
 
         for (Node node : guiObject.getChildren()) {
@@ -105,6 +140,19 @@ public class CodeGenerator {
         for (String s : imports) {
             importsString.append(s);
         }
+
+        return importsString.toString();
+    }
+
+    private static String getFXMLImports(GUIObject guiObject, HashMap<String, String> allImports) {
+        StringBuilder importsString = new StringBuilder();
+
+        importsString.append("<?import java.lang.*?>\n")
+                .append("<?import java.util.*?>\n")
+                .append("<?import javafx.scene.control.*?>\n")
+                .append("<?import javafx.scene.layout.*?>\n")
+                .append("<?import javafx.scene.paint.*?>\n")
+                .append("<?import javafx.scene.shape.*?>\n");
 
         return importsString.toString();
     }

@@ -16,7 +16,7 @@ public class TooltipProperty implements PanelProperty {
     private TextField textField;
     private Control control;
 
-    public TooltipProperty(final GObject gObj, String name, String getter, String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
+    public TooltipProperty(final GObject gObj, String name, String getter, String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.gObj = gObj;
 
         gp.add(new Label(name + ":"), 0, row);
@@ -65,5 +65,10 @@ public class TooltipProperty implements PanelProperty {
         } else {
             return "";
         }
+    }
+
+    @Override
+    public String getFXMLCode() {
+        return "";//TODO Complete this
     }
 }

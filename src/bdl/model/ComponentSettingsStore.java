@@ -122,8 +122,9 @@ public class ComponentSettingsStore {
             String defaultValue = property.getElementsByTagName("default").item(0).getTextContent();
             String getter = property.getElementsByTagName("getter").item(0).getTextContent();
             String setter = property.getElementsByTagName("setter").item(0).getTextContent();
+            String fxml = property.getElementsByTagName("fxml").item(0).getTextContent();
 
-            componentSettings.addProperty(name, type, enabled, defaultValue, getter, setter);
+            componentSettings.addProperty(name, type, enabled, defaultValue, getter, setter, fxml);
         }
     }
     

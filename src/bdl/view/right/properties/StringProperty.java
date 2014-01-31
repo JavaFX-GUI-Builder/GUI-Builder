@@ -14,11 +14,13 @@ public class StringProperty implements PanelProperty {
     
     private GObject gObj;
     private String setter;
+    private String fxml;
     private TextField textField;
     
-    public StringProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
+    public StringProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.gObj = gObj;
         this.setter = setter;
+        this.fxml = fxml;
         
         gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
@@ -70,5 +72,10 @@ public class StringProperty implements PanelProperty {
     @Override
     public String getJavaCode() {
         return gObj.getFieldName() + "." + setter + "(\"" + textField.getText().replace("\\", "\\\\").replace("\"", "\\\"") + "\");";
+    }
+
+    @Override
+    public String getFXMLCode() {
+        return fxml + "=\"" + textField.getText().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
     }
 }

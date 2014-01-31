@@ -20,7 +20,7 @@ public class LayoutProperty implements PanelProperty {
     private TextField layoutY;
     private DecimalFormat format = new DecimalFormat("#.##");
 
-    public LayoutProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
+    public LayoutProperty(final GObject gObj, String name, final String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.node = (Node)gObj;
         this.gObj = gObj;
         int row1 = row;
@@ -124,5 +124,10 @@ public class LayoutProperty implements PanelProperty {
     public String getJavaCode() {
         return gObj.getFieldName() + ".setLayoutX(" + node.getLayoutX() + ");\n" +
                 gObj.getFieldName() + ".setLayoutY(" + node.getLayoutY() + ");";
+    }
+
+    @Override
+    public String getFXMLCode() {
+        return "layoutX=\"" + node.getLayoutX() + "\" layoutY=\"" + node.getLayoutY() + "\"";
     }
 }

@@ -49,8 +49,8 @@ public class PropertyEditPane extends GridPane {
             String type = property.getType();
             try {
                 Class panelPropertyClass = Class.forName("bdl.view.right.properties." + type + "Property");
-                Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, GridPane.class, int.class, Node.class);
-                PanelProperty panelProperty = (PanelProperty)constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getDefaultValue(), this, currentRow++, settingsNode);
+                Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, String.class, GridPane.class, int.class, Node.class);
+                PanelProperty panelProperty = (PanelProperty)constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getFxml(), property.getDefaultValue(), this, currentRow++, settingsNode);
                 if(panelProperty instanceof LayoutProperty) {
                     currentRow++;
                 }

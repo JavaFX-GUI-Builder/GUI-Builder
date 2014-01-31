@@ -13,6 +13,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Text</name>
@@ -21,6 +22,7 @@
                 <default>Button</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
+                <fxml>text</fxml>
             </property>
             <property>
                 <name>Enabled</name>
@@ -29,6 +31,7 @@
                 <default>true</default>
                 <setter>setDisable</setter>
                 <getter>isDisabled</getter>
+                <fxml>disable</fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -37,6 +40,7 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
+                <fxml></fxml>
             </property>
         </properties>
         <listeners>
@@ -61,6 +65,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Text</name>
@@ -69,6 +74,7 @@
                 <default>Text Area Text!</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
+                <fxml>text</fxml>
             </property>
         </properties>
         <listeners>
@@ -93,6 +99,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Text</name>
@@ -101,6 +108,7 @@
                 <default>Text Field Text!</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
+                <fxml>text</fxml>
             </property>
         </properties>
         <listeners>
@@ -181,6 +189,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Enabled</name>
@@ -189,6 +198,7 @@
                 <default>true</default>
                 <setter>setDisable</setter>
                 <getter>isDisabled</getter>
+                <fxml>disable</fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -197,6 +207,7 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
+                <fxml></fxml>
             </property>
         </properties>
         <listeners>
@@ -221,6 +232,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Text</name>
@@ -229,6 +241,7 @@
                 <default>Checkbox</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
+                <fxml>text</fxml>
             </property>
             <property>
                 <name>Enabled</name>
@@ -237,6 +250,7 @@
                 <default>true</default>
                 <setter>setDisable</setter>
                 <getter>isDisabled</getter>
+                <fxml>disable</fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -245,6 +259,7 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
+                <fxml></fxml>
             </property>
         </properties>
         <listeners>
@@ -269,6 +284,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Text</name>
@@ -277,6 +293,7 @@
                 <default>Label text!</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
+                <fxml>text</fxml>
             </property>
             <property>
                 <name>Enabled</name>
@@ -285,6 +302,7 @@
                 <default>true</default>
                 <setter>setDisable</setter>
                 <getter>isDisabled</getter>
+                <fxml>disable</fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -293,6 +311,7 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
+                <fxml></fxml>
             </property>
         </properties>
         <listeners>
@@ -336,6 +355,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Fill</name>
@@ -344,6 +364,7 @@
                 <default>#FF0000</default>
                 <setter>setFill</setter>
                 <getter>getFill</getter>
+                <fxml>fill</fxml>
             </property>
             <property>
                 <name>Stroke</name>
@@ -352,6 +373,7 @@
                 <default>#00FF00</default>
                 <setter>setStroke</setter>
                 <getter>getStroke</getter>
+                <fxml>stroke</fxml>
             </property>
             <property>
                 <name>Stroke Width</name>
@@ -360,6 +382,7 @@
                 <default>5</default>
                 <setter>setStrokeWidth</setter>
                 <getter>getStrokeWidth</getter>
+                <fxml>strokeWidth</fxml>
             </property>
             <property>
                 <name>Radius</name>
@@ -368,6 +391,7 @@
                 <default>10</default>
                 <setter>setRadius</setter>
                 <getter>getRadius</getter>
+                <fxml>radius</fxml>
             </property>
         </properties>
         <listeners>
@@ -387,6 +411,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Fill</name>
@@ -395,6 +420,7 @@
                 <default>#FF0000</default>
                 <setter>setFill</setter>
                 <getter>getFill</getter>
+                <fxml>fill</fxml>
             </property>
             <property>
                 <name>Stroke</name>
@@ -403,6 +429,7 @@
                 <default>#00FF00</default>
                 <setter>setStroke</setter>
                 <getter>getStroke</getter>
+                <fxml>stroke</fxml>
             </property>
             <property>
                 <name>Stroke Width</name>
@@ -411,22 +438,25 @@
                 <default>0</default>
                 <setter>setStrokeWidth</setter>
                 <getter>getStrokeWidth</getter>
+                <fxml>strokeWidth</fxml>
             </property>
             <property>
-                <name>Width (Temp)</name>
+                <name>Width</name>
                 <enabled>true</enabled>
                 <pseudotype>Double1DP</pseudotype>
                 <default>100</default>
                 <setter>setWidth</setter>
                 <getter>getWidth</getter>
+                <fxml>width</fxml>
             </property>
             <property>
-                <name>Height (Temp)</name>
+                <name>Height</name>
                 <enabled>true</enabled>
                 <pseudotype>Double1DP</pseudotype>
                 <default>100</default>
                 <setter>setHeight</setter>
                 <getter>getHeight</getter>
+                <fxml>height</fxml>
             </property>
         </properties>
         <listeners>
@@ -446,6 +476,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Text</name>
@@ -454,6 +485,7 @@
                 <default>Password</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
+                <fxml>text</fxml>
             </property>
         </properties>
         <listeners>
@@ -478,6 +510,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Enabled</name>
@@ -486,6 +519,7 @@
                 <default>true</default>
                 <setter>setDisable</setter>
                 <getter>isDisabled</getter>
+                <fxml>disable</fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -494,6 +528,7 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
+                <fxml></fxml>
             </property>
         </properties>
         <listeners>
@@ -518,6 +553,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Text</name>
@@ -526,6 +562,7 @@
                 <default>Checkbox</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
+                <fxml>text</fxml>
             </property>
             <property>
                 <name>Enabled</name>
@@ -534,6 +571,7 @@
                 <default>true</default>
                 <setter>setDisable</setter>
                 <getter>isDisabled</getter>
+                <fxml>disable</fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -542,6 +580,7 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
+                <fxml></fxml>
             </property>
         </properties>
         <listeners>
@@ -566,6 +605,7 @@
                 <default></default>
                 <setter></setter>
                 <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Text</name>
@@ -574,6 +614,7 @@
                 <default>Hyperlink</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
+                <fxml>text</fxml>
             </property>
             <property>
                 <name>Enabled</name>
@@ -582,6 +623,7 @@
                 <default>true</default>
                 <setter>setDisable</setter>
                 <getter>isDisabled</getter>
+                <fxml>disable</fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -590,6 +632,7 @@
                 <default></default>
                 <setter>setTooltip</setter>
                 <getter>getTooltip</getter>
+                <fxml></fxml>
             </property>
         </properties>
         <listeners>

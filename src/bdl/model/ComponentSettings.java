@@ -92,8 +92,8 @@ public class ComponentSettings {
      * @param getter
      * @param setter
      */
-    public void addProperty(String name, String enabled, String type, String defaultValue, String getter, String setter) {
-        properties.add(new Property(name, enabled, type, defaultValue, getter, setter));
+    public void addProperty(String name, String enabled, String type, String defaultValue, String getter, String setter, String fxml) {
+        properties.add(new Property(name, enabled, type, defaultValue, getter, setter, fxml));
     }
 
     public void addListenerHint(String name, String method, String event) {

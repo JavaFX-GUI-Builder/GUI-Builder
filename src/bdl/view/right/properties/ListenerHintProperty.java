@@ -30,4 +30,9 @@ public class ListenerHintProperty implements PanelProperty {
     public String getJavaCode() {
         return "";
     }
+
+    @Override
+    public String getFXMLCode() {
+        return "";
+    }
 }

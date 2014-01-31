@@ -10,14 +10,16 @@ public class Property {
     private String defaultValue;
     private String getter;
     private String setter;
+    private String fxml;
 
-    public Property(String name, String enabled, String type, String defaultValue, String getter, String setter) {
+    public Property(String name, String enabled, String type, String defaultValue, String getter, String setter, String fxml) {
         this.name = name;
         this.enabled = Boolean.parseBoolean(enabled);
         this.type = type;
         this.defaultValue = defaultValue;
         this.getter = getter;
         this.setter = setter;
+        this.fxml = fxml;
     }
 
     public String getName() {
@@ -30,6 +32,10 @@ public class Property {
 
     public String getSetter() {
         return setter;
+    }
+
+    public String getFxml() {
+        return fxml;
     }
 
     public boolean isEnabled() {

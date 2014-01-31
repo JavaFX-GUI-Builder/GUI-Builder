@@ -14,11 +14,13 @@ public class BackwardsBooleanProperty implements PanelProperty {
 
     private GObject gObj;
     private String setter;
+    private String fxml;
     private CheckBox checkBox;
 
-    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
+    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.gObj = gObj;
         this.setter = setter;
+        this.fxml = fxml;
 
         gp.add(new Label(name + ":"), 0, row);
         checkBox = new CheckBox();
@@ -71,5 +73,8 @@ public class BackwardsBooleanProperty implements PanelProperty {
         return gObj.getFieldName() + "." + setter + "(" + !checkBox.isSelected() + ");";
     }
 
-
+    @Override
+    public String getFXMLCode() {
+        return fxml + "=\"" + !checkBox.isSelected() + "\"";
+    }
 }

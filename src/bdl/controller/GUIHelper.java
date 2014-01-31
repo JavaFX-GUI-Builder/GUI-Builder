@@ -14,5 +14,8 @@ public class GUIHelper {
         decorator.setMinHeight(height);
         decorator.setMaxWidth(width);
         decorator.setMaxHeight(height);
+
+        viewPane.setGUIWidth(width);
+        viewPane.setGUIHeight(height);
     }
 }

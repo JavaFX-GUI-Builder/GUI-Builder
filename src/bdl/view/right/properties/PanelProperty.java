@@ -4,4 +4,6 @@ public interface PanelProperty {
 
     public String getJavaCode();
 
+    public String getFXMLCode();
+
 }

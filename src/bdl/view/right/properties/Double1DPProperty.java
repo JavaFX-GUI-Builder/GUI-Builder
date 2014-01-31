@@ -19,13 +19,15 @@ public class Double1DPProperty implements PanelProperty {
     private GObject gObj;
     private String setter;
     private String getter;
+    private String fxml;
     private TextField textField;
     private DecimalFormat format = new DecimalFormat("#.##");
 
-    public Double1DPProperty(final GObject gObj, String name, final String getter, final String setter, String defaultValue, GridPane gp, int row, Node settingsNode) {
+    public Double1DPProperty(final GObject gObj, String name, final String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
         this.gObj = gObj;
         this.setter = setter;
         this.getter = getter;
+        this.fxml = fxml;
 
         gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
@@ -92,5 +94,10 @@ public class Double1DPProperty implements PanelProperty {
     @Override
     public String getJavaCode() {
         return gObj.getFieldName() + "." + setter + "(" + textField.getText() + ");";
+    }
+
+    @Override
+    public String getFXMLCode() {
+        return fxml + "=\"" + textField.getText() + "\"";
     }
 }

@@ -21,10 +21,7 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -61,38 +58,69 @@ public class Controller {
 
                 File file = fileChooser.showOpenDialog(view.getStage());
 
-                try {
-                    Parent parent = FXMLLoader.load(file.toURI().toURL());
+                if (file != null) {
+                    try {
+                        Parent parent = FXMLLoader.load(file.toURI().toURL());
+    
+                        GUIHelper.setBounds(view.middleTabPane.viewPane, view.middleTabPane.viewPaneDecorator, parent.prefWidth(0), parent.prefHeight(0));
+                        String className = parent.getId();
+                        if (className != null && !className.isEmpty()) {
+                            view.middleTabPane.viewPane.setClassName(className);
+                        }
 
-                    GUIHelper.setBounds(view.middleTabPane.viewPane, view.middleTabPane.viewPaneDecorator, parent.prefWidth(0), parent.prefHeight(0));
+                        for (Node node : parent.getChildrenUnmodifiable()) {
 
-                    for (Node node : parent.getChildrenUnmodifiable()) {
+                            for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
+                                ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
+                                try {
+                                    Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
+                                    Class parentClass = componentClass.getSuperclass();
+                                    if (parentClass.isInstance(node)) {
+                                        Constructor constructor = componentClass.getConstructor();
+                                        GObject newThing = (GObject) constructor.newInstance();
+                                        newThing.setFieldName(node.getId());
 
-                        for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
-                            ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
-                            try {
-                                Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
-                                Class parentClass = componentClass.getSuperclass();
-                                if (parentClass.isInstance(node)) {
-                                    Constructor constructor = componentClass.getConstructor();
-                                    GObject newThing = (GObject) constructor.newInstance();
-                                    newThing.setFieldName(node.getId());
+                                        addGObject(newThing, componentSettings, view, viewListeners, node);
 
-                                    addGObject(newThing, componentSettings, view, viewListeners, node);
-
-                                    break;
+                                        break;
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
                         }
-                    }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
+        view.topPanel.mItmSaveFile.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FileChooser fileChooser = new FileChooser();
+                FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
+                fileChooser.getExtensionFilters().add(filter);
+
+                File file = fileChooser.showSaveDialog(view.getStage());
+
+                if (file != null) {
+                    if (!file.getName().toLowerCase().endsWith(".fxml")) {
+                        file = new File(file.getAbsoluteFile() + ".fxml");
+                    }
+
+                    try {
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write(CodeGenerator.generateFXMLCode(view.middleTabPane.viewPane, null));//We don't need the imports, for the minute...
+                        fileWriter.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
         view.topPanel.mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
@@ -137,7 +165,7 @@ public class Controller {
                         ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
                         imports.put(componentSettings.getType(), componentSettings.getPackageName());
                     }
-                    String code = CodeGenerator.generateCode(view.middleTabPane.viewPane, imports);
+                    String code = CodeGenerator.generateJavaCode(view.middleTabPane.viewPane, imports);
                     view.middleTabPane.codePane.setText(code);
                 }
             }
@@ -152,7 +180,7 @@ public class Controller {
                         ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
                         imports.put(componentSettings.getType(), componentSettings.getPackageName());
                     }
-                    String code = CodeGenerator.generateCode(view.middleTabPane.viewPane, imports);
+                    String code = CodeGenerator.generateJavaCode(view.middleTabPane.viewPane, imports);
 
                     //Write .java file
                     try {
