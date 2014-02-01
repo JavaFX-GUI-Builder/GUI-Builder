@@ -3,6 +3,7 @@ package bdl.view.middle;
 import bdl.build.GUIObject;
 import bdl.controller.GUIHelper;
 import bdl.lang.LabelGrabber;
+import bdl.view.right.PropertyEditPane;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -38,6 +39,7 @@ public class MiddlePanel extends TabPane {
         blankPane.setStyle("-fx-background-color:#94B2E0;");
         
         viewPane = new GUIObject();
+        viewPane.setPEP(new PropertyEditPane(viewPane));
         viewPane.setStyle("-fx-background-color:#FFFFFF;");
 
         scroll = new ScrollPane();

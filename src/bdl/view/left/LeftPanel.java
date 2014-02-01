@@ -21,6 +21,7 @@ public class LeftPanel extends SplitPane {
     public ListView<ComponentMenuItem> leftList;
     public TreeItem<String> treeRoot;
     public TreeView<String> leftTreeView;
+    public HierarchyPane hierPane;
 
     public LeftPanel(ComponentSettingsStore componentSettingsStore, final View view) {
         //Begin left component list
@@ -41,7 +42,7 @@ public class LeftPanel extends SplitPane {
         //End left component list
 
         //Begin left hierarchy panel
-        HierarchyPane hierPane = new HierarchyPane(view);
+        hierPane = new HierarchyPane(view);
         hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), hierPane);
         hierarchyPane.setCollapsible(false);
         hierarchyPane.setMinWidth(205);

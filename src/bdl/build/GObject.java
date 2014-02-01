@@ -1,5 +1,6 @@
 package bdl.build;
 
+import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
 
 import java.util.List;
@@ -19,4 +20,8 @@ public interface GObject {
 
     @Override
     public String toString();
+
+    public void setPEP(PropertyEditPane propertyEditPane);
+    
+    public PropertyEditPane getPEP();
 }

@@ -80,6 +80,7 @@ public class ViewListeners {
     }
     
     public void redraw(Node node) {
+        resetOutline();
         outline.setVisible(true);
         double nodeX = node.getLayoutX();
         double nodeY = node.getLayoutY();

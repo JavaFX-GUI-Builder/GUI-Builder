@@ -35,10 +35,9 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.ClipboardContent;
+import javafx.scene.control.TreeItem;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.TransferMode;
 import javafx.scene.shape.Circle;
@@ -50,6 +49,7 @@ public class Controller {
 
     public Controller(final View view) {
         final ViewListeners viewListeners = new ViewListeners(view);
+        view.viewListeners = viewListeners;
         fieldNames = new ArrayList<>();
 
         //Start Top Panel
@@ -298,7 +298,9 @@ public class Controller {
     private void addGObject(GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
         //Sets the default settings on the gObject and creates the property edit pane
         final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode);
-
+        
+        newThing.setPEP(propertyEditPane);
+        
         final Node newNode = (Node) newThing;
 
         newNode.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -327,6 +329,11 @@ public class Controller {
             public void handle(MouseEvent mouseEvent) {
                 viewListeners.onMousePressed(newNode, mouseEvent);
                 view.rightPanel.propertyScroll.setContent(propertyEditPane);
+                for(TreeItem<GObject> ti : view.leftPanel.hierPane.treeRoot.getChildren()) {
+                    if(ti.getValue().getFieldName().equals(((GObject)newNode).getFieldName())) {
+                        view.leftPanel.hierPane.treeView.getSelectionModel().select(ti);
+                    }
+                }
                 mouseEvent.consume();
             }
         });
@@ -369,6 +376,7 @@ public class Controller {
         view.rightPanel.propertyScroll.setContent(propertyEditPane);
         view.middleTabPane.viewPane.getChildren().add(newNode);
         view.currentlySelected = (GObject) newNode;
+        view.leftPanel.hierPane.add(null, (GObject) newNode);
 
         if (settingsNode == null) {
             if (newNode instanceof Circle) {

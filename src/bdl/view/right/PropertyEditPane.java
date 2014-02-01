@@ -28,6 +28,10 @@ public class PropertyEditPane extends GridPane {
     public PropertyEditPane() {
         add(new Label(LabelGrabber.getLabel("no.component.text")), 0, 0);
     }
+    
+    public PropertyEditPane(GUIObject guiObj) {
+        
+    }
 
     /**
      * Constructor for gObject pane
