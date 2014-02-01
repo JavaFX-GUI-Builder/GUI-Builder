@@ -1,5 +1,6 @@
 package bdl.view;
 
+import bdl.build.GObject;
 import bdl.model.ComponentSettingsStore;
 import bdl.view.left.LeftPanel;
 import bdl.view.middle.MiddlePanel;
@@ -17,6 +18,7 @@ public class View extends AnchorPane {
     public LeftPanel leftPanel;
     public RightPanel rightPanel;
     public MiddlePanel middleTabPane;
+    public GObject currentlySelected;
 
     private Stage stage;
 

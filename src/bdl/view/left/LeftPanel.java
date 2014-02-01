@@ -5,9 +5,15 @@ import bdl.model.ComponentSettings;
 import bdl.model.ComponentSettingsStore;
 import bdl.view.View;
 import bdl.view.hierarchy.HierarchyPane;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.util.Callback;
 
 public class LeftPanel extends SplitPane {
 
@@ -16,36 +22,27 @@ public class LeftPanel extends SplitPane {
     public TreeItem<String> treeRoot;
     public TreeView<String> leftTreeView;
 
-    public LeftPanel(ComponentSettingsStore componentSettingsStore, View view) {
+    public LeftPanel(ComponentSettingsStore componentSettingsStore, final View view) {
         //Begin left component list
         leftList = new ListView<>();
+        leftList.setCellFactory(new Callback<ListView<ComponentMenuItem>, ListCell<ComponentMenuItem>>() {
+            @Override
+            public ListCell<ComponentMenuItem> call(ListView<ComponentMenuItem> list) {
+                return new LeftListCellFactory(view);
+            }
+        });
+
 
         for (ComponentSettings componentSettings : componentSettingsStore.getComponents()) {
             String type = componentSettings.getType();
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/" + componentSettings.getIcon())));
             leftList.getItems().add(new ComponentMenuItem(type, icon, componentSettings));
         }
-
-//        leftList.getItems().add(GType.Button);
-//        leftList.getItems().add(GType.CheckBox);
-//        leftList.getItems().add(GType.ComboBox);
-//        leftList.getItems().add(GType.Label);
-////        leftList.getItems().add(GType.ListView);
-////        leftList.getItems().add(GType.Menu);
-////        leftList.getItems().add(GType.MenuBar);
-////        leftList.getItems().add(GType.MenuItem);
-////        leftList.getItems().add(GType.ScrollPane);
-////        leftList.getItems().add(GType.SplitPane);
-//        leftList.getItems().add(GType.TextArea);
-//        leftList.getItems().add(GType.TextField);
-//        leftList.getItems().add(GType.ToolBar);
-////        leftList.getItems().add(GType.ImageView);
-//        leftList.getItems().add(GType.Circle);
-//        leftList.getItems().add(GType.Rectangle);
         //End left component list
 
         //Begin left hierarchy panel
-        hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), new HierarchyPane(view));
+        HierarchyPane hierPane = new HierarchyPane(view);
+        hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), hierPane);
         hierarchyPane.setCollapsible(false);
         hierarchyPane.setMinWidth(205);
         hierarchyPane.setMaxWidth(205);
@@ -54,4 +51,34 @@ public class LeftPanel extends SplitPane {
         getItems().addAll(leftList);
     }
 
+    private static class LeftListCellFactory extends ListCell<ComponentMenuItem> {
+
+        public LeftListCellFactory(final View view) {
+            super();
+            this.setOnDragDetected(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    Dragboard db = view.leftPanel.leftList.startDragAndDrop(TransferMode.ANY);
+                    ClipboardContent cc = new ClipboardContent();
+                    cc.putString("");
+                    db.setContent(cc);
+                    t.consume();
+                }
+            });
+        }
+        
+        @Override
+        public void updateItem(ComponentMenuItem cmi, boolean empty) {
+            super.updateItem(cmi, empty);
+            if(!empty && cmi != null) {
+                setText(cmi.getText());
+                setGraphic(cmi.getGraphic());
+            }
+            else {
+                setText(null);
+                setGraphic(null);
+                return;
+            }
+        }
+    }
 }

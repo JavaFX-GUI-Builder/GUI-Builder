@@ -35,12 +35,18 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.TransferMode;
 import javafx.scene.shape.Circle;
 
 public class Controller {
 
     private final ArrayList<String> fieldNames;
+    private static final DataFormat cmjFormat = new DataFormat("fmjFormat");
 
     public Controller(final View view) {
         final ViewListeners viewListeners = new ViewListeners(view);
@@ -61,7 +67,7 @@ public class Controller {
                 if (file != null) {
                     try {
                         Parent parent = FXMLLoader.load(file.toURI().toURL());
-    
+
                         GUIHelper.setBounds(view.middleTabPane.viewPane, view.middleTabPane.viewPaneDecorator, parent.prefWidth(0), parent.prefHeight(0));
                         String className = parent.getId();
                         if (className != null && !className.isEmpty()) {
@@ -79,7 +85,7 @@ public class Controller {
                                         GObject newThing = (GObject) constructor.newInstance();
                                         newThing.setFieldName(node.getId());
 
-                                        addGObject(newThing, componentSettings, view, viewListeners, node);
+                                        addGObject(newThing, componentSettings, view, viewListeners, node, -1, -1);
 
                                         break;
                                     }
@@ -248,7 +254,7 @@ public class Controller {
                             e.printStackTrace();
                         }
 
-                        addGObject(newThing, componentSettings, view, viewListeners, null);
+                        addGObject(newThing, componentSettings, view, viewListeners, null, -1, -1);
 
                     }
                     view.leftPanel.leftList.getSelectionModel().select(-1);
@@ -257,10 +263,39 @@ public class Controller {
         });
         //End LeftPanel
 
+        view.middleTabPane.viewPane.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent t) {
+                t.acceptTransferModes(TransferMode.ANY);
+            }
+        });
 
+        view.middleTabPane.viewPane.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent t) {
+                ComponentMenuItem cmj = view.leftPanel.leftList.getSelectionModel().getSelectedItem();
+                ComponentSettings componentSettings = cmj.getComponentSettings();
+                if (componentSettings != null) {
+                    GObject newThing = null;
+
+                    try {
+                        Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
+                        Constructor constructor = panelPropertyClass.getConstructor();
+                        newThing = (GObject) constructor.newInstance();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY());
+
+                }
+                view.leftPanel.leftList.getSelectionModel().select(-1);
+            }
+        });
     }
 
-    private void addGObject(GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode) {
+    //x and y are initial layout positions. To be used only with drag and drop.
+    private void addGObject(GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
         //Sets the default settings on the gObject and creates the property edit pane
         final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode);
 
@@ -323,6 +358,7 @@ public class Controller {
                         public void handle(ActionEvent t) {
                             view.middleTabPane.viewPane.getChildren().remove(newNode);
                             view.rightPanel.propertyScroll.setContent(new PropertyEditPane());
+                            view.currentlySelected = null;
                             viewListeners.resetOutline();
                         }
                     });
@@ -330,7 +366,9 @@ public class Controller {
             }
         });
 
+        view.rightPanel.propertyScroll.setContent(propertyEditPane);
         view.middleTabPane.viewPane.getChildren().add(newNode);
+        view.currentlySelected = (GObject) newNode;
 
         if (settingsNode == null) {
             if (newNode instanceof Circle) {
@@ -340,6 +378,11 @@ public class Controller {
                 newNode.setLayoutX(newNode.getLayoutX() + 4);
                 newNode.setLayoutY(newNode.getLayoutY() + 4);
             }
+        }
+
+        if (x > 0 && y > 0) {
+            newNode.setLayoutX(x);
+            newNode.setLayoutY(y);
         }
     }
 }
