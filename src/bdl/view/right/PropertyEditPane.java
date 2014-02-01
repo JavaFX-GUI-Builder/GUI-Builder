@@ -7,6 +7,7 @@ import bdl.model.ComponentSettings;
 import bdl.model.ListenerHint;
 import bdl.model.Property;
 import bdl.view.right.properties.FieldName;
+import bdl.view.right.properties.GUISizeProperty;
 import bdl.view.right.properties.LayoutProperty;
 import bdl.view.right.properties.ListenerHintProperty;
 import bdl.view.right.properties.PanelProperty;
@@ -28,9 +29,19 @@ public class PropertyEditPane extends GridPane {
     public PropertyEditPane() {
         add(new Label(LabelGrabber.getLabel("no.component.text")), 0, 0);
     }
-    
+
     public PropertyEditPane(GUIObject guiObj) {
-        
+        int currentRow = 0;
+        this.getChildren().clear();
+        this.setMaxWidth(200);
+
+        Label propertiesHeading = new Label(LabelGrabber.getLabel("properties.text") + ":");
+        propertiesHeading.setMinWidth(90);
+        propertiesHeading.setFont(Font.font(propertiesHeading.getFont().getFamily(), FontWeight.BOLD, propertiesHeading.getFont().getSize() + 0.5));
+        add(propertiesHeading, 0, currentRow++);
+
+        GUISizeProperty guisp = new GUISizeProperty(guiObj, guiObj.getGUITitle(), this, currentRow);
+
     }
 
     /**
@@ -54,8 +65,8 @@ public class PropertyEditPane extends GridPane {
             try {
                 Class panelPropertyClass = Class.forName("bdl.view.right.properties." + type + "Property");
                 Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, String.class, GridPane.class, int.class, Node.class);
-                PanelProperty panelProperty = (PanelProperty)constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getFxml(), property.getDefaultValue(), this, currentRow++, settingsNode);
-                if(panelProperty instanceof LayoutProperty) {
+                PanelProperty panelProperty = (PanelProperty) constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getFxml(), property.getDefaultValue(), this, currentRow++, settingsNode);
+                if (panelProperty instanceof LayoutProperty) {
                     currentRow++;
                 }
                 panelPropertyList.add(panelProperty);

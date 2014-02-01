@@ -298,9 +298,9 @@ public class Controller {
     private void addGObject(GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
         //Sets the default settings on the gObject and creates the property edit pane
         final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode);
-        
+
         newThing.setPEP(propertyEditPane);
-        
+
         final Node newNode = (Node) newThing;
 
         newNode.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -329,8 +329,8 @@ public class Controller {
             public void handle(MouseEvent mouseEvent) {
                 viewListeners.onMousePressed(newNode, mouseEvent);
                 view.rightPanel.propertyScroll.setContent(propertyEditPane);
-                for(TreeItem<GObject> ti : view.leftPanel.hierPane.treeRoot.getChildren()) {
-                    if(ti.getValue().getFieldName().equals(((GObject)newNode).getFieldName())) {
+                for (TreeItem<GObject> ti : view.leftPanel.hierPane.treeRoot.getChildren()) {
+                    if (ti.getValue().getFieldName().equals(((GObject) newNode).getFieldName())) {
                         view.leftPanel.hierPane.treeView.getSelectionModel().select(ti);
                     }
                 }
@@ -367,6 +367,11 @@ public class Controller {
                             view.rightPanel.propertyScroll.setContent(new PropertyEditPane());
                             view.currentlySelected = null;
                             viewListeners.resetOutline();
+                            for (TreeItem<GObject> ti : view.leftPanel.hierPane.treeRoot.getChildren()) {
+                                if (ti.getValue().getFieldName().equals(((GObject) newNode).getFieldName())) {
+                                    view.leftPanel.hierPane.treeRoot.getChildren().remove(ti);
+                                }
+                            }
                         }
                     });
                 }

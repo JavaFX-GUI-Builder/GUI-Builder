@@ -34,6 +34,7 @@ public class GUIObject extends GAnchorPane {
 
     public void setGUIWidth(double width) {
         this.width = width;
+        this.setWidth(width);
     }
 
     public double getGUIHeight() {
@@ -42,6 +43,7 @@ public class GUIObject extends GAnchorPane {
 
     public void setGUIHeight(double height) {
         this.height = height;
+        this.setHeight(height);
     }
     
     @Override
