@@ -2,6 +2,7 @@ package bdl.build.javafx.scene.control;
 
 
 import bdl.build.GObject;
+import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
 import javafx.scene.control.MenuItem;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class GMenuItem extends MenuItem implements GObject {
     private String fieldName;
     private List<PanelProperty> properties;
+    public PropertyEditPane pep;
 
     @Override
     public String getFieldName() {
@@ -29,5 +31,15 @@ public class GMenuItem extends MenuItem implements GObject {
     @Override
     public List<PanelProperty> getPanelProperties() {
         return properties;
+    }
+
+    @Override
+    public void setPEP(PropertyEditPane propertyEditPane) {
+        pep = propertyEditPane;
+    }
+    
+    @Override
+    public PropertyEditPane getPEP() {
+        return pep;
     }
 }

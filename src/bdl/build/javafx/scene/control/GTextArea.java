@@ -1,6 +1,7 @@
 package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
+import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
 import javafx.scene.control.TextArea;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public class GTextArea extends TextArea implements GObject {
     private String fieldName;
     private List<PanelProperty> properties;
+    public PropertyEditPane pep;
 
     public GTextArea() {
         setEditable(false);//Prevent changes to text
@@ -32,5 +34,15 @@ public class GTextArea extends TextArea implements GObject {
     @Override
     public List<PanelProperty> getPanelProperties() {
         return properties;
+    }
+
+    @Override
+    public void setPEP(PropertyEditPane propertyEditPane) {
+        pep = propertyEditPane;
+    }
+    
+    @Override
+    public PropertyEditPane getPEP() {
+        return pep;
     }
 }

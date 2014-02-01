@@ -1,6 +1,7 @@
 package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
+import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
 import javafx.scene.control.Hyperlink;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public class GHyperlink extends Hyperlink implements GObject {
     private String fieldName;
     private List<PanelProperty> properties;
+    public PropertyEditPane pep;
 
     @Override
     public String getFieldName() {
@@ -33,5 +35,15 @@ public class GHyperlink extends Hyperlink implements GObject {
     @Override
     public void fire() {
         //Prevents the hyperlink from being fired if you click on it
+    }
+
+    @Override
+    public void setPEP(PropertyEditPane propertyEditPane) {
+        pep = propertyEditPane;
+    }
+    
+    @Override
+    public PropertyEditPane getPEP() {
+        return pep;
     }
 }
