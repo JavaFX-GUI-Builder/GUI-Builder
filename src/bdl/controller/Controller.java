@@ -324,6 +324,7 @@ public class Controller {
                         public void handle(ActionEvent t) {
                             view.middleTabPane.viewPane.getChildren().remove(newNode);
                             view.rightPanel.propertyScroll.setContent(new PropertyEditPane());
+                            view.currentlySelected = null;
                             viewListeners.resetOutline();
                         }
                     });
@@ -332,6 +333,7 @@ public class Controller {
         });
 
         view.middleTabPane.viewPane.getChildren().add(newNode);
+        view.currentlySelected = (GObject) newNode;
 
         if (settingsNode == null) {
             if (newNode instanceof Circle) {

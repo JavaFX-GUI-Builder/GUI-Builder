@@ -1,6 +1,5 @@
 package bdl.build;
 
-import bdl.model.ComponentSettings;
 import bdl.view.right.properties.PanelProperty;
 
 import java.util.List;
@@ -18,4 +17,6 @@ public interface GObject {
 
     public List<PanelProperty> getPanelProperties();
 
+    @Override
+    public String toString();
 }

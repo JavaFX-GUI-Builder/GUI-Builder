@@ -18,50 +18,55 @@ import javafx.util.Callback;
 public class HierarchyPane extends AnchorPane {
 
     public TreeView<GObject> treeView;
-    public TreeItem<GObject> treeRoot;
+    private TreeItem<GObject> treeRoot;
     private ViewListeners viewListeners;
-    
+
     public HierarchyPane(View view) {
         this.setMinWidth(200);
         this.setMaxWidth(200);
-        
+
         viewListeners = new ViewListeners(view);
-        
+
         final HierarchyTreeCellFactory htcf = new HierarchyTreeCellFactory();
         htcf.viewlisteners = viewListeners;
-        
+
         treeView = new TreeView<>();
-        treeView.setCellFactory(new Callback<TreeView<GObject>,TreeCell<GObject>>() {
+        AnchorPane.setBottomAnchor(treeView, 0.0);
+        AnchorPane.setTopAnchor(treeView, 0.0);
+        AnchorPane.setLeftAnchor(treeView, 0.0);
+        AnchorPane.setRightAnchor(treeView, 0.0);
+        this.getChildren().add(treeView);
+
+        treeView.setCellFactory(new Callback<TreeView<GObject>, TreeCell<GObject>>() {
             @Override
             public TreeCell<GObject> call(TreeView<GObject> p) {
                 return htcf;
             }
         });
-        GAnchorPane gap = new GAnchorPane();
-        gap.setFieldName("Testing");
-        treeRoot = new TreeItem(gap);
-        add(gap);
-        treeRoot.setExpanded(true);
-        
         GButton but = new GButton();
-        but.setFieldName("Testing Button");
-        add(but);
-        
+        but.setFieldName("Testing root");
+        TreeItem butti = new TreeItem(but);
+        treeRoot = butti;
         treeView.setRoot(treeRoot);
-        
-        AnchorPane.getTopAnchor(treeView);
-        AnchorPane.getBottomAnchor(treeView);
-        AnchorPane.getLeftAnchor(treeView);
-        AnchorPane.getRightAnchor(treeView);
-        
-        this.getChildren().add(treeView);
+        treeRoot.setExpanded(true);
+        treeView.setShowRoot(true);
+
+        GButton but1 = new GButton();
+        but1.setFieldName("Testing Button");
+        TreeItem but1ti = new TreeItem(but1);
+        GButton but2 = new GButton();
+        but2.setFieldName("Testing Button2");
+        TreeItem but2ti = new TreeItem(but2);
+        but1ti.getChildren().add(but2ti);
+        treeRoot.getChildren().add(but1ti);
     }
-    
+
     public void reorder() {
-       
     }
-    
-    public void add(GObject add) {
-        treeRoot.getChildren().add(new TreeItem(add));
+
+    public final TreeItem add(TreeItem ti, GObject add) {
+        TreeItem a = new TreeItem(add);
+        ti.getChildren().add(a);
+        return a;
     }
 }

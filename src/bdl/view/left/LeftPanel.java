@@ -45,7 +45,8 @@ public class LeftPanel extends SplitPane {
         //End left component list
 
         //Begin left hierarchy panel
-        hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), new HierarchyPane(view));
+        HierarchyPane hierPane = new HierarchyPane(view);
+        hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), hierPane);
         hierarchyPane.setCollapsible(false);
         hierarchyPane.setMinWidth(205);
         hierarchyPane.setMaxWidth(205);
