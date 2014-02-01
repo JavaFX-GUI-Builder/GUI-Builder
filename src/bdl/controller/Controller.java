@@ -73,9 +73,8 @@ public class Controller {
                             for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
                                 ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
                                 try {
-                                    Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
-                                    Class parentClass = componentClass.getSuperclass();
-                                    if (parentClass.isInstance(node)) {
+                                    if (componentSettings.getType().equals(node.getClass().getSimpleName())) {
+                                        Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                                         Constructor constructor = componentClass.getConstructor();
                                         GObject newThing = (GObject) constructor.newInstance();
                                         newThing.setFieldName(node.getId());
