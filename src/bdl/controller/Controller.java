@@ -142,10 +142,10 @@ public class Controller {
             @Override
             public void handle(ActionEvent t) {
                 if (view.topPanel.mItmHistory.isSelected()) {
-                    view.rightPanel.getItems().add(view.rightPanel.rightSplitPaneBottom);
+                    view.rightPanel.getItems().add(view.rightPanel.historyPanel);
                     view.rightPanel.setDividerPosition(0, 0.6);
                 } else {
-                    view.rightPanel.getItems().remove(view.rightPanel.rightSplitPaneBottom);
+                    view.rightPanel.getItems().remove(view.rightPanel.historyPanel);
                 }
             }
         });
