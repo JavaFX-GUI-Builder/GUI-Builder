@@ -27,9 +27,6 @@ public class HierarchyPane extends AnchorPane {
 
         viewListeners = new ViewListeners(view);
 
-        final HierarchyTreeCellFactory htcf = new HierarchyTreeCellFactory();
-        htcf.viewlisteners = viewListeners;
-
         treeView = new TreeView<>();
         AnchorPane.setBottomAnchor(treeView, 0.0);
         AnchorPane.setTopAnchor(treeView, 0.0);
@@ -40,7 +37,7 @@ public class HierarchyPane extends AnchorPane {
         treeView.setCellFactory(new Callback<TreeView<GObject>, TreeCell<GObject>>() {
             @Override
             public TreeCell<GObject> call(TreeView<GObject> p) {
-                return htcf;
+                return new HierarchyTreeCellFactory(viewListeners);
             }
         });
         GButton but = new GButton();

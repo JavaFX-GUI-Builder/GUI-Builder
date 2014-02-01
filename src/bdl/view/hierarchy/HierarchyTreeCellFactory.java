@@ -16,41 +16,16 @@ public class HierarchyTreeCellFactory extends TreeCell<GObject> {
 
     public ViewListeners viewlisteners;
 
-    public HierarchyTreeCellFactory() {
+    public HierarchyTreeCellFactory(ViewListeners viewlisteners) {
         super();
-//        if (getItem() != null) {
-//            setText(getItem().getFieldName());
-//            this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent t) {
-//                    viewlisteners.redraw((Node) getItem());
-//                    System.out.println(getItem().getFieldName());
-//                }
-//            });
-//        }
+        this.viewlisteners = viewlisteners;
     }
 
     @Override
     public void updateItem(GObject item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty || item == null) {
-            System.out.println("null triggered");
-            setText(null);
-            return;
+        if (item != null) {
+            setText(item.getFieldName());
         }
-        setGraphic(new Label(item.getFieldName()));
-        System.out.println(item.getFieldName());
-        
-//        if (empty) {
-//            setText(null);
-//            setGraphic(null);
-//        } else {
-//            setText(item.getFieldName());
-//            Node currentNode = getGraphic();
-//            Node newNode = (Node) item;
-//            if (currentNode == null || !currentNode.equals(newNode)) {
-//                setGraphic(newNode);
-//            }
-//        }
     }
 }

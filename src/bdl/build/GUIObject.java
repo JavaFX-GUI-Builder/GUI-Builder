@@ -1,6 +1,9 @@
 package bdl.build;
 
 import bdl.lang.LabelGrabber;
+import javafx.event.EventHandler;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.layout.AnchorPane;
 
 public class GUIObject extends AnchorPane {
