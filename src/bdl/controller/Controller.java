@@ -44,15 +44,24 @@ import javafx.scene.shape.Circle;
 
 public class Controller {
 
+    private View view;
+    private ViewListeners viewListeners;
     private final ArrayList<String> fieldNames;
     private static final DataFormat cmjFormat = new DataFormat("fmjFormat");
 
-    public Controller(final View view) {
-        final ViewListeners viewListeners = new ViewListeners(view);
+    public Controller(View view) {
+        this.view = view;
+        viewListeners = new ViewListeners(view);
         view.viewListeners = viewListeners;
         fieldNames = new ArrayList<>();
 
-        //Start Top Panel
+        setupLeftPanel();
+        setupMiddlePanel();
+        setupRightPanel();
+        setupTopPanel();
+    }
+
+    private void setupTopPanel() {
         view.topPanel.mItmLoadFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -149,9 +158,35 @@ public class Controller {
                 }
             }
         });
-        //End TopPanel
+    }
 
-        //Start MiddlePanel
+    private void setupLeftPanel() {
+        view.leftPanel.leftList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getClickCount() == 2) {
+                    ComponentSettings componentSettings = view.leftPanel.leftList.getSelectionModel().getSelectedItem().getComponentSettings();
+                    if (componentSettings != null) {
+                        GObject newThing = null;
+
+                        try {
+                            Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
+                            Constructor constructor = panelPropertyClass.getConstructor();
+                            newThing = (GObject) constructor.newInstance();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        addGObject(newThing, componentSettings, view, viewListeners, null, -1, -1);
+
+                    }
+                    view.leftPanel.leftList.getSelectionModel().select(-1);
+                }
+            }
+        });
+    }
+
+    private void setupMiddlePanel() {
         view.middleTabPane.viewPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -235,33 +270,6 @@ public class Controller {
                 }
             }
         });
-        //End MiddlePanel
-
-        //Start LeftPanel
-        view.leftPanel.leftList.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getClickCount() == 2) {
-                    ComponentSettings componentSettings = view.leftPanel.leftList.getSelectionModel().getSelectedItem().getComponentSettings();
-                    if (componentSettings != null) {
-                        GObject newThing = null;
-
-                        try {
-                            Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
-                            Constructor constructor = panelPropertyClass.getConstructor();
-                            newThing = (GObject) constructor.newInstance();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        addGObject(newThing, componentSettings, view, viewListeners, null, -1, -1);
-
-                    }
-                    view.leftPanel.leftList.getSelectionModel().select(-1);
-                }
-            }
-        });
-        //End LeftPanel
 
         view.middleTabPane.viewPane.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -293,6 +301,12 @@ public class Controller {
             }
         });
     }
+
+    private void setupRightPanel() {
+
+    }
+
+
 
     //x and y are initial layout positions. To be used only with drag and drop.
     private void addGObject(GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
