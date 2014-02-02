@@ -49,7 +49,7 @@ public class LeftPanel extends SplitPane {
         hierarchyPane.setMaxWidth(205);
         //End left hierarchy panel
 
-        getItems().addAll(leftList);
+        getItems().addAll(leftList, hierarchyPane);
     }
 
     private static class LeftListCellFactory extends ListCell<ComponentMenuItem> {

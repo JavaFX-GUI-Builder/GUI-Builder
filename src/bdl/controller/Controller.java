@@ -4,15 +4,23 @@ import bdl.build.CodeGenerator;
 import bdl.build.GObject;
 import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
+import bdl.model.history.HistoryItem;
+import bdl.model.history.HistoryListener;
+import bdl.model.history.HistoryManager;
+import bdl.model.history.update.HistoryItemDescription;
+import bdl.model.history.update.HistoryUpdate;
 import bdl.view.View;
 import bdl.view.left.ComponentMenuItem;
 import bdl.view.right.PropertyEditPane;
+import bdl.view.right.history.HistoryPanelItem;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -46,7 +54,8 @@ public class Controller {
 
     private View view;
     private ViewListeners viewListeners;
-    private final ArrayList<String> fieldNames;
+    private ArrayList<String> fieldNames;
+    private HistoryManager historyManager;
     private static final DataFormat cmjFormat = new DataFormat("fmjFormat");
 
     public Controller(View view) {
@@ -54,6 +63,7 @@ public class Controller {
         viewListeners = new ViewListeners(view);
         view.viewListeners = viewListeners;
         fieldNames = new ArrayList<>();
+        historyManager = new HistoryManager();
 
         setupLeftPanel();
         setupMiddlePanel();
@@ -304,12 +314,34 @@ public class Controller {
 
     private void setupRightPanel() {
 
+        new HistoryPanelUpdateHandler(historyManager);
+
+    }
+
+    public class HistoryPanelUpdateHandler implements HistoryListener {
+
+        public HistoryPanelUpdateHandler(HistoryManager historyManager) {
+            historyManager.addHistoryListener(this);
+        }
+
+        public void historyUpdated(HistoryUpdate historyUpdate) {
+            ObservableList<Label> panelItems = view.rightPanel.historyPanel.getItems();
+            panelItems.clear();
+
+            for (HistoryItemDescription item : historyUpdate.getHistory()) {
+                panelItems.add(new HistoryPanelItem(item));
+            }
+            view.rightPanel.historyPanel.getSelectionModel().select(historyUpdate.getCurrentIndex());
+        }
+
     }
 
 
 
     //x and y are initial layout positions. To be used only with drag and drop.
     private void addGObject(GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
+        historyManager.addHistory(new HistoryItem(null, null, "" + newThing.getClass().getSuperclass().getSimpleName() + " added!"));
+
         //Sets the default settings on the gObject and creates the property edit pane
         final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode);
 

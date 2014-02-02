@@ -1,14 +1,14 @@
 package bdl.view.right;
 
-import bdl.model.HistoryItem;
-import javafx.scene.control.ListView;
+import bdl.view.right.history.HistoryPanel;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 
 public class RightPanel extends SplitPane {
 
-    public ListView<HistoryItem> historyPanel;
+    public HistoryPanel<Label> historyPanel;
     public ScrollPane propertyScroll;
     public PropertyEditPane propertyEditPane;
 
@@ -26,8 +26,8 @@ public class RightPanel extends SplitPane {
         rightSplitPaneTop.getChildren().add(propertyScroll);
         //End right properties panel
 
-        historyPanel = new ListView<>();
+        historyPanel = new HistoryPanel<>();
 
-        getItems().addAll(rightSplitPaneTop);
+        getItems().addAll(rightSplitPaneTop, historyPanel);
     }
 }
