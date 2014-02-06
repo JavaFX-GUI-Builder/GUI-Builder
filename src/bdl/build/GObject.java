@@ -2,6 +2,7 @@ package bdl.build;
 
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
+import javafx.beans.property.StringProperty;
 
 import java.util.List;
 
@@ -18,10 +19,9 @@ public interface GObject {
 
     public List<PanelProperty> getPanelProperties();
 
-    @Override
-    public String toString();
-
     public void setPEP(PropertyEditPane propertyEditPane);
     
     public PropertyEditPane getPEP();
+
+    public StringProperty fieldNameProperty();
 }

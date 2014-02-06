@@ -10,15 +10,13 @@ public class RightPanel extends SplitPane {
 
     public HistoryPanel<Label> historyPanel;
     public ScrollPane propertyScroll;
-    public PropertyEditPane propertyEditPane;
 
     public RightPanel() {
         AnchorPane rightSplitPaneTop = new AnchorPane();
 
         //Begin right properties panel
-        propertyEditPane = new PropertyEditPane();
         propertyScroll = new ScrollPane();
-        propertyScroll.setContent(propertyEditPane);
+        propertyScroll.setContent(new PropertyEditPane());
         AnchorPane.setTopAnchor(propertyScroll, 0.0);
         AnchorPane.setBottomAnchor(propertyScroll, 0.0);
         AnchorPane.setLeftAnchor(propertyScroll, 0.0);

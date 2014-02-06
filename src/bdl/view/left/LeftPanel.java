@@ -4,7 +4,7 @@ import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
 import bdl.model.ComponentSettingsStore;
 import bdl.view.View;
-import bdl.view.hierarchy.HierarchyPane;
+import bdl.view.left.hierarchy.HierarchyPane;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -17,11 +17,11 @@ import javafx.util.Callback;
 
 public class LeftPanel extends SplitPane {
 
-    public TitledPane hierarchyPane;
+    private TitledPane hierarchyTitledPane;
     public ListView<ComponentMenuItem> leftList;
     public TreeItem<String> treeRoot;
     public TreeView<String> leftTreeView;
-    public HierarchyPane hierPane;
+    public HierarchyPane hierarchyPane;
 
     public LeftPanel(ComponentSettingsStore componentSettingsStore, final View view) {
         //Begin left component list
@@ -42,14 +42,14 @@ public class LeftPanel extends SplitPane {
         //End left component list
 
         //Begin left hierarchy panel
-        hierPane = new HierarchyPane(view);
-        hierarchyPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), hierPane);
-        hierarchyPane.setCollapsible(false);
-        hierarchyPane.setMinWidth(205);
-        hierarchyPane.setMaxWidth(205);
+        hierarchyPane = new HierarchyPane(view);
+        hierarchyTitledPane = new TitledPane(LabelGrabber.getLabel("hierarchy.tab.title"), hierarchyPane);
+        hierarchyTitledPane.setCollapsible(false);
+        hierarchyTitledPane.setMinWidth(205);
+        hierarchyTitledPane.setMaxWidth(205);
         //End left hierarchy panel
 
-        getItems().addAll(leftList, hierarchyPane);
+        getItems().addAll(leftList, hierarchyTitledPane);
     }
 
     private static class LeftListCellFactory extends ListCell<ComponentMenuItem> {

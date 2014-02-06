@@ -4,6 +4,8 @@ package bdl.build.javafx.scene.control;
 import bdl.build.GObject;
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.MenuItem;
 
 import java.util.List;
@@ -11,16 +13,22 @@ import java.util.List;
 public class GMenuItem extends MenuItem implements GObject {
     private String fieldName;
     private List<PanelProperty> properties;
-    public PropertyEditPane pep;
+    private PropertyEditPane pep;
+    private StringProperty fieldNameProperty = new SimpleStringProperty();
 
     @Override
     public String getFieldName() {
-        return fieldName;
+        return fieldNameProperty.getValue();
     }
 
     @Override
     public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+        fieldNameProperty.setValue(fieldName);
+    }
+
+    @Override
+    public StringProperty fieldNameProperty() {
+        return fieldNameProperty;
     }
 
     @Override

@@ -3,23 +3,30 @@ package bdl.build.javafx.scene.layout;
 import bdl.build.GObject;
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
 
 public class GAnchorPane extends AnchorPane implements GObject {
-    private String fieldName;
     private List<PanelProperty> properties;
-    public PropertyEditPane pep;
+    private PropertyEditPane pep;
+    private StringProperty fieldNameProperty = new SimpleStringProperty();
 
     @Override
     public String getFieldName() {
-        return fieldName;
+        return fieldNameProperty.getValue();
     }
 
     @Override
     public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+        fieldNameProperty.setValue(fieldName);
+    }
+
+    @Override
+    public StringProperty fieldNameProperty() {
+        return fieldNameProperty;
     }
 
     @Override
@@ -30,11 +37,6 @@ public class GAnchorPane extends AnchorPane implements GObject {
     @Override
     public List<PanelProperty> getPanelProperties() {
         return properties;
-    }
-    
-    @Override
-    public String toString() {
-        return fieldName;
     }
 
     @Override

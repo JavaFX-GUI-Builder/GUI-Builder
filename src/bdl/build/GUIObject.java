@@ -3,6 +3,8 @@ package bdl.build;
 import bdl.build.javafx.scene.layout.GAnchorPane;
 import bdl.lang.LabelGrabber;
 import bdl.view.right.PropertyEditPane;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class GUIObject extends GAnchorPane {
 
@@ -10,10 +12,9 @@ public class GUIObject extends GAnchorPane {
     private String title = LabelGrabber.getLabel("default.gui.title");
     private double width;
     private double height;
-    
-    @Override
-    public String getFieldName() {
-        return title;
+
+    public GUIObject() {
+        setFieldName(title);
     }
 
     public String getGUITitle() {
@@ -44,14 +45,5 @@ public class GUIObject extends GAnchorPane {
     public void setGUIHeight(double height) {
         this.height = height;
         this.setHeight(height);
-    }
-    
-    @Override
-    public PropertyEditPane getPEP() {
-        return pep;
-    }
-    
-    public void setPEP(PropertyEditPane propertyEditPane) {
-        pep = propertyEditPane;
     }
 }

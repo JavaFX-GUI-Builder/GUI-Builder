@@ -12,6 +12,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class MiddlePanel extends TabPane {
@@ -25,6 +26,8 @@ public class MiddlePanel extends TabPane {
     public TextArea codePane;
     public ScrollPane scroll;
     private StackPane blankPane;
+
+    public Rectangle outline;
 
     public MiddlePanel() {
         setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -58,6 +61,14 @@ public class MiddlePanel extends TabPane {
         blankPane.getChildren().addAll(viewPaneDecorator);
         StackPane.setAlignment(viewPaneDecorator, Pos.CENTER);
         StackPane.setMargin(viewPaneDecorator, new Insets(30, 30, 30, 30));
+
+        outline = new Rectangle();
+        outline.setStrokeWidth(2);
+        outline.setStroke(Color.BLUE);
+        outline.setFill(Color.TRANSPARENT);
+        outline.setMouseTransparent(true);
+        outline.setStyle("-fx-opacity: 1;");//Could use this to make a light grey foreground
+        viewPaneDecorator.getChildren().add(outline);
 
         scroll.setFitToWidth(true);
         scroll.setFitToHeight(true);

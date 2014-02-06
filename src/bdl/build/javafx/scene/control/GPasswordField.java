@@ -3,6 +3,8 @@ package bdl.build.javafx.scene.control;
 import bdl.build.GObject;
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.properties.PanelProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.PasswordField;
 
 import java.util.List;
@@ -10,7 +12,8 @@ import java.util.List;
 public class GPasswordField extends PasswordField implements GObject {
     private String fieldName;
     private List<PanelProperty> properties;
-    public PropertyEditPane pep;
+    private PropertyEditPane pep;
+    private StringProperty fieldNameProperty = new SimpleStringProperty();
 
     public GPasswordField() {
         setEditable(false);
@@ -18,14 +21,18 @@ public class GPasswordField extends PasswordField implements GObject {
 
     @Override
     public String getFieldName() {
-        return fieldName;
+        return fieldNameProperty.getValue();
     }
 
     @Override
     public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+        fieldNameProperty.setValue(fieldName);
     }
 
+    @Override
+    public StringProperty fieldNameProperty() {
+        return fieldNameProperty;
+    }
     @Override
     public void setPanelProperties(List<PanelProperty> properties) {
         this.properties = properties;

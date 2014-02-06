@@ -9,8 +9,11 @@ import bdl.model.history.HistoryListener;
 import bdl.model.history.HistoryManager;
 import bdl.model.history.update.HistoryItemDescription;
 import bdl.model.history.update.HistoryUpdate;
+import bdl.model.selection.SelectionListener;
+import bdl.model.selection.SelectionManager;
 import bdl.view.View;
 import bdl.view.left.ComponentMenuItem;
+import bdl.view.left.hierarchy.HierarchyTreeItem;
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.history.HistoryPanelItem;
 import javafx.collections.ObservableList;
@@ -21,7 +24,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -44,10 +48,6 @@ import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.TransferMode;
 import javafx.scene.shape.Circle;
 
 public class Controller {
@@ -56,14 +56,16 @@ public class Controller {
     private ViewListeners viewListeners;
     private ArrayList<String> fieldNames;
     private HistoryManager historyManager;
+    private SelectionManager selectionManager;
     private static final DataFormat cmjFormat = new DataFormat("fmjFormat");
 
     public Controller(View view) {
         this.view = view;
-        viewListeners = new ViewListeners(view);
+        viewListeners = new ViewListeners();
         view.viewListeners = viewListeners;
         fieldNames = new ArrayList<>();
         historyManager = new HistoryManager();
+        selectionManager = new SelectionManager();
 
         setupLeftPanel();
         setupMiddlePanel();
@@ -194,14 +196,76 @@ public class Controller {
                 }
             }
         });
+
+        view.leftPanel.hierarchyPane.treeView.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                TreeItem<HierarchyTreeItem> item = view.leftPanel.hierarchyPane.treeView.getSelectionModel().getSelectedItem();
+                if (item != null) {
+                    selectionManager.updateSelected(item.getValue().getGObject());
+                }
+            }
+        });
+
+        //Add selection handlers for Hierarchy Pane
+        selectionManager.addSelectionListener(new SelectionListener() {
+            @Override
+            public void updateSelected(GObject gObject) {
+                for (TreeItem<HierarchyTreeItem> ti : view.leftPanel.hierarchyPane.treeRoot.getChildren()) {
+                    if (ti.getValue().getGObject().getFieldName().equals(gObject.getFieldName())) {
+                        view.leftPanel.hierarchyPane.treeView.getSelectionModel().select(ti);
+                    }
+                }
+            }
+
+            @Override
+            public void clearSelection() {
+                view.leftPanel.hierarchyPane.treeView.getSelectionModel().select(-1);
+            }
+        });
     }
 
     private void setupMiddlePanel() {
+
+        // Add selection handlers for the outline
+        selectionManager.addSelectionListener(new SelectionListener() {
+            @Override
+            public void updateSelected(GObject gObject) {
+                Node node = (Node) gObject;
+                Rectangle outline = view.middleTabPane.outline;
+                outline.setVisible(true);
+
+                double nodeX = node.getLayoutX();
+                double nodeY = node.getLayoutY();
+                Bounds bounds = node.getLayoutBounds();
+                double nodeW = bounds.getWidth();
+                double nodeH = bounds.getHeight();
+                if (node instanceof Circle) {
+                    outline.setLayoutX(nodeX - 4 - (nodeW / 2));
+                    outline.setLayoutY(nodeY - 4 - (nodeH / 2));
+                } else if (node instanceof Rectangle) {
+                    Rectangle r = (Rectangle) node;
+                    outline.setLayoutX(nodeX - 4 - (r.getStrokeWidth() / 2));
+                    outline.setLayoutY(nodeY - 4 - (r.getStrokeWidth() / 2));
+                } else {
+                    outline.setLayoutX(nodeX - 4);
+                    outline.setLayoutY(nodeY - 4);
+                }
+                outline.setWidth(nodeW + 8);
+                outline.setHeight(nodeH + 8);
+            }
+
+            @Override
+            public void clearSelection() {
+                view.middleTabPane.outline.setVisible(false);
+            }
+        });
+
+
         view.middleTabPane.viewPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                view.rightPanel.propertyScroll.setContent(new PropertyEditPane());
-                viewListeners.resetOutline();
+                selectionManager.clearSelection();
                 mouseEvent.consume();
             }
         });
@@ -314,28 +378,34 @@ public class Controller {
 
     private void setupRightPanel() {
 
-        new HistoryPanelUpdateHandler(historyManager);
-
-    }
-
-    public class HistoryPanelUpdateHandler implements HistoryListener {
-
-        public HistoryPanelUpdateHandler(HistoryManager historyManager) {
-            historyManager.addHistoryListener(this);
-        }
-
-        public void historyUpdated(HistoryUpdate historyUpdate) {
-            ObservableList<Label> panelItems = view.rightPanel.historyPanel.getItems();
-            panelItems.clear();
-
-            for (HistoryItemDescription item : historyUpdate.getHistory()) {
-                panelItems.add(new HistoryPanelItem(item));
+        // Add selection handlers for the Property Edit Pane
+        selectionManager.addSelectionListener(new SelectionListener() {
+            @Override
+            public void updateSelected(GObject gObject) {
+                view.rightPanel.propertyScroll.setContent(gObject.getPEP());
             }
-            view.rightPanel.historyPanel.getSelectionModel().select(historyUpdate.getCurrentIndex());
-        }
+
+            @Override
+            public void clearSelection() {
+                view.rightPanel.propertyScroll.setContent(new PropertyEditPane());
+            }
+        });
+
+        // Add history handlers for the History Pane
+        historyManager.addHistoryListener(new HistoryListener() {
+            @Override
+            public void historyUpdated(HistoryUpdate historyUpdate) {
+                ObservableList<Label> panelItems = view.rightPanel.historyPanel.getItems();
+                panelItems.clear();
+
+                for (HistoryItemDescription item : historyUpdate.getHistory()) {
+                    panelItems.add(new HistoryPanelItem(item));
+                }
+                view.rightPanel.historyPanel.getSelectionModel().select(historyUpdate.getCurrentIndex());
+            }
+        });
 
     }
-
 
 
     //x and y are initial layout positions. To be used only with drag and drop.
@@ -352,34 +422,31 @@ public class Controller {
         newNode.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> ov, Bounds t, Bounds t1) {
-                viewListeners.redraw(newNode);
+                selectionManager.updateSelected((GObject) newNode);
             }
         });
 
         newNode.layoutXProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                viewListeners.redraw(newNode);
+                selectionManager.updateSelected((GObject) newNode);
             }
         });
 
         newNode.layoutYProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                viewListeners.redraw(newNode);
+                selectionManager.updateSelected((GObject) newNode);
             }
         });
 
         newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                selectionManager.updateSelected((GObject) newNode);
+
                 viewListeners.onMousePressed(newNode, mouseEvent);
-                view.rightPanel.propertyScroll.setContent(propertyEditPane);
-                for (TreeItem<GObject> ti : view.leftPanel.hierPane.treeRoot.getChildren()) {
-                    if (ti.getValue().getFieldName().equals(((GObject) newNode).getFieldName())) {
-                        view.leftPanel.hierPane.treeView.getSelectionModel().select(ti);
-                    }
-                }
+
                 mouseEvent.consume();
             }
         });
@@ -394,6 +461,7 @@ public class Controller {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 viewListeners.onMouseDragged(newNode, mouseEvent);
+                selectionManager.updateSelected((GObject) newNode);
                 mouseEvent.consume();
             }
         });
@@ -409,25 +477,28 @@ public class Controller {
                     button.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent t) {
+
                             view.middleTabPane.viewPane.getChildren().remove(newNode);
-                            view.rightPanel.propertyScroll.setContent(new PropertyEditPane());
-                            view.currentlySelected = null;
-                            viewListeners.resetOutline();
-                            for (TreeItem<GObject> ti : view.leftPanel.hierPane.treeRoot.getChildren()) {
-                                if (ti.getValue().getFieldName().equals(((GObject) newNode).getFieldName())) {
-                                    view.leftPanel.hierPane.treeRoot.getChildren().remove(ti);
+
+                            selectionManager.clearSelection();
+
+                            for (TreeItem<HierarchyTreeItem> ti : view.leftPanel.hierarchyPane.treeRoot.getChildren()) {
+                                if (ti.getValue().getGObject().getFieldName().equals(((GObject) newNode).getFieldName())) {
+                                    view.leftPanel.hierarchyPane.treeRoot.getChildren().remove(ti);
                                 }
                             }
+
+                            selectionManager.clearSelection();
                         }
                     });
                 }
             }
         });
 
-        view.rightPanel.propertyScroll.setContent(propertyEditPane);
         view.middleTabPane.viewPane.getChildren().add(newNode);
-        view.currentlySelected = (GObject) newNode;
-        view.leftPanel.hierPane.add(null, (GObject) newNode);
+        view.leftPanel.hierarchyPane.treeRoot.getChildren()
+                .add(new TreeItem<>(new HierarchyTreeItem(newThing)));
+
 
         if (settingsNode == null) {
             if (newNode instanceof Circle) {
