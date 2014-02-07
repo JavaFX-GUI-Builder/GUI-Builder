@@ -1,6 +1,5 @@
 package bdl.view.left.hierarchy;
 
-import bdl.view.View;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;

@@ -1,7 +1,5 @@
 package bdl.view;
 
-import bdl.controller.ViewListeners;
-import bdl.model.ComponentSettingsStore;
 import bdl.view.left.LeftPanel;
 import bdl.view.middle.MiddlePanel;
 import bdl.view.right.RightPanel;

@@ -2,9 +2,6 @@ package bdl.build;
 
 import bdl.build.javafx.scene.layout.GAnchorPane;
 import bdl.lang.LabelGrabber;
-import bdl.view.right.PropertyEditPane;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class GUIObject extends GAnchorPane {
 

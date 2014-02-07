@@ -1,7 +1,6 @@
 package bdl.view.right.properties;
 
 import bdl.build.GUIObject;
-import java.text.DecimalFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -10,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+
+import java.text.DecimalFormat;
 
 public class GUISizeProperty implements PanelProperty {
 
