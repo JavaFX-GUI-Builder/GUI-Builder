@@ -36,8 +36,8 @@ public class Main extends Application {
             e.printStackTrace();
             System.exit(1);
         }
-        final View view = new View(model, stage);
-        Controller controller = new Controller(view);
+        final View view = new View(stage);
+        Controller controller = new Controller(view, model);
 
         Scene scene = new Scene(view, 1024, 600);
 

@@ -14,7 +14,7 @@ public class HierarchyPane extends AnchorPane {
     public TreeView<HierarchyTreeItem> treeView;
     public TreeItem<HierarchyTreeItem> treeRoot;
 
-    public HierarchyPane(final View view) {
+    public HierarchyPane() {
         this.setMinWidth(200);
         this.setMaxWidth(200);
 
@@ -24,11 +24,6 @@ public class HierarchyPane extends AnchorPane {
         AnchorPane.setLeftAnchor(treeView, 0.0);
         AnchorPane.setRightAnchor(treeView, 0.0);
         this.getChildren().add(treeView);
-
-        treeRoot = new TreeItem<>(new HierarchyTreeItem(view.middleTabPane.viewPane));
-        treeView.setRoot(treeRoot);
-        treeRoot.setExpanded(true);
-        treeView.setShowRoot(true);
     }
 
 

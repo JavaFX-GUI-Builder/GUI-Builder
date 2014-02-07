@@ -4,6 +4,7 @@ import bdl.build.CodeGenerator;
 import bdl.build.GObject;
 import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
+import bdl.model.ComponentSettingsStore;
 import bdl.model.history.HistoryItem;
 import bdl.model.history.HistoryListener;
 import bdl.model.history.HistoryManager;
@@ -16,6 +17,7 @@ import bdl.view.left.ComponentMenuItem;
 import bdl.view.left.hierarchy.HierarchyTreeItem;
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.history.HistoryPanelItem;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -23,7 +25,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -45,24 +49,22 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Bounds;
 import javafx.geometry.Side;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TreeItem;
 import javafx.scene.shape.Circle;
+import javafx.util.Callback;
 
 public class Controller {
 
     private View view;
+    private ComponentSettingsStore componentSettingsStore;
     private ViewListeners viewListeners;
     private ArrayList<String> fieldNames;
     private HistoryManager historyManager;
     private SelectionManager selectionManager;
-    private static final DataFormat cmjFormat = new DataFormat("fmjFormat");
 
-    public Controller(View view) {
+    public Controller(View view, ComponentSettingsStore componentSettingsStore) {
         this.view = view;
+        this.componentSettingsStore = componentSettingsStore;
         viewListeners = new ViewListeners();
-        view.viewListeners = viewListeners;
         fieldNames = new ArrayList<>();
         historyManager = new HistoryManager();
         selectionManager = new SelectionManager();
@@ -77,8 +79,6 @@ public class Controller {
         view.topPanel.mItmLoadFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                view.middleTabPane.viewPane.getChildren().clear();
-
                 FileChooser fileChooser = new FileChooser();
                 FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
                 fileChooser.getExtensionFilters().add(filter);
@@ -86,6 +86,11 @@ public class Controller {
                 File file = fileChooser.showOpenDialog(view.getStage());
 
                 if (file != null) {
+
+                    view.middleTabPane.viewPane.getChildren().clear();
+                    selectionManager.clearSelection();
+                    historyManager.clearHistory();
+
                     try {
                         Parent parent = FXMLLoader.load(file.toURI().toURL());
 
@@ -173,6 +178,20 @@ public class Controller {
     }
 
     private void setupLeftPanel() {
+        view.leftPanel.leftList.setCellFactory(new Callback<ListView<ComponentMenuItem>, ListCell<ComponentMenuItem>>() {
+            @Override
+            public ListCell<ComponentMenuItem> call(ListView<ComponentMenuItem> list) {
+                return new LeftListCellFactory(view);
+            }
+        });
+
+
+        for (ComponentSettings componentSettings : componentSettingsStore.getComponents()) {
+            String type = componentSettings.getType();
+            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/" + componentSettings.getIcon())));
+            view.leftPanel.leftList.getItems().add(new ComponentMenuItem(type, icon, componentSettings));
+        }
+
         view.leftPanel.leftList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -197,12 +216,32 @@ public class Controller {
             }
         });
 
+        view.leftPanel.hierarchyPane.treeRoot = new TreeItem<>(new HierarchyTreeItem(view.middleTabPane.viewPane));
+        view.leftPanel.hierarchyPane.treeView.setRoot(view.leftPanel.hierarchyPane.treeRoot);
+        view.leftPanel.hierarchyPane.treeRoot.setExpanded(true);
+        view.leftPanel.hierarchyPane.treeView.setShowRoot(true);
+
         view.leftPanel.hierarchyPane.treeView.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 TreeItem<HierarchyTreeItem> item = view.leftPanel.hierarchyPane.treeView.getSelectionModel().getSelectedItem();
                 if (item != null) {
                     selectionManager.updateSelected(item.getValue().getGObject());
+                }
+            }
+        });
+
+        //Add listener to node list to update hierarchy pane
+        view.middleTabPane.viewPane.getChildren().addListener(new ListChangeListener<Node>() {
+            @Override
+            public void onChanged(Change<? extends Node> change) {
+                TreeItem<HierarchyTreeItem> root = view.leftPanel.hierarchyPane.treeRoot;
+                root.getChildren().clear();
+
+                ObservableList nodes = change.getList();
+                // Add backwards so that they appear in the correct order
+                for (int i = nodes.size() - 1; i >= 0; i--) {
+                    root.getChildren().add(new TreeItem<>(new HierarchyTreeItem((GObject)nodes.get(i))));
                 }
             }
         });
@@ -401,7 +440,9 @@ public class Controller {
                 for (HistoryItemDescription item : historyUpdate.getHistory()) {
                     panelItems.add(new HistoryPanelItem(item));
                 }
+
                 view.rightPanel.historyPanel.getSelectionModel().select(historyUpdate.getCurrentIndex());
+                view.rightPanel.historyPanel.scrollTo(historyUpdate.getCurrentIndex());
             }
         });
 
@@ -444,9 +485,7 @@ public class Controller {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 selectionManager.updateSelected((GObject) newNode);
-
                 viewListeners.onMousePressed(newNode, mouseEvent);
-
                 mouseEvent.consume();
             }
         });
@@ -477,17 +516,7 @@ public class Controller {
                     button.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent t) {
-
                             view.middleTabPane.viewPane.getChildren().remove(newNode);
-
-                            selectionManager.clearSelection();
-
-                            for (TreeItem<HierarchyTreeItem> ti : view.leftPanel.hierarchyPane.treeRoot.getChildren()) {
-                                if (ti.getValue().getGObject().getFieldName().equals(((GObject) newNode).getFieldName())) {
-                                    view.leftPanel.hierarchyPane.treeRoot.getChildren().remove(ti);
-                                }
-                            }
-
                             selectionManager.clearSelection();
                         }
                     });
@@ -496,8 +525,6 @@ public class Controller {
         });
 
         view.middleTabPane.viewPane.getChildren().add(newNode);
-        view.leftPanel.hierarchyPane.treeRoot.getChildren()
-                .add(new TreeItem<>(new HierarchyTreeItem(newThing)));
 
 
         if (settingsNode == null) {
@@ -513,6 +540,37 @@ public class Controller {
         if (x > 0 && y > 0) {
             newNode.setLayoutX(x);
             newNode.setLayoutY(y);
+        }
+    }
+
+    private static class LeftListCellFactory extends ListCell<ComponentMenuItem> {
+
+        public LeftListCellFactory(final View view) {
+            super();
+            this.setOnDragDetected(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    Dragboard db = view.leftPanel.leftList.startDragAndDrop(TransferMode.ANY);
+                    ClipboardContent cc = new ClipboardContent();
+                    cc.putString("");
+                    db.setContent(cc);
+                    t.consume();
+                }
+            });
+        }
+
+        @Override
+        public void updateItem(ComponentMenuItem cmi, boolean empty) {
+            super.updateItem(cmi, empty);
+            if(!empty && cmi != null) {
+                setText(cmi.getText());
+                setGraphic(cmi.getGraphic());
+            }
+            else {
+                setText(null);
+                setGraphic(null);
+                return;
+            }
         }
     }
 }

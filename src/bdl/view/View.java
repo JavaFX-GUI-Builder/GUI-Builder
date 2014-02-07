@@ -20,9 +20,8 @@ public class View extends AnchorPane {
     public MiddlePanel middleTabPane;
 
     private Stage stage;
-    public ViewListeners viewListeners;
 
-    public View(ComponentSettingsStore componentSettingsStore, Stage stage) {
+    public View(Stage stage) {
         this.stage = stage;
 
         //Begin Main panel
@@ -55,7 +54,7 @@ public class View extends AnchorPane {
         //End MiddlePanel
 
         //Begin LeftPanel
-        leftPanel = new LeftPanel(componentSettingsStore, this);
+        leftPanel = new LeftPanel();
         AnchorPane leftAnchorPane = new AnchorPane();
         leftPanel.setOrientation(Orientation.VERTICAL);
         AnchorPane.setLeftAnchor(leftPanel, 0.0);

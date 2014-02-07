@@ -29,6 +29,13 @@ public class HistoryManager {
         notifyOfUpdate();
     }
 
+    public void clearHistory() {
+        chain.clear();
+        chain.add(new HistoryItem(null, null, "Start"));
+        currentIndex = 0;
+        notifyOfUpdate();
+    }
+
     private void notifyOfUpdate() {
         if (historyListeners.size() > 0) {
             ArrayList<HistoryItemDescription> historyDescriptions = new ArrayList<>();

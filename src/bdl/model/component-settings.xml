@@ -559,7 +559,7 @@
                 <name>Text</name>
                 <enabled>true</enabled>
                 <pseudotype>String</pseudotype>
-                <default>Checkbox</default>
+                <default>RadioButton</default>
                 <setter>setText</setter>
                 <getter>getText</getter>
                 <fxml>text</fxml>
