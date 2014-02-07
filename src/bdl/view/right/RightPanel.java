@@ -1,14 +1,14 @@
 package bdl.view.right;
 
 import bdl.view.right.history.HistoryPanel;
-import javafx.scene.control.Label;
+import bdl.view.right.history.HistoryPanelItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 
 public class RightPanel extends SplitPane {
 
-    public HistoryPanel<Label> historyPanel;
+    public HistoryPanel<HistoryPanelItem> historyPanel;
     public ScrollPane propertyScroll;
 
     public RightPanel() {

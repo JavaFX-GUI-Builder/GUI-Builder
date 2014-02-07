@@ -434,7 +434,7 @@ public class Controller {
         historyManager.addHistoryListener(new HistoryListener() {
             @Override
             public void historyUpdated(HistoryUpdate historyUpdate) {
-                ObservableList<Label> panelItems = view.rightPanel.historyPanel.getItems();
+                ObservableList<HistoryPanelItem> panelItems = view.rightPanel.historyPanel.getItems();
                 panelItems.clear();
 
                 for (HistoryItemDescription item : historyUpdate.getHistory()) {
@@ -446,12 +446,23 @@ public class Controller {
             }
         });
 
+        view.rightPanel.historyPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getClickCount() == 2) {
+                    HistoryPanelItem historyItemDescription = view.rightPanel.historyPanel.getSelectionModel().getSelectedItem();
+                    if (historyItemDescription != null) {
+                        historyManager.updateTo(historyItemDescription.getIndex());
+                    }
+                }
+            }
+        });
+
     }
 
 
     //x and y are initial layout positions. To be used only with drag and drop.
-    private void addGObject(GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
-        historyManager.addHistory(new HistoryItem(null, null, "" + newThing.getClass().getSuperclass().getSimpleName() + " added!"));
+    private void addGObject(final GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
 
         //Sets the default settings on the gObject and creates the property edit pane
         final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode);
@@ -525,6 +536,25 @@ public class Controller {
         });
 
         view.middleTabPane.viewPane.getChildren().add(newNode);
+
+        historyManager.addHistory(new HistoryItem() {
+            @Override
+            public void restore() {
+                view.middleTabPane.viewPane.getChildren().add(newNode);
+                selectionManager.updateSelected(newThing);
+            }
+
+            @Override
+            public void revert() {
+                view.middleTabPane.viewPane.getChildren().remove(newThing);
+                selectionManager.clearSelection();
+            }
+
+            @Override
+            public String getAppearance() {
+                return newThing.getClass().getSuperclass().getSimpleName() + " added!";
+            }
+        });
 
 
         if (settingsNode == null) {

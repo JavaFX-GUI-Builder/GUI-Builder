@@ -15,7 +15,12 @@ public class HistoryManager {
     public HistoryManager() {
         currentIndex = 0;
         chain = new ArrayList<>();
-        chain.add(new HistoryItem(null, null, "Start"));
+        chain.add(0, new HistoryItem() {
+            @Override
+            public String getAppearance() {
+                return "Start";
+            }
+        });
         historyListeners = new ArrayList<>();
     }
 
@@ -24,16 +29,42 @@ public class HistoryManager {
     }
 
     public void addHistory(HistoryItem newHistoryItem) {
-        chain.add(newHistoryItem);
         currentIndex++;
+        for (int i = chain.size() - 1; i >= currentIndex; i--) {
+            chain.remove(i);
+        }
+        chain.add(currentIndex, newHistoryItem);
         notifyOfUpdate();
     }
 
     public void clearHistory() {
         chain.clear();
-        chain.add(new HistoryItem(null, null, "Start"));
         currentIndex = 0;
+        chain.add(0, new HistoryItem() {
+            @Override
+            public String getAppearance() {
+                return "Start";
+            }
+        });
         notifyOfUpdate();
+    }
+
+    public void updateTo(int index) {
+        if (index >= 0 && index < chain.size()) {
+            if (currentIndex > index) {
+                //Go back
+                for (int i = currentIndex; i > index; i--) {
+                    chain.get(i).revert();
+                }
+            } else if (currentIndex < index) {
+                //Go forwards
+                for (int i = currentIndex + 1; i <= index; i++) {
+                    chain.get(i).restore();
+                }
+            }
+            currentIndex = index;
+            notifyOfUpdate();
+        }
     }
 
     private void notifyOfUpdate() {
@@ -41,7 +72,7 @@ public class HistoryManager {
             ArrayList<HistoryItemDescription> historyDescriptions = new ArrayList<>();
             int i = 0;
             for (HistoryItem historyItem : chain) {
-                historyDescriptions.add(new HistoryItemDescription(i, historyItem.getUpdateAppearance()));
+                historyDescriptions.add(new HistoryItemDescription(i, historyItem.getAppearance()));
                 i++;
             }
             HistoryUpdate historyUpdate = new HistoryUpdate(currentIndex, historyDescriptions.toArray(new HistoryItemDescription[historyDescriptions.size()]));
