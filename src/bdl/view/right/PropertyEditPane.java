@@ -54,7 +54,7 @@ public class PropertyEditPane extends GridPane {
         propertiesHeading.setMinWidth(90);
         propertiesHeading.setFont(Font.font(propertiesHeading.getFont().getFamily(), FontWeight.BOLD, propertiesHeading.getFont().getSize() + 0.5));
         add(propertiesHeading, 0, currentRow++);
-        new FieldName(gObj, fieldNames, componentSettings.getType(), this, currentRow++);
+        new FieldName(gObj, fieldNames, componentSettings.getType(), this, currentRow++, historyManager);
 
         List<PanelProperty> panelPropertyList = new ArrayList<>();
         for (Property property : componentSettings.getProperties()) {

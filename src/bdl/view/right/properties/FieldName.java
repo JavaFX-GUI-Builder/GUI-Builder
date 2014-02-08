@@ -2,6 +2,8 @@ package bdl.view.right.properties;
 
 import bdl.build.GObject;
 import bdl.lang.LabelGrabber;
+import bdl.model.history.HistoryItem;
+import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -16,11 +18,17 @@ import java.util.ArrayList;
 public class FieldName {
 
     private ArrayList<String> fieldNames;
+    private HistoryManager historyManager;
+    private final TextField textField;
+    private final GObject gObj;
 
-    public FieldName(final GObject gObj, ArrayList<String> fieldNames, String type, GridPane gp, int row) {
+    public FieldName(final GObject gObj, ArrayList<String> fieldNames, String type, GridPane gp, int row, HistoryManager hm) {
         gp.add(new Label(LabelGrabber.getLabel("field.name.text") + ":"), 0, row);
-        final TextField textField = new FieldNameTextField();
+        textField = new FieldNameTextField();
         this.fieldNames = fieldNames;
+        this.historyManager = hm;
+        this.gObj = gObj;
+        updateHistory(); // For FieldNames its a bind, not a method call.
 
         // Grab the fieldname if already set (which is the case when loading from FXML).
         if (gObj.getFieldName() != null) {
@@ -44,7 +52,9 @@ public class FieldName {
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
-                if (!aBoolean2) gObj.setFieldName(textField.getText());
+                if (!aBoolean2) {
+                    gObj.setFieldName(textField.getText());
+                }
             }
         });
     }
@@ -66,7 +76,6 @@ public class FieldName {
                 }
             });
         }
-
         final ChangeListener<Number> ignoreNextBackspace = new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
@@ -77,7 +86,8 @@ public class FieldName {
             }
         };
 
-        @Override public void replaceText(int start, int end, String text) {
+        @Override
+        public void replaceText(int start, int end, String text) {
             try {
                 if (isAllowed(start, end, text)) {
                     super.replaceText(start, end, text);
@@ -89,8 +99,9 @@ public class FieldName {
             }
         }
 
-        @Override public void replaceSelection(String text) {
-            int a = getCaretPosition(), b=getAnchor();
+        @Override
+        public void replaceSelection(String text) {
+            int a = getCaretPosition(), b = getAnchor();
             int start = Math.min(a, b);
             int end = Math.max(a, b);
             if (isAllowed(start, end, text)) {
@@ -98,29 +109,32 @@ public class FieldName {
             }
             backspacePressed = false;
         }
-
         private String[] reservedWords = {
-                "assert",
-                "abstract", "boolean", "break", "byte",
-                "case", "catch", "char", "class",
-                "const", "continue", "default", "do",
-                "double", "else", "extends", "final",
-                "finally", "float", "for", "goto",
-                "if", "implements", "import",
-                "instanceof", "int", "interface",
-                "long", "native", "new", "package",
-                "private", "protected", "public",
-                "return", "short", "static", "super",
-                "switch", "synchronized", "this",
-                "throw", "throws", "transient",
-                "try", "void", "volatile", "while"
+            "assert",
+            "abstract", "boolean", "break", "byte",
+            "case", "catch", "char", "class",
+            "const", "continue", "default", "do",
+            "double", "else", "extends", "final",
+            "finally", "float", "for", "goto",
+            "if", "implements", "import",
+            "instanceof", "int", "interface",
+            "long", "native", "new", "package",
+            "private", "protected", "public",
+            "return", "short", "static", "super",
+            "switch", "synchronized", "this",
+            "throw", "throws", "transient",
+            "try", "void", "volatile", "while"
         };
 
         private boolean isAllowed(int start, int end, String text) {
             if (text != null) {
                 String curText = getText();
-                if (curText == null) curText = "";
-                if (end > curText.length()) end = curText.length();
+                if (curText == null) {
+                    curText = "";
+                }
+                if (end > curText.length()) {
+                    end = curText.length();
+                }
                 String potentialNewText = curText.substring(0, start) + text + curText.substring(end);
 
                 //Must not cause new text to be empty.
@@ -145,7 +159,7 @@ public class FieldName {
                     return false;
                 }
                 //Finally, must not cause a reserved word
-                for (int i = 0; i < reservedWords.length; i++){
+                for (int i = 0; i < reservedWords.length; i++) {
                     if (potentialNewText.equals(reservedWords[i])) {
                         return false;
                     }
@@ -157,4 +171,30 @@ public class FieldName {
         }
     }
 
+    public void updateHistory() {
+        gObj.fieldNameProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> ov, final String t, final String t1) {
+                if (t != null) {
+                    historyManager.addHistory(new HistoryItem() {
+                        @Override
+                        public void restore() {
+                            gObj.setFieldName(t1);
+                        }
+
+                        @Override
+                        public void revert() {
+                            gObj.setFieldName(t);
+                        }
+
+                        @Override
+                        public String getAppearance() {
+                            return t + " -> " + t1;
+                        }
+                    });
+                }
+            }
+        });
+
+    }
 }
