@@ -6,6 +6,7 @@ import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
 import bdl.model.ListenerHint;
 import bdl.model.Property;
+import bdl.model.history.HistoryManager;
 import bdl.view.right.properties.*;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -18,14 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PropertyEditPane extends GridPane {
-
+    
     /**
      * Constructor for "No component selected" pane
      */
     public PropertyEditPane() {
         add(new Label(LabelGrabber.getLabel("no.component.text")), 0, 0);
     }
-
+    
     public PropertyEditPane(GUIObject guiObj) {
         int currentRow = 0;
         this.getChildren().clear();
@@ -43,7 +44,7 @@ public class PropertyEditPane extends GridPane {
     /**
      * Constructor for gObject pane
      */
-    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings, ArrayList<String> fieldNames, GUIObject guiObject, Node settingsNode) {
+    public PropertyEditPane(GObject gObj, ComponentSettings componentSettings, ArrayList<String> fieldNames, GUIObject guiObject, Node settingsNode, HistoryManager historyManager) {
         //For reference, old properties panel: http://i.imgur.com/UBb7P4k.png
         int currentRow = 0;
         this.getChildren().clear();
@@ -60,8 +61,8 @@ public class PropertyEditPane extends GridPane {
             String type = property.getType();
             try {
                 Class panelPropertyClass = Class.forName("bdl.view.right.properties." + type + "Property");
-                Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, String.class, GridPane.class, int.class, Node.class);
-                PanelProperty panelProperty = (PanelProperty) constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getFxml(), property.getDefaultValue(), this, currentRow++, settingsNode);
+                Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, String.class, GridPane.class, int.class, Node.class, HistoryManager.class);
+                PanelProperty panelProperty = (PanelProperty) constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getFxml(), property.getDefaultValue(), this, currentRow++, settingsNode, historyManager);
                 if (panelProperty instanceof LayoutProperty) {
                     currentRow++;
                 }

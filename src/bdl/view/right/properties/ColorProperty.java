@@ -1,6 +1,7 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.model.history.HistoryManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -19,7 +20,7 @@ public class ColorProperty implements PanelProperty {
     private String fxml;
     private ColorPicker colorPicker;
 
-    public ColorProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
+    public ColorProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
         this.gObj = gObj;
         this.setter = setter;
         this.fxml = fxml;

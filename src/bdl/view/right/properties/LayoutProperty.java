@@ -1,6 +1,8 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.model.history.HistoryItem;
+import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -20,16 +22,18 @@ public class LayoutProperty implements PanelProperty {
     private TextField layoutX;
     private TextField layoutY;
     private DecimalFormat format = new DecimalFormat("#.##");
+    private HistoryManager historyManager;
 
-    public LayoutProperty(final GObject gObj, String name, final String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
-        this.node = (Node)gObj;
+    public LayoutProperty(final GObject gObj, String name, final String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
+        this.node = (Node) gObj;
         this.gObj = gObj;
+        historyManager = hm;
         int row1 = row;
         int row2 = row + 1;
 
         Label lx = new Label("LayoutX:");
         Label ly = new Label("LayoutY:");
-        
+
         gp.add(lx, 0, row1);
         gp.add(ly, 0, row2);
         layoutX = new TextField();
@@ -67,7 +71,10 @@ public class LayoutProperty implements PanelProperty {
                 if (!aBoolean2) {
                     try {
                         double value = Double.parseDouble(layoutX.getText());
-                        node.setLayoutX(value);
+                        if (value != node.getLayoutX()) {
+                            updateHistory(node.getLayoutY(), value, node.getLayoutY(), node.getLayoutX());
+                            node.setLayoutX(value);
+                        }
                     } catch (Exception e) {
                         //Reset value
                         layoutX.setText(format.format(node.getLayoutX()));
@@ -81,7 +88,10 @@ public class LayoutProperty implements PanelProperty {
                 if (!aBoolean2) {
                     try {
                         double value = Double.parseDouble(layoutY.getText());
-                        node.setLayoutY(value);
+                        if (value != node.getLayoutY()) {
+                            updateHistory(value, node.getLayoutX(), node.getLayoutY(), node.getLayoutX());
+                            node.setLayoutY(value);
+                        }
                     } catch (Exception e) {
                         //Reset value
                         layoutY.setText(format.format(node.getLayoutY()));
@@ -89,14 +99,17 @@ public class LayoutProperty implements PanelProperty {
                 }
             }
         });
-        
+
         layoutX.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
                 if (ke.getCode().equals(KeyCode.ENTER)) {
                     try {
                         double value = Double.parseDouble(layoutX.getText());
-                        node.setLayoutX(value);
+                        if (value != node.getLayoutX()) {
+                            updateHistory(node.getLayoutY(), value, node.getLayoutY(), node.getLayoutX());
+                            node.setLayoutX(value);
+                        }
                     } catch (Exception e) {
                         //Reset value
                         layoutX.setText(format.format(node.getLayoutX()));
@@ -104,14 +117,17 @@ public class LayoutProperty implements PanelProperty {
                 }
             }
         });
-        
+
         layoutY.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
                 if (ke.getCode().equals(KeyCode.ENTER)) {
                     try {
                         double value = Double.parseDouble(layoutY.getText());
-                        node.setLayoutY(value);
+                        if (value != node.getLayoutY()) {
+                            updateHistory(value, node.getLayoutX(), node.getLayoutY(), node.getLayoutX());
+                            node.setLayoutY(value);
+                        }
                     } catch (Exception e) {
                         //Reset value
                         layoutY.setText(format.format(node.getLayoutY()));
@@ -123,12 +139,33 @@ public class LayoutProperty implements PanelProperty {
 
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + ".setLayoutX(" + node.getLayoutX() + ");\n" +
-                gObj.getFieldName() + ".setLayoutY(" + node.getLayoutY() + ");";
+        return gObj.getFieldName() + ".setLayoutX(" + node.getLayoutX() + ");\n"
+                + gObj.getFieldName() + ".setLayoutY(" + node.getLayoutY() + ");";
     }
 
     @Override
     public String getFXMLCode() {
         return "layoutX=\"" + node.getLayoutX() + "\" layoutY=\"" + node.getLayoutY() + "\"";
+    }
+
+    public void updateHistory(final double yvalue, final double xvalue, final double yhistory, final double xhistory) {
+        historyManager.addHistory(new HistoryItem() {
+            @Override
+            public void restore() {
+                node.setLayoutY(yvalue);
+                node.setLayoutX(xvalue);
+            }
+
+            @Override
+            public void revert() {
+                node.setLayoutY(yhistory);
+                node.setLayoutX(xhistory);
+            }
+
+            @Override
+            public String getAppearance() {
+                return gObj.getFieldName() + " layout changed!";
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -23,7 +24,7 @@ public class Double2DPProperty implements PanelProperty {
     private TextField textField;
     private DecimalFormat format = new DecimalFormat("#.##");
 
-    public Double2DPProperty(final GObject gObj, String name, final String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
+    public Double2DPProperty(final GObject gObj, String name, final String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
         this.gObj = gObj;
         this.setter = setter;
         this.getter = getter;

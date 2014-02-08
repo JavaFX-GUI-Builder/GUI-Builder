@@ -465,7 +465,7 @@ public class Controller {
     private void addGObject(final GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
 
         //Sets the default settings on the gObject and creates the property edit pane
-        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode);
+        final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode, historyManager);
 
         newThing.setPEP(propertyEditPane);
 

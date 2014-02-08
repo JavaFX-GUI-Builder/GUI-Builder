@@ -1,6 +1,7 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -17,7 +18,7 @@ public class StringProperty implements PanelProperty {
     private String fxml;
     private TextField textField;
     
-    public StringProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode) {
+    public StringProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
         this.gObj = gObj;
         this.setter = setter;
         this.fxml = fxml;
