@@ -54,12 +54,12 @@ import java.util.HashMap;
 
 public class Controller {
 
-    private View view;
+    public View view;
     private ComponentSettingsStore componentSettingsStore;
     private ViewListeners viewListeners;
     private ArrayList<String> fieldNames;
-    private HistoryManager historyManager;
-    private SelectionManager selectionManager;
+    public HistoryManager historyManager;
+    public SelectionManager selectionManager;
     public static boolean historyPause = false;
 
     public Controller(View view, ComponentSettingsStore componentSettingsStore) {
@@ -187,7 +187,7 @@ public class Controller {
             }
         });
 
-
+        
         for (ComponentSettings componentSettings : componentSettingsStore.getComponents()) {
             String type = componentSettings.getType();
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/" + componentSettings.getIcon())));
@@ -219,7 +219,7 @@ public class Controller {
             }
         });
 
-        view.leftPanel.hierarchyPane.treeRoot = new TreeItem<>(new HierarchyTreeItem(view.middleTabPane.viewPane));
+        view.leftPanel.hierarchyPane.treeRoot = new TreeItem<>(new HierarchyTreeItem(view.middleTabPane.viewPane, view, selectionManager, historyManager));
         view.leftPanel.hierarchyPane.treeView.setRoot(view.leftPanel.hierarchyPane.treeRoot);
         view.leftPanel.hierarchyPane.treeRoot.setExpanded(true);
         view.leftPanel.hierarchyPane.treeView.setShowRoot(true);
@@ -244,7 +244,7 @@ public class Controller {
                 ObservableList nodes = change.getList();
                 // Add backwards so that they appear in the correct order
                 for (int i = nodes.size() - 1; i >= 0; i--) {
-                    root.getChildren().add(new TreeItem<>(new HierarchyTreeItem((GObject) nodes.get(i))));
+                    root.getChildren().add(new TreeItem<>(new HierarchyTreeItem((GObject) nodes.get(i), view, selectionManager, historyManager)));
                 }
             }
         });

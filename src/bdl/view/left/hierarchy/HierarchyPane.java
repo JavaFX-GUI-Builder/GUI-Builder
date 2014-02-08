@@ -24,6 +24,4 @@ public class HierarchyPane extends AnchorPane {
         AnchorPane.setRightAnchor(treeView, 0.0);
         this.getChildren().add(treeView);
     }
-
-
 }
