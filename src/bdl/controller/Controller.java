@@ -241,7 +241,7 @@ public class Controller {
                 ObservableList nodes = change.getList();
                 // Add backwards so that they appear in the correct order
                 for (int i = nodes.size() - 1; i >= 0; i--) {
-                    root.getChildren().add(new TreeItem<>(new HierarchyTreeItem((GObject)nodes.get(i))));
+                    root.getChildren().add(new TreeItem<>(new HierarchyTreeItem((GObject) nodes.get(i))));
                 }
             }
         });
@@ -460,7 +460,6 @@ public class Controller {
 
     }
 
-
     //x and y are initial layout positions. To be used only with drag and drop.
     private void addGObject(final GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
 
@@ -529,6 +528,24 @@ public class Controller {
                         public void handle(ActionEvent t) {
                             view.middleTabPane.viewPane.getChildren().remove(newNode);
                             selectionManager.clearSelection();
+                            historyManager.addHistory(new HistoryItem() {
+                                @Override
+                                public void revert() {
+                                    view.middleTabPane.viewPane.getChildren().add(newNode);
+                                    selectionManager.updateSelected((GObject) newNode);
+                                }
+
+                                @Override
+                                public void restore() {
+                                    view.middleTabPane.viewPane.getChildren().remove(newNode);
+                                    selectionManager.clearSelection();
+                                }
+
+                                @Override
+                                public String getAppearance() {
+                                    return ((GObject) newNode).getFieldName() + " deleted!";
+                                }
+                            });
                         }
                     });
                 }
@@ -592,11 +609,10 @@ public class Controller {
         @Override
         public void updateItem(ComponentMenuItem cmi, boolean empty) {
             super.updateItem(cmi, empty);
-            if(!empty && cmi != null) {
+            if (!empty && cmi != null) {
                 setText(cmi.getText());
                 setGraphic(cmi.getGraphic());
-            }
-            else {
+            } else {
                 setText(null);
                 setGraphic(null);
                 return;

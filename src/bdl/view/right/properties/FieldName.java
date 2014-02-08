@@ -28,7 +28,6 @@ public class FieldName {
         this.fieldNames = fieldNames;
         this.historyManager = hm;
         this.gObj = gObj;
-//        updateHistory(); // For FieldNames its a bind, not a method call.
 
         // Grab the fieldname if already set (which is the case when loading from FXML).
         if (gObj.getFieldName() != null) {
@@ -71,7 +70,7 @@ public class FieldName {
 
                         @Override
                         public String getAppearance() {
-                            return old + "->" + nnew;
+                            return old + " -> " + nnew;
                         }
                     });
                     gObj.setFieldName(textField.getText());
@@ -192,31 +191,4 @@ public class FieldName {
             return true;//Text passed the above checks
         }
     }
-
-//    public void updateHistory() {
-//        gObj.fieldNameProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> ov, final String t, final String t1) {
-//                if (t != null) {
-//                    historyManager.addHistory(new HistoryItem() {
-//                        @Override
-//                        public void restore() {
-//                            gObj.setFieldName(t1);
-//                        }
-//
-//                        @Override
-//                        public void revert() {
-//                            gObj.setFieldName(t);
-//                        }
-//
-//                        @Override
-//                        public String getAppearance() {
-//                            return t + " -> " + t1;
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//
-//    }
 }

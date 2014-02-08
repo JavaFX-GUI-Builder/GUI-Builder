@@ -38,23 +38,25 @@ public class ViewListeners {
         isMousePressed = false;
         final double finalX = node.getLayoutX();
         final double finalY = node.getLayoutY();
-        historyManager.addHistory(new HistoryItem() {
-            @Override
-            public void restore() {
-                node.setLayoutY(finalY);
-                node.setLayoutX(finalX);
-            }
+        if (finalX != historyX || finalY != historyY) {
+            historyManager.addHistory(new HistoryItem() {
+                @Override
+                public void restore() {
+                    node.setLayoutY(finalY);
+                    node.setLayoutX(finalX);
+                }
 
-            @Override
-            public void revert() {
-                node.setLayoutY((double) historyY);
-                node.setLayoutX((double) historyX);
-            }
+                @Override
+                public void revert() {
+                    node.setLayoutY(historyY);
+                    node.setLayoutX(historyX);
+                }
 
-            @Override
-            public String getAppearance() {
-                return ((GObject) node).getFieldName() + " X and Y changed!";
-            }
-        });
+                @Override
+                public String getAppearance() {
+                    return ((GObject) node).getFieldName() + " layout changed!";
+                }
+            });
+        }
     }
 }
