@@ -64,9 +64,9 @@ public class Controller {
     public Controller(View view, ComponentSettingsStore componentSettingsStore) {
         this.view = view;
         this.componentSettingsStore = componentSettingsStore;
-        viewListeners = new ViewListeners();
         fieldNames = new ArrayList<>();
         historyManager = new HistoryManager();
+        viewListeners = new ViewListeners(historyManager);
         selectionManager = new SelectionManager();
 
         setupLeftPanel();
