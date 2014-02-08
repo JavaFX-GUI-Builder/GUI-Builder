@@ -1,6 +1,8 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.controller.Controller;
+import bdl.model.history.HistoryItem;
 import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,11 +19,15 @@ public class BackwardsBooleanProperty implements PanelProperty {
     private String setter;
     private String fxml;
     private CheckBox checkBox;
+    private final HistoryManager historyManager;
+    private String getter;
 
     public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
         this.gObj = gObj;
         this.setter = setter;
+        this.getter = getter;
         this.fxml = fxml;
+        this.historyManager = hm;
 
         gp.add(new Label(name + ":"), 0, row);
         checkBox = new CheckBox();
@@ -30,7 +36,7 @@ public class BackwardsBooleanProperty implements PanelProperty {
         if (settingsNode != null) {
             try {
                 Method method = settingsNode.getClass().getMethod(getter);
-                String value = Boolean.toString(!((Boolean)method.invoke(settingsNode)));
+                String value = Boolean.toString(!((Boolean) method.invoke(settingsNode)));
                 if (value != null) {
                     defaultValue = value;
                 }
@@ -65,8 +71,37 @@ public class BackwardsBooleanProperty implements PanelProperty {
     }
 
     private void setValue() throws Exception {
-        Method method = gObj.getClass().getMethod(setter, boolean.class);
-        method.invoke(gObj, !checkBox.isSelected());
+        final Method setMethod = gObj.getClass().getMethod(setter, boolean.class);
+        final Method getMethod = gObj.getClass().getMethod(getter);
+        final boolean old = (boolean) getMethod.invoke(gObj);
+        final boolean nnew = !checkBox.isSelected();
+        if (old != nnew && !Controller.historyPause) {
+            historyManager.addHistory(new HistoryItem() {
+                @Override
+                public void revert() {
+                    try {
+                        setMethod.invoke(gObj, old);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void restore() {
+                    try {
+                        setMethod.invoke(gObj, nnew);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+                @Override
+                public String getAppearance() {
+                    return gObj.getFieldName() + " checkbox changed!";
+                }
+            });
+        }
+        setMethod.invoke(gObj, !checkBox.isSelected());
     }
 
     @Override

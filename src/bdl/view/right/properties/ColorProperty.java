@@ -1,9 +1,9 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.controller.Controller;
 import bdl.model.history.HistoryItem;
 import bdl.model.history.HistoryManager;
-import java.lang.reflect.InvocationTargetException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -12,10 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-
 import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ColorProperty implements PanelProperty {
 
@@ -77,16 +74,14 @@ public class ColorProperty implements PanelProperty {
     private void setValue() throws Exception {
         final Method setMethod = gObj.getClass().getMethod(setter, Paint.class);
         final Method getMethod = gObj.getClass().getMethod(getter);
+        final Color old = (Color) getMethod.invoke(gObj);
+        final Color nnew = colorPicker.getValue();
+        if(!Controller.historyPause)
         historyManager.addHistory(new HistoryItem() {
-            Color old = (Color) getMethod.invoke(gObj);
-            Color nnew = colorPicker.getValue();
-
             @Override
             public void revert() {
                 try {
-                    if (old != null) {
-                        setMethod.invoke(gObj, old);
-                    }
+                    setMethod.invoke(gObj, old);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -95,9 +90,7 @@ public class ColorProperty implements PanelProperty {
             @Override
             public void restore() {
                 try {
-                    if (nnew != null) {
-                        setMethod.invoke(gObj, nnew);
-                    }
+                    setMethod.invoke(gObj, nnew);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

@@ -1,6 +1,8 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.controller.Controller;
+import bdl.model.history.HistoryItem;
 import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,12 +25,14 @@ public class Double1DPProperty implements PanelProperty {
     private String fxml;
     private TextField textField;
     private DecimalFormat format = new DecimalFormat("#.##");
+    private final HistoryManager historyManager;
 
     public Double1DPProperty(final GObject gObj, String name, final String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
         this.gObj = gObj;
         this.setter = setter;
         this.getter = getter;
         this.fxml = fxml;
+        this.historyManager = hm;
 
         gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
@@ -61,7 +65,7 @@ public class Double1DPProperty implements PanelProperty {
                 }
             }
         });
-        
+
         textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
@@ -74,20 +78,50 @@ public class Double1DPProperty implements PanelProperty {
 
     private void setValue() {
         try {
-            double dValue = (double) ((int) (0.5 + (Double.parseDouble(textField.getText()) * 10))) / 10;
+            final double dValue = (double) ((int) (0.5 + (Double.parseDouble(textField.getText()) * 10))) / 10;
             textField.setText(format.format(dValue));
 
-            Method method = gObj.getClass().getMethod(setter, double.class);
-            method.invoke(gObj, dValue);
+            final Method setMethod = gObj.getClass().getMethod(setter, double.class);
+            final Method getMethod = gObj.getClass().getMethod(getter);
+            final double old = (double) getMethod.invoke(gObj);
+            final double nnew = dValue;
+            if (old != nnew && !Controller.historyPause) {
+                historyManager.addHistory(new HistoryItem() {
+                    @Override
+                    public void revert() {
+                        try {
+                            setMethod.invoke(gObj, old);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void restore() {
+                        try {
+                            setMethod.invoke(gObj, nnew);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public String getAppearance() {
+                        return gObj.getFieldName() + " double changed!";
+                    }
+                });
+            }
+            setMethod.invoke(gObj, dValue);
         } catch (Exception e) {
             //Reset
-            Method method;
-            try {
-                method = gObj.getClass().getMethod(getter);
-                textField.setText(format.format((Double) method.invoke(gObj)));
-            } catch (Exception ee) {
-                e.printStackTrace();
-            }
+            //If this happens then shit.
+//            Method method;
+//            try {
+//                method = gObj.getClass().getMethod(getter);
+//                textField.setText(format.format((Double) method.invoke(gObj)));
+//            } catch (Exception ee) {
+//                e.printStackTrace();
+//            }
             //TODO show error message
         }
     }

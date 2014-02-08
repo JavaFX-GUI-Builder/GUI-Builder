@@ -60,6 +60,7 @@ public class Controller {
     private ArrayList<String> fieldNames;
     private HistoryManager historyManager;
     private SelectionManager selectionManager;
+    public static boolean historyPause = false;
 
     public Controller(View view, ComponentSettingsStore componentSettingsStore) {
         this.view = view;
@@ -68,7 +69,7 @@ public class Controller {
         historyManager = new HistoryManager();
         viewListeners = new ViewListeners(historyManager);
         selectionManager = new SelectionManager();
-
+        
         setupLeftPanel();
         setupMiddlePanel();
         setupRightPanel();
@@ -106,13 +107,14 @@ public class Controller {
                                 ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
                                 try {
                                     if (componentSettings.getType().equals(node.getClass().getSimpleName())) {
+                                        historyPause = true;
                                         Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                                         Constructor constructor = componentClass.getConstructor();
                                         GObject newThing = (GObject) constructor.newInstance();
                                         newThing.setFieldName(node.getId());
 
                                         addGObject(newThing, componentSettings, view, viewListeners, node, -1, -1);
-
+                                        historyPause = false;
                                         break;
                                     }
                                 } catch (Exception e) {
@@ -200,6 +202,7 @@ public class Controller {
                     if (componentSettings != null) {
                         GObject newThing = null;
 
+                        historyPause = true;
                         try {
                             Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                             Constructor constructor = panelPropertyClass.getConstructor();
@@ -209,7 +212,7 @@ public class Controller {
                         }
 
                         addGObject(newThing, componentSettings, view, viewListeners, null, -1, -1);
-
+                        historyPause = false;
                     }
                     view.leftPanel.leftList.getSelectionModel().select(-1);
                 }
@@ -398,7 +401,8 @@ public class Controller {
                 ComponentSettings componentSettings = cmj.getComponentSettings();
                 if (componentSettings != null) {
                     GObject newThing = null;
-
+                    
+                    historyPause = true;
                     try {
                         Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                         Constructor constructor = panelPropertyClass.getConstructor();
@@ -408,7 +412,7 @@ public class Controller {
                     }
 
                     addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY());
-
+                    historyPause = false;
                 }
                 view.leftPanel.leftList.getSelectionModel().select(-1);
             }

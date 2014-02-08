@@ -1,6 +1,8 @@
 package bdl.view.right.properties;
 
 import bdl.build.GObject;
+import bdl.controller.Controller;
+import bdl.model.history.HistoryItem;
 import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,17 +14,21 @@ import javafx.scene.layout.GridPane;
 import java.lang.reflect.Method;
 
 public class StringProperty implements PanelProperty {
-    
+
     private GObject gObj;
     private String setter;
+    private String getter;
     private String fxml;
     private TextField textField;
-    
+    private final HistoryManager historyManager;
+
     public StringProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
         this.gObj = gObj;
         this.setter = setter;
+        this.getter = getter;
         this.fxml = fxml;
-        
+        this.historyManager = hm;
+
         gp.add(new Label(name + ":"), 0, row);
         textField = new TextField();
 
@@ -38,16 +44,16 @@ public class StringProperty implements PanelProperty {
                 e.printStackTrace();
             }
         }
-        
+
         textField.setText(defaultValue);
-        
+
         try {
             setValue();
         } catch (Exception e) {
             e.printStackTrace();
             return;//TODO: Probably need some better behavior here.
         }
-        
+
         gp.add(textField, 1, row);
 
         //Upon losing focus, save to the GObject
@@ -64,12 +70,42 @@ public class StringProperty implements PanelProperty {
             }
         });
     }
-    
+
     private void setValue() throws Exception {
-        Method method = gObj.getClass().getMethod(setter, String.class);
-        method.invoke(gObj, textField.getText());
+        final Method setMethod = gObj.getClass().getMethod(setter, String.class);
+        final Method getMethod = gObj.getClass().getMethod(getter);
+        final String old = (String) getMethod.invoke(gObj);
+        final String nnew = textField.getText();
+        System.out.println(Controller.historyPause);
+        if (!old.equals(nnew) && !Controller.historyPause) {
+            historyManager.addHistory(new HistoryItem() {
+                @Override
+                public void revert() {
+                    try {
+                        setMethod.invoke(gObj, old);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void restore() {
+                    try {
+                            setMethod.invoke(gObj, nnew);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+                @Override
+                public String getAppearance() {
+                    return gObj.getFieldName() + " string changed!";
+                }
+            });
+        }
+        setMethod.invoke(gObj, textField.getText());
     }
-    
+
     @Override
     public String getJavaCode() {
         return gObj.getFieldName() + "." + setter + "(\"" + textField.getText().replace("\\", "\\\\").replace("\"", "\\\"") + "\");";
