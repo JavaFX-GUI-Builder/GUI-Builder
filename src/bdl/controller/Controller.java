@@ -535,13 +535,14 @@ public class Controller {
             }
         });
 
+
+        final ContextMenu popUp = new ContextMenu();
+        final MenuItem button = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
+        popUp.getItems().add(button);
         newNode.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 if (t.getButton().equals(MouseButton.SECONDARY)) {
-                    ContextMenu popUp = new ContextMenu();
-                    MenuItem button = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
-                    popUp.getItems().add(button);
                     popUp.show(newNode, Side.RIGHT, 0, 0);
                     button.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
