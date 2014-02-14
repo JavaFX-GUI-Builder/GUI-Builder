@@ -219,6 +219,17 @@ public class Controller {
             }
         });
 
+        view.leftPanel.hierarchyPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.DELETE) {
+                    view.middleTabPane.viewPane.getChildren().remove(view.leftPanel.hierarchyPane.treeView.getSelectionModel().getSelectedItem().getValue().getGObject());
+                    selectionManager.clearSelection();
+                }
+            }
+        });
+
+
         view.leftPanel.hierarchyPane.treeRoot = new TreeItem<>(new HierarchyTreeItem(view.middleTabPane.viewPane));
         view.leftPanel.hierarchyPane.treeView.setRoot(view.leftPanel.hierarchyPane.treeRoot);
         view.leftPanel.hierarchyPane.treeRoot.setExpanded(true);
