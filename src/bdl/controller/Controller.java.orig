@@ -221,38 +221,6 @@ public class Controller {
             }
         });
 
-        view.leftPanel.hierarchyPane.treeView.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.DELETE) {
-                    final TreeItem<HierarchyTreeItem> toRemove = view.leftPanel.hierarchyPane.treeView.getSelectionModel().getSelectedItem();
-                    if (toRemove != null) {
-                        view.middleTabPane.viewPane.getChildren().remove(toRemove.getValue().getGObject());
-                        selectionManager.clearSelection();
-                        historyManager.addHistory(new HistoryItem() {
-                                @Override
-                                public void revert() {
-                                    view.middleTabPane.viewPane.getChildren().add((Node) toRemove.getValue().getGObject());
-                                    selectionManager.updateSelected((GObject) (Node) toRemove.getValue().getGObject());
-                                }
-
-                                @Override
-                                public void restore() {
-                                    view.middleTabPane.viewPane.getChildren().remove((Node) toRemove.getValue().getGObject());
-                                    selectionManager.clearSelection();
-                                }
-
-                                @Override
-                                public String getAppearance() {
-                                    return ((GObject) (Node) toRemove.getValue().getGObject()).getFieldName() + " deleted!";
-                                }
-                            });
-                    }
-                }
-            }
-        });
-
-
         view.leftPanel.hierarchyPane.treeRoot = new TreeItem<>(new HierarchyTreeItem(view.middleTabPane.viewPane, view, selectionManager, historyManager));
         view.leftPanel.hierarchyPane.treeView.setRoot(view.leftPanel.hierarchyPane.treeRoot);
         view.leftPanel.hierarchyPane.treeRoot.setExpanded(true);
@@ -341,7 +309,6 @@ public class Controller {
         view.middleTabPane.viewPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                view.middleTabPane.viewPane.requestFocus();
                 selectionManager.clearSelection();
                 mouseEvent.consume();
             }
@@ -533,7 +500,6 @@ public class Controller {
         newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                view.middleTabPane.viewPane.requestFocus();
                 selectionManager.updateSelected((GObject) newNode);
                 viewListeners.onMousePressed(newNode, mouseEvent);
                 mouseEvent.consume();
@@ -555,14 +521,13 @@ public class Controller {
             }
         });
 
-
-        final ContextMenu popUp = new ContextMenu();
-        final MenuItem button = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
-        popUp.getItems().add(button);
         newNode.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 if (t.getButton().equals(MouseButton.SECONDARY)) {
+                    ContextMenu popUp = new ContextMenu();
+                    MenuItem button = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
+                    popUp.getItems().add(button);
                     popUp.show(newNode, Side.RIGHT, 0, 0);
                     button.setOnAction(new EventHandler<ActionEvent>() {
                         @Override

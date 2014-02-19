@@ -14,15 +14,20 @@ public class LabelGrabber {
     
     public LabelGrabber() {
         lang = new Properties();
-        languageFile = new File("lang/gb.lang"); //TODO update later with more languages
-        if(languageFile == null) {
-            System.err.println("Missing language file at: lang/gb.lang");
-            return;
-        }
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(languageFile), "UTF-8"))) {
-            lang.load(reader);
-        }
-        catch(IOException e) {
+//        languageFile = new File("lang/gb.lang"); //TODO update later with more languages
+//        if(languageFile == null) {
+//            System.err.println("Missing language file at: lang/gb.lang");
+//            return;
+//        }
+//        try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(languageFile), "UTF-8"))) {
+//            lang.load(reader);
+//        }
+//        catch(IOException e) {
+//            e.printStackTrace();
+//        }
+        try {
+            lang.load(getClass().getResourceAsStream("/bdl/lang/gb.lang"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         

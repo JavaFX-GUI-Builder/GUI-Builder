@@ -70,14 +70,14 @@ public class ComponentSettingsStore {
      * a list of Component with all properties initialised.
      */
     private void parseComponentSettings(String path) throws Exception {
-        File settings = new File(path);
-        if (!settings.exists()) {
-            throw new RuntimeException("File " + path + " does not exist, could not load ComponentSettings.");
-        }
+//        File settings = new File(path);
+//        if (!settings.exists()) {
+//            throw new RuntimeException("File " + path + " does not exist, could not load ComponentSettings.");
+//        }
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
-        Document d = db.parse(settings);
+        Document d = db.parse(getClass().getResourceAsStream(path));
 
         Element root = d.getDocumentElement();
         root.normalize();

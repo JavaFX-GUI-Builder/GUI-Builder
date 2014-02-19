@@ -25,13 +25,13 @@
                 <fxml>text</fxml>
             </property>
             <property>
-                <name>Enabled</name>
+                <name>Disabled</name>
                 <enabled>true</enabled>
-                <pseudotype>BackwardsBoolean</pseudotype>
-                <default>true</default>
-                <setter>setDisable</setter>
-                <getter>isDisabled</getter>
-                <fxml>disable</fxml>
+                <pseudotype>Disabled</pseudotype>
+                <default>false</default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -192,13 +192,13 @@
                 <fxml></fxml>
             </property>
             <property>
-                <name>Enabled</name>
+                <name>Disabled</name>
                 <enabled>true</enabled>
-                <pseudotype>BackwardsBoolean</pseudotype>
-                <default>true</default>
-                <setter>setDisable</setter>
-                <getter>isDisabled</getter>
-                <fxml>disable</fxml>
+                <pseudotype>Disabled</pseudotype>
+                <default>false</default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -244,13 +244,13 @@
                 <fxml>text</fxml>
             </property>
             <property>
-                <name>Enabled</name>
+                <name>Disabled</name>
                 <enabled>true</enabled>
-                <pseudotype>BackwardsBoolean</pseudotype>
-                <default>true</default>
-                <setter>setDisable</setter>
-                <getter>isDisabled</getter>
-                <fxml>disable</fxml>
+                <pseudotype>Disabled</pseudotype>
+                <default>false</default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -296,13 +296,13 @@
                 <fxml>text</fxml>
             </property>
             <property>
-                <name>Enabled</name>
+                <name>Disabled</name>
                 <enabled>true</enabled>
-                <pseudotype>BackwardsBoolean</pseudotype>
-                <default>true</default>
-                <setter>setDisable</setter>
-                <getter>isDisabled</getter>
-                <fxml>disable</fxml>
+                <pseudotype>Disabled</pseudotype>
+                <default>false</default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -513,13 +513,13 @@
                 <fxml></fxml>
             </property>
             <property>
-                <name>Enabled</name>
+                <name>Disabled</name>
                 <enabled>true</enabled>
-                <pseudotype>BackwardsBoolean</pseudotype>
-                <default>true</default>
-                <setter>setDisable</setter>
-                <getter>isDisabled</getter>
-                <fxml>disable</fxml>
+                <pseudotype>Disabled</pseudotype>
+                <default>false</default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -565,13 +565,13 @@
                 <fxml>text</fxml>
             </property>
             <property>
-                <name>Enabled</name>
+                <name>Disabled</name>
                 <enabled>true</enabled>
-                <pseudotype>BackwardsBoolean</pseudotype>
-                <default>true</default>
-                <setter>setDisable</setter>
-                <getter>isDisabled</getter>
-                <fxml>disable</fxml>
+                <pseudotype>Disabled</pseudotype>
+                <default>false</default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Tooltip</name>
@@ -617,13 +617,13 @@
                 <fxml>text</fxml>
             </property>
             <property>
-                <name>Enabled</name>
+                <name>Disabled</name>
                 <enabled>true</enabled>
-                <pseudotype>BackwardsBoolean</pseudotype>
-                <default>true</default>
-                <setter>setDisable</setter>
-                <getter>isDisabled</getter>
-                <fxml>disable</fxml>
+                <pseudotype>Disabled</pseudotype>
+                <default>false</default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Tooltip</name>

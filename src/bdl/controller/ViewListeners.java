@@ -40,16 +40,21 @@ public class ViewListeners {
         final double finalY = node.getLayoutY();
         if (finalX != historyX || finalY != historyY) {
             historyManager.addHistory(new HistoryItem() {
+                double hFinalX = finalX;
+                double hFinalY = finalY;
+                double hHistoryX = historyX;
+                double hHistoryY = historyY;
+
                 @Override
                 public void restore() {
-                    node.setLayoutY(finalY);
-                    node.setLayoutX(finalX);
+                    node.setLayoutY(hFinalY);
+                    node.setLayoutX(hFinalX);
                 }
 
                 @Override
                 public void revert() {
-                    node.setLayoutY(historyY);
-                    node.setLayoutX(historyX);
+                    node.setLayoutY(hHistoryY);
+                    node.setLayoutX(hHistoryX);
                 }
 
                 @Override
