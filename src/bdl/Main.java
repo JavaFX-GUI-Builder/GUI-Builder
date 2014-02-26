@@ -14,8 +14,12 @@ import javafx.stage.Stage;
 /**
  * Main class.
  */
-public class Main extends Application {
+public class Main extends Application implements Runnable {
 
+    public void run() {
+        launch();
+    }
+    
     @Override
     public void start(final Stage stage) throws Exception {
         stage.setMinWidth(800);
@@ -64,6 +68,8 @@ public class Main extends Application {
             }
         });
 
+        bdl.Interface.SetController(controller);
+        bdl.Interface.SetStage(stage);
         stage.show();
     }
 

@@ -1,5 +1,6 @@
 package bdl.controller;
 
+import bdl.Interface;
 import bdl.build.CodeGenerator;
 import bdl.build.GObject;
 import bdl.lang.LabelGrabber;
@@ -177,6 +178,13 @@ public class Controller {
                 } else {
                     view.rightPanel.getItems().remove(view.rightPanel.historyPanel);
                 }
+            }
+        });
+        
+        view.topPanel.mItmDebugMsg.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                Interface.TestWriteMessage("Debug test from GUI Builder!");
             }
         });
     }
