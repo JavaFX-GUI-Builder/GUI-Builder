@@ -65,7 +65,6 @@ public class ColorProperty implements PanelProperty {
                     setValue();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return;//TODO: Probably need some better behavior here.
                 }
             }
         });

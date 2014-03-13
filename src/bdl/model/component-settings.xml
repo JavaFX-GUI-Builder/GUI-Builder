@@ -369,20 +369,11 @@
             <property>
                 <name>Stroke</name>
                 <enabled>true</enabled>
-                <pseudotype>Color</pseudotype>
-                <default>#00FF00</default>
-                <setter>setStroke</setter>
-                <getter>getStroke</getter>
-                <fxml>stroke</fxml>
-            </property>
-            <property>
-                <name>Stroke Width</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>5</default>
-                <setter>setStrokeWidth</setter>
-                <getter>getStrokeWidth</getter>
-                <fxml>strokeWidth</fxml>
+                <pseudotype>Stroke</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Radius</name>
@@ -425,20 +416,11 @@
             <property>
                 <name>Stroke</name>
                 <enabled>true</enabled>
-                <pseudotype>Color</pseudotype>
-                <default>#00FF00</default>
-                <setter>setStroke</setter>
-                <getter>getStroke</getter>
-                <fxml>stroke</fxml>
-            </property>
-            <property>
-                <name>Stroke Width</name>
-                <enabled>true</enabled>
-                <pseudotype>Double1DP</pseudotype>
-                <default>0</default>
-                <setter>setStrokeWidth</setter>
-                <getter>getStrokeWidth</getter>
-                <fxml>strokeWidth</fxml>
+                <pseudotype>Stroke</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
             </property>
             <property>
                 <name>Width</name>
