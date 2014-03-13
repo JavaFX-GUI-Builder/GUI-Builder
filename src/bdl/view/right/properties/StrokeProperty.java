@@ -81,10 +81,8 @@ public class StrokeProperty implements PanelProperty {
                 public void revert() {
                     node.setStroke(before);
                     colorPicker.setValue(before);
-                    Controller.historyPause = true;
                     // work around to update colorpicker's displayed selection
                     colorPicker.fireEvent(new ActionEvent(null, colorPicker));
-                    Controller.historyPause = false;
                 }
 
                 @Override
