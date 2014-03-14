@@ -113,17 +113,15 @@ public class Double2DPProperty implements PanelProperty {
             }
             setMethod.invoke(gObj, dValue);
         } catch (Exception e) {
-            //Reset
-            //If this happens then shit.
-//            Method method;
-//            try {
-//                method = gObj.getClass().getMethod(getter);
-//                textField.setText(format.format((Double)method.invoke(gObj)));
-//            } catch (Exception ee) {
-//                //Can never happen - the fact we get here verifies this method works because we used it earlier
-//                e.printStackTrace();
-//            }
-            //TODO show error message
+            // If value entered is not a double, then revert to the previous value
+            Method method;
+            try {
+                method = gObj.getClass().getMethod(getter);
+                textField.setText(format.format((Double)method.invoke(gObj)));
+            } catch (Exception ee) {
+                //Can never happen - the fact we get here verifies this method works because we used it earlier
+                e.printStackTrace();
+            }
         }
     }
 
