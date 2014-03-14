@@ -15,6 +15,8 @@ public class TopPanel extends MenuBar {
     public MenuItem mItmSaveFile;
 
     public Menu menuEdit;
+    public MenuItem mItmUndo;
+    public MenuItem mItmRedo;
     public MenuItem mItmDelete;
 
     public Menu menuView;
@@ -36,6 +38,10 @@ public class TopPanel extends MenuBar {
         mItmSaveFile = new MenuItem(LabelGrabber.getLabel("menu.file.save"));
 
         menuEdit = new Menu(LabelGrabber.getLabel("menu.edit"));
+        mItmUndo = new MenuItem(LabelGrabber.getLabel("menu.edit.undo"));
+        mItmUndo.setDisable(true);
+        mItmRedo = new MenuItem(LabelGrabber.getLabel("menu.edit.redo"));
+        mItmRedo.setDisable(true);
         mItmDelete = new MenuItem(LabelGrabber.getLabel("menu.edit.delete"));
 
         menuView = new Menu(LabelGrabber.getLabel("menu.view"));
@@ -52,7 +58,7 @@ public class TopPanel extends MenuBar {
         mItmAbout = new MenuItem(LabelGrabber.getLabel("menu.help.about"));
 
         menuFile.getItems().addAll(mItmLoadFile, mItmSaveFile, mItmFullScreen, mItmClose);
-        menuEdit.getItems().addAll(mItmDelete);
+        menuEdit.getItems().addAll(mItmUndo, mItmRedo, mItmDelete);
         menuView.getItems().addAll(mItmHierarchy, mItmHistory);
         menuDebug.getItems().addAll(mItmDebugMsg);
         menuHelp.getItems().addAll(mItmAbout);

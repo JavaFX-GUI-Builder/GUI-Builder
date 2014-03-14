@@ -157,6 +157,38 @@ public class Controller {
             }
         });
 
+        //Add HistoryListener for the Undo/Redo menu items in the Edit menu
+        historyManager.addHistoryListener(new HistoryListener() {
+            @Override
+            public void historyUpdated(final HistoryUpdate historyUpdate) {
+                //Undo MenuItem
+                if (historyUpdate.canUndo()) {
+                    view.topPanel.mItmUndo.setDisable(false);
+                    view.topPanel.mItmUndo.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            historyManager.updateTo(historyUpdate.getCurrentIndex() - 1);
+                        }
+                    });
+                } else {
+                    view.topPanel.mItmUndo.setDisable(true);
+                }
+
+                //Redo MenuItem
+                if (historyUpdate.canRedo()) {
+                    view.topPanel.mItmRedo.setDisable(false);
+                    view.topPanel.mItmRedo.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            historyManager.updateTo(historyUpdate.getCurrentIndex() + 1);
+                        }
+                    });
+                } else {
+                    view.topPanel.mItmRedo.setDisable(true);
+                }
+            }
+        });
+
         view.topPanel.mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {

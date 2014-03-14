@@ -19,11 +19,11 @@ public class HistoryUpdate {
     }
 
     public boolean canUndo() {
-        return currentIndex < history.length;
+        return currentIndex > 0;
     }
 
     public boolean canRedo() {
-        return currentIndex > 0;
+        return currentIndex < history.length - 1;
     }
 
     public String getUndoDescription() {
