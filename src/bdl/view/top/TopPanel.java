@@ -43,6 +43,7 @@ public class TopPanel extends MenuBar {
         mItmRedo = new MenuItem(LabelGrabber.getLabel("menu.edit.redo"));
         mItmRedo.setDisable(true);
         mItmDelete = new MenuItem(LabelGrabber.getLabel("menu.edit.delete"));
+        mItmDelete.setDisable(true);
 
         menuView = new Menu(LabelGrabber.getLabel("menu.view"));
         mItmHistory = new CheckMenuItem(LabelGrabber.getLabel("menu.view.history"));

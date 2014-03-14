@@ -189,6 +189,44 @@ public class Controller {
             }
         });
 
+        //Edit Menu > Delete button functionality
+        selectionManager.addSelectionListener(new SelectionListener() {
+            @Override
+            public void updateSelected(final GObject gObject) {
+                view.topPanel.mItmDelete.setDisable(false);
+                view.topPanel.mItmDelete.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        view.middleTabPane.viewPane.getChildren().remove(gObject);
+                        selectionManager.clearSelection();
+                        historyManager.addHistory(new HistoryItem() {
+                            @Override
+                            public void restore() {
+                                view.middleTabPane.viewPane.getChildren().remove(gObject);
+                                selectionManager.clearSelection();
+                            }
+
+                            @Override
+                            public void revert() {
+                                view.middleTabPane.viewPane.getChildren().add((Node)gObject);
+                                selectionManager.updateSelected(gObject);
+                            }
+
+                            @Override
+                            public String getAppearance() {
+                                return gObject.getFieldName() + " deleted";
+                            }
+                        });
+                    }
+                });
+            }
+
+            @Override
+            public void clearSelection() {
+                view.topPanel.mItmDelete.setDisable(true);
+            }
+        });
+
         view.topPanel.mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {

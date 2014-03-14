@@ -17,6 +17,16 @@ public class HistoryManager {
         chain = new ArrayList<>();
         chain.add(0, new HistoryItem() {
             @Override
+            public void restore() {
+                //As the first item, this one can't restore
+            }
+
+            @Override
+            public void revert() {
+                //As the first item, this one can't revert
+            }
+
+            @Override
             public String getAppearance() {
                 return "Start";
             }
@@ -41,6 +51,16 @@ public class HistoryManager {
         chain.clear();
         currentIndex = 0;
         chain.add(0, new HistoryItem() {
+            @Override
+            public void restore() {
+                //As the first item, this one can't restore
+            }
+
+            @Override
+            public void revert() {
+                //As the first item, this one can't revert
+            }
+
             @Override
             public String getAppearance() {
                 return "Start";
