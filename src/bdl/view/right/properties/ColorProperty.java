@@ -84,6 +84,11 @@ public class ColorProperty implements PanelProperty {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                colorPicker.setValue(old);
+                Controller.historyPause = true;
+                // work around to update colorpicker's displayed selection
+                colorPicker.fireEvent(new ActionEvent(null, colorPicker));
+                Controller.historyPause = false;
             }
 
             @Override
@@ -93,6 +98,11 @@ public class ColorProperty implements PanelProperty {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                colorPicker.setValue(nnew);
+                Controller.historyPause = true;
+                // work around to update colorpicker's displayed selection
+                colorPicker.fireEvent(new ActionEvent(null, colorPicker));
+                Controller.historyPause = false;
             }
 
             @Override
