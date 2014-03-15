@@ -415,6 +415,37 @@ public class Controller {
             }
         });
 
+        //Add keypress delete functionality
+        view.middleTabPane.viewPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.DELETE) {
+                    final GObject currentlySelected = selectionManager.getCurrentlySelected();
+                    if (currentlySelected != null) {
+                        view.middleTabPane.viewPane.getChildren().remove(currentlySelected);
+                        selectionManager.clearSelection();
+                        historyManager.addHistory(new HistoryItem() {
+                            @Override
+                            public void restore() {
+                                view.middleTabPane.viewPane.getChildren().remove(currentlySelected);
+                                selectionManager.clearSelection();
+                            }
+
+                            @Override
+                            public void revert() {
+                                view.middleTabPane.viewPane.getChildren().add((Node)currentlySelected);
+                                selectionManager.updateSelected(currentlySelected);
+                            }
+
+                            @Override
+                            public String getAppearance() {
+                                return currentlySelected.getFieldName() + " deleted";
+                            }
+                        });
+                    }
+                }
+            }
+        });
 
         view.middleTabPane.viewPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
