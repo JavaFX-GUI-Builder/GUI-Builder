@@ -288,13 +288,13 @@ public class Controller {
             }
         });
 
-        view.topPanel.mItmDebugMsg.setOnAction(
-                new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                Interface.TestWriteMessage("Debug test from GUI Builder!");
-            }
-        });
+//        view.topPanel.mItmDebugMsg.setOnAction(
+//                new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent t) {
+//                Interface.TestWriteMessage("Debug test from GUI Builder!");
+//            }
+//        });
     }
 
     private void setupLeftPanel() {

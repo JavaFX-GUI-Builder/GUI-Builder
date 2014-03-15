@@ -12,18 +12,18 @@ import javax.swing.SwingUtilities;
 public class Interface {
     
     // If you are not working with the BlueJ project, comment out the following section of BlueJ code.
-    public static bluej.pkgmgr.PkgMgrFrame pmf;
-    public static void SetPkgMgrFrame(bluej.pkgmgr.PkgMgrFrame pmf) { Interface.pmf = pmf; }
-    // Interface from GUI Builder -> BlueJ
-    public static void TestWriteMessage(final String msg) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // TODO: Attempt to communicate back to BlueJ.
-                pmf.setStatus(msg);
-            }
-        });
-    }
+//    public static bluej.pkgmgr.PkgMgrFrame pmf;
+//    public static void SetPkgMgrFrame(bluej.pkgmgr.PkgMgrFrame pmf) { Interface.pmf = pmf; }
+//    // Interface from GUI Builder -> BlueJ
+//    public static void TestWriteMessage(final String msg) {
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                // TODO: Attempt to communicate back to BlueJ.
+//                pmf.setStatus(msg);
+//            }
+//        });
+//    }
     
     // Private fields
     private static javafx.stage.Stage stage;
