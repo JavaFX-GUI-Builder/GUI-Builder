@@ -331,12 +331,38 @@
     </component>
     <component>
         <type>AnchorPane</type>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
         <package>javafx.scene.layout</package>
-        <layouttype>Todo</layouttype>
+        <layouttype>anchorpane</layouttype>
         <icon>AnchorPane.png</icon>
         <properties>
-
+            <property>
+                <name>Layout</name>
+                <enabled>true</enabled>
+                <pseudotype>Layout</pseudotype>
+                <default></default>
+                <setter></setter>
+                <getter></getter>
+                <fxml></fxml>
+            </property>
+            <property>
+                <name>Width</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>100</default>
+                <setter>setMinWidth</setter>
+                <getter>getWidth</getter>
+                <fxml>width</fxml>
+            </property>
+            <property>
+                <name>Height</name>
+                <enabled>true</enabled>
+                <pseudotype>Double1DP</pseudotype>
+                <default>100</default>
+                <setter>setMinHeight</setter>
+                <getter>getHeight</getter>
+                <fxml>height</fxml>
+            </property>
         </properties>
         <listeners>
         </listeners>

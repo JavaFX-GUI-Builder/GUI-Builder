@@ -34,6 +34,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -589,6 +590,41 @@ public class Controller {
         final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode, historyManager);
 
         newThing.setPEP(propertyEditPane);
+
+        if (componentSettings.getLayoutType().equals("anchorpane")) {
+            ((AnchorPane)newThing).setOnDragOver(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent t) {
+                    t.acceptTransferModes(TransferMode.ANY);
+                }
+            });
+
+            ((AnchorPane)newThing).setOnDragDropped(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent t) {
+                    t.consume();
+                    ComponentMenuItem cmj = view.leftPanel.leftList.getSelectionModel().getSelectedItem();
+                    ComponentSettings componentSettings = cmj.getComponentSettings();
+                    if (componentSettings != null) {
+                        GObject newnewThing = null;
+
+                        historyPause = true;
+                        try {
+                            Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
+                            Constructor constructor = panelPropertyClass.getConstructor();
+                            newnewThing = (GObject) constructor.newInstance();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+//                        addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY());
+                        ((AnchorPane)newThing).getChildren().add((Node)newnewThing);
+                        historyPause = false;
+                    }
+                    view.leftPanel.leftList.getSelectionModel().select(-1);
+                }
+            });
+        }
 
         final Node newNode = (Node) newThing;
 
