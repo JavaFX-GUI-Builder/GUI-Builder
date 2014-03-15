@@ -72,7 +72,7 @@ public class Controller {
         historyManager = new HistoryManager();
         viewListeners = new ViewListeners(historyManager);
         selectionManager = new SelectionManager();
-        
+
         setupLeftPanel();
         setupMiddlePanel();
         setupRightPanel();
@@ -208,7 +208,7 @@ public class Controller {
 
                             @Override
                             public void revert() {
-                                view.middleTabPane.viewPane.getChildren().add((Node)gObject);
+                                view.middleTabPane.viewPane.getChildren().add((Node) gObject);
                                 selectionManager.updateSelected(gObject);
                             }
 
@@ -250,7 +250,7 @@ public class Controller {
                 }
             }
         });
-        
+
         view.topPanel.mItmDebugMsg.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
@@ -267,7 +267,7 @@ public class Controller {
             }
         });
 
-        
+
         for (ComponentSettings componentSettings : componentSettingsStore.getComponents()) {
             String type = componentSettings.getType();
             ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/" + componentSettings.getIcon())));
@@ -298,38 +298,6 @@ public class Controller {
                 }
             }
         });
-
-        view.leftPanel.hierarchyPane.treeView.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.DELETE) {
-                    final TreeItem<HierarchyTreeItem> toRemove = view.leftPanel.hierarchyPane.treeView.getSelectionModel().getSelectedItem();
-                    if (toRemove != null) {
-                        view.middleTabPane.viewPane.getChildren().remove(toRemove.getValue().getGObject());
-                        selectionManager.clearSelection();
-                        historyManager.addHistory(new HistoryItem() {
-                                @Override
-                                public void revert() {
-                                    view.middleTabPane.viewPane.getChildren().add((Node) toRemove.getValue().getGObject());
-                                    selectionManager.updateSelected((GObject) (Node) toRemove.getValue().getGObject());
-                                }
-
-                                @Override
-                                public void restore() {
-                                    view.middleTabPane.viewPane.getChildren().remove((Node) toRemove.getValue().getGObject());
-                                    selectionManager.clearSelection();
-                                }
-
-                                @Override
-                                public String getAppearance() {
-                                    return ((GObject) (Node) toRemove.getValue().getGObject()).getFieldName() + " deleted!";
-                                }
-                            });
-                    }
-                }
-            }
-        });
-
 
         view.leftPanel.hierarchyPane.treeRoot = new TreeItem<>(new HierarchyTreeItem(view.middleTabPane.viewPane, view, selectionManager, historyManager));
         view.leftPanel.hierarchyPane.treeView.setRoot(view.leftPanel.hierarchyPane.treeRoot);
@@ -412,38 +380,6 @@ public class Controller {
             @Override
             public void clearSelection() {
                 view.middleTabPane.outline.setVisible(false);
-            }
-        });
-
-        //Add keypress delete functionality
-        view.middleTabPane.viewPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.DELETE) {
-                    final GObject currentlySelected = selectionManager.getCurrentlySelected();
-                    if (currentlySelected != null) {
-                        view.middleTabPane.viewPane.getChildren().remove(currentlySelected);
-                        selectionManager.clearSelection();
-                        historyManager.addHistory(new HistoryItem() {
-                            @Override
-                            public void restore() {
-                                view.middleTabPane.viewPane.getChildren().remove(currentlySelected);
-                                selectionManager.clearSelection();
-                            }
-
-                            @Override
-                            public void revert() {
-                                view.middleTabPane.viewPane.getChildren().add((Node)currentlySelected);
-                                selectionManager.updateSelected(currentlySelected);
-                            }
-
-                            @Override
-                            public String getAppearance() {
-                                return currentlySelected.getFieldName() + " deleted";
-                            }
-                        });
-                    }
-                }
             }
         });
 
@@ -545,7 +481,7 @@ public class Controller {
                 ComponentSettings componentSettings = cmj.getComponentSettings();
                 if (componentSettings != null) {
                     GObject newThing = null;
-                    
+
                     historyPause = true;
                     try {
                         Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
@@ -665,15 +601,15 @@ public class Controller {
         });
 
 
-        final ContextMenu popUp = new ContextMenu();
-        final MenuItem button = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
-        popUp.getItems().add(button);
+        final ContextMenu nodePopUp = new ContextMenu();
+        final MenuItem deletebutton = new MenuItem(LabelGrabber.getLabel("delete.node.text"));
+        nodePopUp.getItems().add(deletebutton);
         newNode.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
                 if (t.getButton().equals(MouseButton.SECONDARY)) {
-                    popUp.show(newNode, Side.RIGHT, 0, 0);
-                    button.setOnAction(new EventHandler<ActionEvent>() {
+                    nodePopUp.show(newNode, Side.RIGHT, 0, 0);
+                    deletebutton.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent t) {
                             view.middleTabPane.viewPane.getChildren().remove(newNode);
@@ -745,32 +681,32 @@ public class Controller {
         public LeftListCellFactory(final View view) {
             super();
             final ObjectProperty<Cursor> cp = this.cursorProperty();
-            this.setOnMouseDragged(new EventHandler<MouseEvent>(){
+            this.setOnMouseDragged(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
                     cp.setValue(Cursor.CROSSHAIR);
                 }
             });
-            this.setOnMousePressed(new EventHandler<MouseEvent>(){
+            this.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
                     cp.setValue(Cursor.CROSSHAIR);
                 }
             });
-            this.setOnMouseMoved(new EventHandler<MouseEvent>(){
+            this.setOnMouseMoved(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
                     cp.setValue(Cursor.CROSSHAIR);
                 }
             });
-            this.setOnMousePressed(new EventHandler<MouseEvent>(){
+            this.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
                     cp.setValue(Cursor.CROSSHAIR);
                 }
             });
-            
-            
+
+
             this.setOnDragDetected(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
