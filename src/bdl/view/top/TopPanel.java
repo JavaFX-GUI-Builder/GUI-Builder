@@ -5,6 +5,9 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 
 public class TopPanel extends MenuBar {
 
@@ -40,10 +43,13 @@ public class TopPanel extends MenuBar {
         menuEdit = new Menu(LabelGrabber.getLabel("menu.edit"));
         mItmUndo = new MenuItem(LabelGrabber.getLabel("menu.edit.undo"));
         mItmUndo.setDisable(true);
+        mItmUndo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN));
         mItmRedo = new MenuItem(LabelGrabber.getLabel("menu.edit.redo"));
         mItmRedo.setDisable(true);
+        mItmRedo.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN));
         mItmDelete = new MenuItem(LabelGrabber.getLabel("menu.edit.delete"));
         mItmDelete.setDisable(true);
+        mItmDelete.setAccelerator(new KeyCodeCombination(KeyCode.DELETE));
 
         menuView = new Menu(LabelGrabber.getLabel("menu.view"));
         mItmHistory = new CheckMenuItem(LabelGrabber.getLabel("menu.view.history"));
