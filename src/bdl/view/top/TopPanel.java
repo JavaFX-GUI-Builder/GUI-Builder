@@ -32,6 +32,7 @@ public class TopPanel extends MenuBar {
 
     public Menu menuHelp;
     public MenuItem mItmAbout;
+    public MenuItem mItmClearAll;
 
     public TopPanel() {
         menuFile = new Menu(LabelGrabber.getLabel("menu.file"));
@@ -50,6 +51,8 @@ public class TopPanel extends MenuBar {
         mItmDelete = new MenuItem(LabelGrabber.getLabel("menu.edit.delete"));
         mItmDelete.setDisable(true);
         mItmDelete.setAccelerator(new KeyCodeCombination(KeyCode.DELETE));
+        mItmClearAll = new MenuItem(LabelGrabber.getLabel("menu.edit.clearall"));
+        mItmClearAll.setDisable(true);
 
         menuView = new Menu(LabelGrabber.getLabel("menu.view"));
         mItmHistory = new CheckMenuItem(LabelGrabber.getLabel("menu.view.history"));
@@ -65,7 +68,7 @@ public class TopPanel extends MenuBar {
         mItmAbout = new MenuItem(LabelGrabber.getLabel("menu.help.about"));
 
         menuFile.getItems().addAll(mItmLoadFile, mItmSaveFile, mItmFullScreen, mItmClose);
-        menuEdit.getItems().addAll(mItmUndo, mItmRedo, mItmDelete);
+        menuEdit.getItems().addAll(mItmUndo, mItmRedo, mItmDelete, mItmClearAll);
         menuView.getItems().addAll(mItmHierarchy, mItmHistory);
         menuDebug.getItems().addAll(mItmDebugMsg);
         menuHelp.getItems().addAll(mItmAbout);

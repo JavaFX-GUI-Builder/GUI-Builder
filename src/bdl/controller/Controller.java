@@ -52,6 +52,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Cursor;
 
@@ -219,15 +220,50 @@ public class Controller {
                         });
                     }
                 });
+                view.topPanel.mItmClearAll.setDisable(false);
+                view.topPanel.mItmClearAll.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        final List<Node> list = new ArrayList<>();
+                        list.addAll(view.middleTabPane.viewPane.getChildren());
+                        view.middleTabPane.viewPane.getChildren().clear();
+                        selectionManager.clearSelection();
+
+                        historyManager.addHistory(new HistoryItem() {
+                            @Override
+                            public void restore() {
+                                for (Node n : list) {
+                                    view.middleTabPane.viewPane.getChildren().remove(n);
+                                }
+                                selectionManager.clearSelection();
+                            }
+
+                            @Override
+                            public void revert() {
+                                for (Node n : list) {
+                                    view.middleTabPane.viewPane.getChildren().add(n);
+                                    selectionManager.updateSelected((GObject) n);
+                                }
+                            }
+
+                            @Override
+                            public String getAppearance() {
+                                return ("Clear All");
+                            }
+                        });
+                    }
+                });
             }
 
             @Override
             public void clearSelection() {
                 view.topPanel.mItmDelete.setDisable(true);
+                view.topPanel.mItmClearAll.setDisable(true);
             }
         });
 
-        view.topPanel.mItmHierarchy.setOnAction(new EventHandler<ActionEvent>() {
+        view.topPanel.mItmHierarchy.setOnAction(
+                new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 if (view.topPanel.mItmHierarchy.isSelected()) {
@@ -239,7 +275,8 @@ public class Controller {
             }
         });
 
-        view.topPanel.mItmHistory.setOnAction(new EventHandler<ActionEvent>() {
+        view.topPanel.mItmHistory.setOnAction(
+                new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 if (view.topPanel.mItmHistory.isSelected()) {
@@ -251,7 +288,8 @@ public class Controller {
             }
         });
 
-        view.topPanel.mItmDebugMsg.setOnAction(new EventHandler<ActionEvent>() {
+        view.topPanel.mItmDebugMsg.setOnAction(
+                new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 Interface.TestWriteMessage("Debug test from GUI Builder!");

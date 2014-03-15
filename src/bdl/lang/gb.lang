@@ -24,3 +24,4 @@ editor.view.tab=Editor View
 code.view.tab=Code View
 preview.gui.tab=Preview GUI
 hierarchy.tab.title=Hierarchy
+menu.edit.clearall=Clear All
