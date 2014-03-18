@@ -2,6 +2,7 @@ package bdl.controller;
 
 import bdl.build.CodeGenerator;
 import bdl.build.GObject;
+import bdl.build.GUIObject;
 import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettings;
 import bdl.model.ComponentSettingsStore;
@@ -117,7 +118,7 @@ public class Controller {
                                         GObject newThing = (GObject) constructor.newInstance();
                                         newThing.setFieldName(node.getId());
 
-                                        addGObject(newThing, componentSettings, view, viewListeners, node, -1, -1);
+                                        addGObject(newThing, componentSettings, view, viewListeners, node, -1, -1, view.middleTabPane.viewPane);
                                         historyPause = false;
                                         break;
                                     }
@@ -329,7 +330,7 @@ public class Controller {
                             e.printStackTrace();
                         }
 
-                        addGObject(newThing, componentSettings, view, viewListeners, null, -1, -1);
+                        addGObject(newThing, componentSettings, view, viewListeners, null, -1, -1, view.middleTabPane.viewPane);
                         historyPause = false;
                     }
                     view.leftPanel.leftList.getSelectionModel().select(-1);
@@ -380,12 +381,13 @@ public class Controller {
         selectionManager.addSelectionListener(new SelectionListener() {
             @Override
             public void updateSelected(GObject gObject) {
+                if(gObject instanceof GUIObject) return;
                 Node node = (Node) gObject;
                 Rectangle outline = view.middleTabPane.outline;
                 outline.setVisible(true);
 
-                double nodeX = node.getLayoutX();
-                double nodeY = node.getLayoutY();
+                double nodeX = node.getParent().getLayoutX() + node.getLayoutX();
+                double nodeY = node.getParent().getLayoutY() + node.getLayoutY();
                 Bounds bounds = node.getLayoutBounds();
                 double nodeW = bounds.getWidth();
                 double nodeH = bounds.getHeight();
@@ -518,7 +520,7 @@ public class Controller {
                         e.printStackTrace();
                     }
 
-                    addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY());
+                    addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY(), view.middleTabPane.viewPane);
                     historyPause = false;
                 }
                 view.leftPanel.leftList.getSelectionModel().select(-1);
@@ -572,7 +574,7 @@ public class Controller {
     }
 
     //x and y are initial layout positions. To be used only with drag and drop.
-    private void addGObject(final GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y) {
+    private void addGObject(final GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y, final AnchorPane destination) {
 
         //Sets the default settings on the gObject and creates the property edit pane
         final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode, historyManager);
@@ -609,7 +611,7 @@ public class Controller {
         newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                view.middleTabPane.viewPane.requestFocus();
+                destination.requestFocus();
                 selectionManager.updateSelected((GObject) newNode);
                 viewListeners.onMousePressed(newNode, mouseEvent);
                 mouseEvent.consume();
@@ -643,18 +645,18 @@ public class Controller {
                     deletebutton.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent t) {
-                            view.middleTabPane.viewPane.getChildren().remove(newNode);
+                            destination.getChildren().remove(newNode);
                             selectionManager.clearSelection();
                             historyManager.addHistory(new HistoryItem() {
                                 @Override
                                 public void revert() {
-                                    view.middleTabPane.viewPane.getChildren().add(newNode);
+                                    destination.getChildren().add(newNode);
                                     selectionManager.updateSelected((GObject) newNode);
                                 }
 
                                 @Override
                                 public void restore() {
-                                    view.middleTabPane.viewPane.getChildren().remove(newNode);
+                                    destination.getChildren().remove(newNode);
                                     selectionManager.clearSelection();
                                 }
 
@@ -669,18 +671,18 @@ public class Controller {
             }
         });
 
-        view.middleTabPane.viewPane.getChildren().add(newNode);
+       destination.getChildren().add(newNode);
 
         historyManager.addHistory(new HistoryItem() {
             @Override
             public void restore() {
-                view.middleTabPane.viewPane.getChildren().add(newNode);
+                destination.getChildren().add(newNode);
                 selectionManager.updateSelected(newThing);
             }
 
             @Override
             public void revert() {
-                view.middleTabPane.viewPane.getChildren().remove(newThing);
+                destination.getChildren().remove(newThing);
                 selectionManager.clearSelection();
             }
 
@@ -750,16 +752,16 @@ public class Controller {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    final Node newGObj = (Node) newnewThing;
+                    final GObject newGObj = (GObject) newnewThing;
 
-//                        addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY());
-                    newThing.getChildren().add(newGObj);
+                    addGObject(newGObj, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY(), newThing);
+                    //newThing.getChildren().add((Node) newGObj);
                     historyPause = false;
                     historyManager.addHistory(new HistoryItem() {
                         @Override
                         public void restore() {
-                            newThing.getChildren().add(newGObj);
-                            selectionManager.updateSelected((GObject) newGObj);
+                            newThing.getChildren().add((Node) newGObj);
+                            selectionManager.updateSelected(newGObj);
                         }
 
                         @Override
