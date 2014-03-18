@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Cursor;
+import javafx.scene.layout.Pane;
 
 public class Controller {
 
@@ -355,7 +356,7 @@ public class Controller {
 
         //Add listener to node list to update hierarchy pane
         addAnchorPaneChildrenToHierarchy(view.middleTabPane.viewPane, view.leftPanel.hierarchyPane.treeRoot);
-        
+
 
         //Add selection handlers for Hierarchy Pane
         selectionManager.addSelectionListener(new SelectionListener() {
@@ -381,20 +382,22 @@ public class Controller {
         selectionManager.addSelectionListener(new SelectionListener() {
             @Override
             public void updateSelected(GObject gObject) {
-                if(gObject instanceof GUIObject) return;
+                if (gObject instanceof GUIObject) {
+                    return;
+                }
                 Node node = (Node) gObject;
                 Rectangle outline = view.middleTabPane.outline;
                 outline.setVisible(true);
-                
+
                 double nodeX = 0;
                 double nodeY = 0;
                 Node node2 = node;
-                while(!(node2 instanceof GUIObject)) {
+                while (!(node2 instanceof GUIObject)) {
                     nodeX += node2.getLayoutX();
                     nodeY += node2.getLayoutY();
                     node2 = node2.getParent();
                 }
-                
+
                 //double nodeX = node.getParent().getLayoutX() + node.getLayoutX();
                 //double nodeY = node.getParent().getLayoutY() + node.getLayoutY();
                 Bounds bounds = node.getLayoutBounds();
@@ -680,7 +683,7 @@ public class Controller {
             }
         });
 
-       destination.getChildren().add(newNode);
+        destination.getChildren().add(newNode);
 
         historyManager.addHistory(new HistoryItem() {
             @Override
@@ -719,6 +722,97 @@ public class Controller {
     }
 
     private void dealWithAnchorPane(final AnchorPane newThing) {
+        newThing.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                double x = t.getX();
+                double y = t.getY();
+                eventFallThrough(newThing, x, y, t);
+            }
+
+            private void eventFallThrough(Pane n, double x, double y, MouseEvent t) {
+                for (Node node : n.getChildren()) {
+                    if (node.getBoundsInParent().contains(x, y)) {
+                        if (node instanceof Pane) {
+                            eventFallThrough((Pane) node, x, y, t);
+                        } else {
+                            selectionManager.updateSelected((GObject) node);
+                        }
+                    }
+                }
+            }
+        });
+        
+        newThing.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                t.consume();
+                double x = t.getX();
+                double y = t.getY();
+                eventFallThrough(newThing, x, y, t);
+            }
+
+            private void eventFallThrough(Pane n, double x, double y, MouseEvent t) {
+                for (Node node : n.getChildren()) {
+                    if (node.getBoundsInParent().contains(x, y)) {
+                        if (node instanceof Pane) {
+                            eventFallThrough((Pane) node, x, y, t);
+                        } else {
+                            viewListeners.onMousePressed(node, t);
+                            //node.fireEvent((Event) node.getOnMousePressed());
+                        }
+                    }
+                }
+            }
+        });
+
+        newThing.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                t.consume();
+                t.setDragDetect(false);
+                double x = t.getX();
+                double y = t.getY();
+                eventFallThrough(newThing, x, y, t);
+            }
+
+            private void eventFallThrough(Pane n, double x, double y, MouseEvent t) {
+                for (Node node : n.getChildren()) {
+                    if (node.getBoundsInParent().contains(x, y)) {
+                        if (node instanceof Pane) {
+                            eventFallThrough((Pane) node, x, y, t);
+                        } else {
+                            node.setCursor(Cursor.MOVE);
+                            viewListeners.onMouseDragged(node, t);
+                        }
+                    }
+                }
+            }
+        });
+
+        newThing.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                t.consume();
+                double x = t.getX();
+                double y = t.getY();
+                eventFallThrough(newThing, x, y, t);
+            }
+
+            private void eventFallThrough(Pane n, double x, double y, MouseEvent t) {
+                for (Node node : n.getChildren()) {
+                    if (node.getBoundsInParent().contains(x, y)) {
+                        if (node instanceof Pane) {
+                            eventFallThrough((Pane) node, x, y, t);
+                        } else {
+                            viewListeners.onMouseReleased(node, t);
+                            //node.fireEvent((Event) node.getOnMouseReleased());
+                        }
+                    }
+                }
+            }
+        });
+
         newThing.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent t) {
@@ -728,7 +822,7 @@ public class Controller {
                 double nodeX = 0;
                 double nodeY = 0;
                 Node newThing2 = newThing;
-                while(!(newThing2 instanceof GUIObject)) {
+                while (!(newThing2 instanceof GUIObject)) {
                     nodeX += newThing2.getLayoutX();
                     nodeY += newThing2.getLayoutY();
                     newThing2 = newThing2.getParent();
@@ -795,7 +889,7 @@ public class Controller {
             }
         });
     }
-    
+
     private void addAnchorPaneChildrenToHierarchy(AnchorPane ap, final TreeItem ti) {
         ap.getChildren().addListener(new ListChangeListener<Node>() {
             @Override
