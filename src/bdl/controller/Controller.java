@@ -385,9 +385,18 @@ public class Controller {
                 Node node = (Node) gObject;
                 Rectangle outline = view.middleTabPane.outline;
                 outline.setVisible(true);
-
-                double nodeX = node.getParent().getLayoutX() + node.getLayoutX();
-                double nodeY = node.getParent().getLayoutY() + node.getLayoutY();
+                
+                double nodeX = 0;
+                double nodeY = 0;
+                Node node2 = node;
+                while(!(node2 instanceof GUIObject)) {
+                    nodeX += node2.getLayoutX();
+                    nodeY += node2.getLayoutY();
+                    node2 = node2.getParent();
+                }
+                
+                //double nodeX = node.getParent().getLayoutX() + node.getLayoutX();
+                //double nodeY = node.getParent().getLayoutY() + node.getLayoutY();
                 Bounds bounds = node.getLayoutBounds();
                 double nodeW = bounds.getWidth();
                 double nodeH = bounds.getHeight();
@@ -716,8 +725,14 @@ public class Controller {
                 t.acceptTransferModes(TransferMode.ANY);
                 Rectangle highlight = view.middleTabPane.highlight;
                 highlight.setVisible(true);
-                double nodeX = newThing.getLayoutX();
-                double nodeY = newThing.getLayoutY();
+                double nodeX = 0;
+                double nodeY = 0;
+                Node newThing2 = newThing;
+                while(!(newThing2 instanceof GUIObject)) {
+                    nodeX += newThing2.getLayoutX();
+                    nodeY += newThing2.getLayoutY();
+                    newThing2 = newThing2.getParent();
+                }
                 Bounds bounds = newThing.getLayoutBounds();
                 double nodeW = bounds.getWidth();
                 double nodeH = bounds.getHeight();
