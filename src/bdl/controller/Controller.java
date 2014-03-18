@@ -1,6 +1,5 @@
 package bdl.controller;
 
-import bdl.Interface;
 import bdl.build.CodeGenerator;
 import bdl.build.GObject;
 import bdl.lang.LabelGrabber;
@@ -354,19 +353,8 @@ public class Controller {
         });
 
         //Add listener to node list to update hierarchy pane
-        view.middleTabPane.viewPane.getChildren().addListener(new ListChangeListener<Node>() {
-            @Override
-            public void onChanged(Change<? extends Node> change) {
-                TreeItem<HierarchyTreeItem> root = view.leftPanel.hierarchyPane.treeRoot;
-                root.getChildren().clear();
-
-                ObservableList nodes = change.getList();
-                // Add backwards so that they appear in the correct order
-                for (int i = nodes.size() - 1; i >= 0; i--) {
-                    root.getChildren().add(new TreeItem<>(new HierarchyTreeItem((GObject) nodes.get(i), view, selectionManager, historyManager)));
-                }
-            }
-        });
+        addAnchorPaneChildrenToHierarchy(view.middleTabPane.viewPane, view.leftPanel.hierarchyPane.treeRoot);
+        
 
         //Add selection handlers for Hierarchy Pane
         selectionManager.addSelectionListener(new SelectionListener() {
@@ -592,57 +580,7 @@ public class Controller {
         newThing.setPEP(propertyEditPane);
 
         if (componentSettings.getLayoutType().equals("anchorpane")) {
-            final AnchorPane newAP = (AnchorPane) newThing;
-            newAP.setOnDragOver(new EventHandler<DragEvent>() {
-                @Override
-                public void handle(DragEvent t) {
-                    t.acceptTransferModes(TransferMode.ANY);
-                    Rectangle highlight = view.middleTabPane.highlight;
-                    highlight.setVisible(true);
-                    double nodeX = newAP.getLayoutX();
-                    double nodeY = newAP.getLayoutY();
-                    Bounds bounds = newAP.getLayoutBounds();
-                    double nodeW = bounds.getWidth();
-                    double nodeH = bounds.getHeight();
-                    highlight.setLayoutX(nodeX - 4);
-                    highlight.setLayoutY(nodeY - 4);
-                    highlight.setWidth(nodeW + 8);
-                    highlight.setHeight(nodeH + 8);
-                }
-            });
-            
-            newAP.setOnDragExited(new EventHandler<DragEvent>() {
-                @Override
-                public void handle(DragEvent t) {
-                    view.middleTabPane.highlight.setVisible(false);
-                }
-            });
-
-            newAP.setOnDragDropped(new EventHandler<DragEvent>() {
-                @Override
-                public void handle(DragEvent t) {
-                    t.consume();
-                    ComponentMenuItem cmj = view.leftPanel.leftList.getSelectionModel().getSelectedItem();
-                    ComponentSettings componentSettings = cmj.getComponentSettings();
-                    if (componentSettings != null) {
-                        GObject newnewThing = null;
-
-                        historyPause = true;
-                        try {
-                            Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
-                            Constructor constructor = panelPropertyClass.getConstructor();
-                            newnewThing = (GObject) constructor.newInstance();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-//                        addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY());
-                        ((AnchorPane) newThing).getChildren().add((Node) newnewThing);
-                        historyPause = false;
-                    }
-                    view.leftPanel.leftList.getSelectionModel().select(-1);
-                }
-            });
+            dealWithAnchorPane((AnchorPane) newThing);
         }
 
         final Node newNode = (Node) newThing;
@@ -767,6 +705,98 @@ public class Controller {
             newNode.setLayoutX(x);
             newNode.setLayoutY(y);
         }
+    }
+
+    private void dealWithAnchorPane(final AnchorPane newThing) {
+        newThing.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent t) {
+                t.acceptTransferModes(TransferMode.ANY);
+                Rectangle highlight = view.middleTabPane.highlight;
+                highlight.setVisible(true);
+                double nodeX = newThing.getLayoutX();
+                double nodeY = newThing.getLayoutY();
+                Bounds bounds = newThing.getLayoutBounds();
+                double nodeW = bounds.getWidth();
+                double nodeH = bounds.getHeight();
+                highlight.setLayoutX(nodeX - 4);
+                highlight.setLayoutY(nodeY - 4);
+                highlight.setWidth(nodeW + 8);
+                highlight.setHeight(nodeH + 8);
+            }
+        });
+
+        newThing.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent t) {
+                view.middleTabPane.highlight.setVisible(false);
+            }
+        });
+
+        newThing.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent t) {
+                t.consume();
+                ComponentMenuItem cmj = view.leftPanel.leftList.getSelectionModel().getSelectedItem();
+                ComponentSettings componentSettings = cmj.getComponentSettings();
+                if (componentSettings != null) {
+                    GObject newnewThing = null;
+
+                    historyPause = true;
+                    try {
+                        Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
+                        Constructor constructor = panelPropertyClass.getConstructor();
+                        newnewThing = (GObject) constructor.newInstance();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    final Node newGObj = (Node) newnewThing;
+
+//                        addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY());
+                    newThing.getChildren().add(newGObj);
+                    historyPause = false;
+                    historyManager.addHistory(new HistoryItem() {
+                        @Override
+                        public void restore() {
+                            newThing.getChildren().add(newGObj);
+                            selectionManager.updateSelected((GObject) newGObj);
+                        }
+
+                        @Override
+                        public void revert() {
+                            newThing.getChildren().remove(newGObj);
+                            selectionManager.clearSelection();
+                        }
+
+                        @Override
+                        public String getAppearance() {
+                            return newThing.getClass().getSuperclass().getSimpleName() + " > " + newGObj.getClass().getSuperclass().getSimpleName() + " added!";
+                        }
+                    });
+                }
+                view.leftPanel.leftList.getSelectionModel().select(-1);
+            }
+        });
+    }
+    
+    private void addAnchorPaneChildrenToHierarchy(AnchorPane ap, final TreeItem ti) {
+        ap.getChildren().addListener(new ListChangeListener<Node>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Node> change) {
+                TreeItem<HierarchyTreeItem> root = ti;
+                root.getChildren().clear();
+
+                ObservableList nodes = change.getList();
+                // Add backwards so that they appear in the correct order
+                for (int i = nodes.size() - 1; i >= 0; i--) {
+                    TreeItem ti = new TreeItem<>(new HierarchyTreeItem((GObject) nodes.get(i), view, selectionManager, historyManager));
+                    root.getChildren().add(ti);
+                    if (nodes.get(i) instanceof AnchorPane) {
+                        addAnchorPaneChildrenToHierarchy((AnchorPane) nodes.get(i), ti);
+                    }
+                }
+            }
+        });
     }
 
     private static class LeftListCellFactory extends ListCell<ComponentMenuItem> {
