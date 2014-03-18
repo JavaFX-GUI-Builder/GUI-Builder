@@ -34,7 +34,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -355,7 +354,7 @@ public class Controller {
         });
 
         //Add listener to node list to update hierarchy pane
-        addAnchorPaneChildrenToHierarchy(view.middleTabPane.viewPane, view.leftPanel.hierarchyPane.treeRoot);
+        addPaneChildrenToHierarchy(view.middleTabPane.viewPane, view.leftPanel.hierarchyPane.treeRoot);
 
 
         //Add selection handlers for Hierarchy Pane
@@ -586,7 +585,7 @@ public class Controller {
     }
 
     //x and y are initial layout positions. To be used only with drag and drop.
-    private void addGObject(final GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y, final AnchorPane destination) {
+    private void addGObject(final GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y, final Pane destination) {
 
         //Sets the default settings on the gObject and creates the property edit pane
         final PropertyEditPane propertyEditPane = new PropertyEditPane(newThing, componentSettings, fieldNames, view.middleTabPane.viewPane, settingsNode, historyManager);
@@ -594,7 +593,7 @@ public class Controller {
         newThing.setPEP(propertyEditPane);
 
         if (componentSettings.getLayoutType().equals("anchorpane")) {
-            dealWithAnchorPane((AnchorPane) newThing);
+            dealWithPane((Pane) newThing);
         }
 
         final Node newNode = (Node) newThing;
@@ -721,7 +720,7 @@ public class Controller {
         }
     }
 
-    private void dealWithAnchorPane(final AnchorPane newThing) {
+    private void dealWithPane(final Pane newThing) {
         newThing.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
@@ -890,7 +889,7 @@ public class Controller {
         });
     }
 
-    private void addAnchorPaneChildrenToHierarchy(AnchorPane ap, final TreeItem ti) {
+    private void addPaneChildrenToHierarchy(Pane ap, final TreeItem ti) {
         ap.getChildren().addListener(new ListChangeListener<Node>() {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Node> change) {
@@ -902,8 +901,8 @@ public class Controller {
                 for (int i = nodes.size() - 1; i >= 0; i--) {
                     TreeItem ti = new TreeItem<>(new HierarchyTreeItem((GObject) nodes.get(i), view, selectionManager, historyManager));
                     root.getChildren().add(ti);
-                    if (nodes.get(i) instanceof AnchorPane) {
-                        addAnchorPaneChildrenToHierarchy((AnchorPane) nodes.get(i), ti);
+                    if (nodes.get(i) instanceof Pane) {
+                        addPaneChildrenToHierarchy((Pane) nodes.get(i), ti);
                     }
                 }
             }

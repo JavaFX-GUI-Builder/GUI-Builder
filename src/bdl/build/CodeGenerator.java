@@ -1,10 +1,12 @@
 package bdl.build;
 
 import bdl.view.right.properties.PanelProperty;
+import java.util.ArrayList;
 import javafx.scene.Node;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import javafx.scene.layout.Pane;
 
 public class CodeGenerator {
 
@@ -18,15 +20,7 @@ public class CodeGenerator {
 
         //Add declarations
         for (Node node : guiObject.getChildren()) {
-            GObject gObj = (GObject) node;
-            String nodeType = node.getClass().getSimpleName().substring(1);
-            code.append("    public static ")
-                    .append(nodeType)
-                    .append(" ")
-                    .append(gObj.getFieldName())
-                    .append(" = new ")
-                    .append(nodeType)
-                    .append("();\n");
+            declaration(node, code);
         }
         code.append('\n');
 
@@ -43,44 +37,52 @@ public class CodeGenerator {
             prefix = ", ";
             code.append(gObj.getFieldName());
         }
-        code.append(");\n\n");
+        code.append(");\n");
+
+        //Build a list of panes so that we can add each node into that pane's pane.
+        ArrayList<Pane> paneList = buildPaneList(guiObject);
+        for (Pane p : paneList) {
+            code.append("        ").append(((GObject) p).getFieldName()).append(".getChildren().addAll(");
+            prefix = "";
+            for (Node node : p.getChildren()) {
+                GObject gObj = (GObject) node;
+                code.append(prefix);
+                prefix = ", ";
+                code.append(gObj.getFieldName());
+            }
+            code.append(");\n");
+        }
+        code.append("\n");
 
         for (Node node : guiObject.getChildren()) {
-            GObject gObj = (GObject) node;
-            for (PanelProperty property : gObj.getPanelProperties()) {
-                String javaCode = property.getJavaCode();
-                if (!javaCode.isEmpty()) {
-                    code.append("        ").append(javaCode.replace("\n", "\n        ")).append("\n");
-                }
-            }
-            code.append('\n');
+            panelProperties(node, code);
         }
         code.append("        return root;\n");
         code.append("    }\n\n");
 
 
         //Add start method
-        code.append("    @Override\n" +
-                "    public void start(Stage primaryStage) {\n" +
-                "        Scene scene = new Scene(getRoot(), " + guiObject.getWidth() + ", " + guiObject.getHeight() + ");\n" +
-                "        \n" +
-                "        primaryStage.setTitle(\"" + guiObject.getGUITitle() + "\");\n" +
-                "        primaryStage.setScene(scene);\n" +
-                "        primaryStage.show();\n" +
-                "    }\n\n");
+        code.append("    @Override\n"
+                + "    public void start(Stage primaryStage) {\n"
+                + "        Scene scene = new Scene(getRoot(), " + guiObject.getWidth() + ", " + guiObject.getHeight() + ");\n"
+                + "        \n"
+                + "        primaryStage.setTitle(\"" + guiObject.getGUITitle() + "\");\n"
+                + "        primaryStage.setScene(scene);\n"
+                + "        primaryStage.show();\n"
+                + "    }\n\n");
 
         //Add main method
-        code.append("    /**\n" +
-                "     * The main() method is ignored in correctly deployed JavaFX application.\n" +
-                "     * main() serves only as fallback in case the application can not be\n" +
-                "     * launched through deployment artifacts, e.g., in IDEs with limited FX\n" +
-                "     * support. NetBeans ignores main().\n" +
-                "     *\n" +
-                "     * @param args the command line arguments\n" +
-                "     */\n" +
-                "    public static void main(String[] args) {\n" +
-                "        launch(args);\n" +
-                "    }\n");;
+        code.append("    /**\n"
+                + "     * The main() method is ignored in correctly deployed JavaFX application.\n"
+                + "     * main() serves only as fallback in case the application can not be\n"
+                + "     * launched through deployment artifacts, e.g., in IDEs with limited FX\n"
+                + "     * support. NetBeans ignores main().\n"
+                + "     *\n"
+                + "     * @param args the command line arguments\n"
+                + "     */\n"
+                + "    public static void main(String[] args) {\n"
+                + "        launch(args);\n"
+                + "    }\n");;
 
         code.append('}');//Close class tag
         return code.toString();
@@ -103,17 +105,7 @@ public class CodeGenerator {
         code.append("    <children>\n");
 
         for (Node node : guiObject.getChildren()) {
-            String nodeClass = node.getClass().getSuperclass().getSimpleName();
-            code.append("        <").append(nodeClass);
-            GObject gObj = (GObject) node;
-            code.append(" fx:id=\"").append(gObj.getFieldName()).append("\" ");
-            for (PanelProperty property : gObj.getPanelProperties()) {
-                String fxmlCode = property.getFXMLCode();
-                if (!fxmlCode.isEmpty()) {
-                    code.append(fxmlCode).append(' ');
-                }
-            }
-            code.append("/>\n");
+            fxmlOutput(node, code);
         }
 
         code.append("    </children>\n");
@@ -125,8 +117,7 @@ public class CodeGenerator {
         HashSet<String> imports = new HashSet<>();
 
         for (Node node : guiObject.getChildren()) {
-            String gObjectName= node.getClass().getSimpleName().substring(1);
-            imports.add("import " + allImports.get(gObjectName) + "." + gObjectName + ";\n");
+            javaImports(node, imports, allImports);
         }
 
         StringBuilder importsString = new StringBuilder();
@@ -157,4 +148,101 @@ public class CodeGenerator {
         return importsString.toString();
     }
 
+    private static void declaration(Node node, StringBuilder code) {
+        GObject gObj = (GObject) node;
+        String nodeType = node.getClass().getSimpleName().substring(1);
+        code.append("    public static ")
+                .append(nodeType)
+                .append(" ")
+                .append(gObj.getFieldName())
+                .append(" = new ")
+                .append(nodeType)
+                .append("();\n");
+        if (node instanceof Pane) {
+            for (Node node2 : ((Pane) node).getChildren()) {
+                declaration(node2, code);
+            }
+        }
+    }
+
+    private static void properties(String prefix, Node node, StringBuilder code) {
+        GObject gObj = (GObject) node;
+        code.append(prefix);
+        prefix = ", ";
+        code.append(gObj.getFieldName());
+        if (node instanceof Pane) {
+            code.append("        ").append(((GObject) node).getFieldName()).append(".getChildren().addAll(");
+            prefix = "";
+            for (Node node2 : ((Pane) node).getChildren()) {
+                properties(prefix, node2, code);
+            }
+            code.append(");\n");
+        }
+    }
+
+    private static void panelProperties(Node node, StringBuilder code) {
+        GObject gObj = (GObject) node;
+        for (PanelProperty property : gObj.getPanelProperties()) {
+            String javaCode = property.getJavaCode();
+            if (!javaCode.isEmpty()) {
+                code.append("        ").append(javaCode.replace("\n", "\n        ")).append("\n");
+            }
+        }
+        code.append('\n');
+        if (node instanceof Pane) {
+            for (Node node2 : ((Pane) node).getChildren()) {
+                panelProperties(node2, code);
+            }
+        }
+    }
+
+    private static void fxmlOutput(Node node, StringBuilder code) {
+        String nodeClass = node.getClass().getSuperclass().getSimpleName();
+        code.append("        <").append(nodeClass);
+        GObject gObj = (GObject) node;
+        code.append(" fx:id=\"").append(gObj.getFieldName()).append("\" ");
+        for (PanelProperty property : gObj.getPanelProperties()) {
+            String fxmlCode = property.getFXMLCode();
+            if (!fxmlCode.isEmpty()) {
+                code.append(fxmlCode).append(' ');
+            }
+        }
+        code.append("/>\n");
+        if (node instanceof Pane) {
+            for (Node node2 : ((Pane) node).getChildren()) {
+                fxmlOutput(node2, code);
+            }
+        }
+    }
+
+    private static void javaImports(Node node, HashSet<String> imports, HashMap<String, String> allImports) {
+        String gObjectName = node.getClass().getSimpleName().substring(1);
+        imports.add("import " + allImports.get(gObjectName) + "." + gObjectName + ";\n");
+        if (node instanceof Pane) {
+            for (Node node2 : ((Pane) node).getChildren()) {
+                javaImports(node2, imports, allImports);
+            }
+        }
+    }
+
+    // Recursively build an arraylist of panes in the current gui.
+    private static ArrayList<Pane> buildPaneList(GUIObject guiObject) {
+        ArrayList<Pane> list = new ArrayList<>();
+        for (Node n : guiObject.getChildren()) {
+            if (n instanceof Pane) {
+                list.add((Pane) n);
+                buildList((Pane) n, list);
+            }
+        }
+        return list;
+    }
+
+    private static void buildList(Pane pane, ArrayList<Pane> list) {
+        for (Node n : pane.getChildren()) {
+            if (n instanceof Pane) {
+                list.add((Pane) n);
+                buildList((Pane) n, list);
+            }
+        }
+    }
 }
