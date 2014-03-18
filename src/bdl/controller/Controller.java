@@ -592,14 +592,33 @@ public class Controller {
         newThing.setPEP(propertyEditPane);
 
         if (componentSettings.getLayoutType().equals("anchorpane")) {
-            ((AnchorPane)newThing).setOnDragOver(new EventHandler<DragEvent>() {
+            final AnchorPane newAP = (AnchorPane) newThing;
+            newAP.setOnDragOver(new EventHandler<DragEvent>() {
                 @Override
                 public void handle(DragEvent t) {
                     t.acceptTransferModes(TransferMode.ANY);
+                    Rectangle highlight = view.middleTabPane.highlight;
+                    highlight.setVisible(true);
+                    double nodeX = newAP.getLayoutX();
+                    double nodeY = newAP.getLayoutY();
+                    Bounds bounds = newAP.getLayoutBounds();
+                    double nodeW = bounds.getWidth();
+                    double nodeH = bounds.getHeight();
+                    highlight.setLayoutX(nodeX - 4);
+                    highlight.setLayoutY(nodeY - 4);
+                    highlight.setWidth(nodeW + 8);
+                    highlight.setHeight(nodeH + 8);
+                }
+            });
+            
+            newAP.setOnDragExited(new EventHandler<DragEvent>() {
+                @Override
+                public void handle(DragEvent t) {
+                    view.middleTabPane.highlight.setVisible(false);
                 }
             });
 
-            ((AnchorPane)newThing).setOnDragDropped(new EventHandler<DragEvent>() {
+            newAP.setOnDragDropped(new EventHandler<DragEvent>() {
                 @Override
                 public void handle(DragEvent t) {
                     t.consume();
@@ -618,7 +637,7 @@ public class Controller {
                         }
 
 //                        addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY());
-                        ((AnchorPane)newThing).getChildren().add((Node)newnewThing);
+                        ((AnchorPane) newThing).getChildren().add((Node) newnewThing);
                         historyPause = false;
                     }
                     view.leftPanel.leftList.getSelectionModel().select(-1);

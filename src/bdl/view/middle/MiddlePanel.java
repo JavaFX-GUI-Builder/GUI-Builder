@@ -28,6 +28,7 @@ public class MiddlePanel extends TabPane {
     private StackPane blankPane;
 
     public Rectangle outline;
+    public Rectangle highlight;
 
     public MiddlePanel() {
         setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -69,6 +70,14 @@ public class MiddlePanel extends TabPane {
         outline.setMouseTransparent(true);
         outline.setStyle("-fx-opacity: 1;");//Could use this to make a light grey foreground
         viewPaneDecorator.getChildren().add(outline);
+        
+        highlight = new Rectangle();
+        highlight.setStrokeWidth(2);
+        highlight.setStroke(Color.RED);
+        highlight.setFill(Color.TRANSPARENT);
+        highlight.setMouseTransparent(true);
+        highlight.setStyle("-fx-opacity: 1;");//Could use this to make a light grey foreground
+        viewPaneDecorator.getChildren().add(highlight);
 
         scroll.setFitToWidth(true);
         scroll.setFitToHeight(true);
