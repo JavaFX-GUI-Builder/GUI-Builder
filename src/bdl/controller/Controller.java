@@ -915,31 +915,12 @@ public class Controller {
         public LeftListCellFactory(final View view) {
             super();
             final ObjectProperty<Cursor> cp = this.cursorProperty();
-            this.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    cp.setValue(Cursor.CROSSHAIR);
-                }
-            });
-            this.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    cp.setValue(Cursor.CROSSHAIR);
-                }
-            });
             this.setOnMouseMoved(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
-                    cp.setValue(Cursor.CROSSHAIR);
+                    cp.setValue(Cursor.MOVE);
                 }
             });
-            this.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    cp.setValue(Cursor.CROSSHAIR);
-                }
-            });
-
 
             this.setOnDragDetected(new EventHandler<MouseEvent>() {
                 @Override
@@ -948,7 +929,6 @@ public class Controller {
                     ClipboardContent cc = new ClipboardContent();
                     cc.putString("");
                     db.setContent(cc);
-                    cp.setValue(Cursor.CROSSHAIR);
                     t.consume();
                 }
             });
