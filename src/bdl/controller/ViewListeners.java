@@ -3,18 +3,21 @@ package bdl.controller;
 import bdl.build.GObject;
 import bdl.model.history.HistoryItem;
 import bdl.model.history.HistoryManager;
+import bdl.model.selection.SelectionManager;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 public class ViewListeners {
 
+    private SelectionManager selectionManager;
     HistoryManager historyManager;
     double historyX, historyY;
     boolean isMousePressed = false;
     double curX = 0, curY = 0;
 
-    public ViewListeners(HistoryManager hm) {
+    public ViewListeners(HistoryManager hm, SelectionManager selectionManager) {
         historyManager = hm;
+        this.selectionManager = selectionManager;
     }
 
     public void onMousePressed(Node node, MouseEvent mouseEvent) {
@@ -26,7 +29,7 @@ public class ViewListeners {
     }
 
     public void onMouseDragged(Node node, MouseEvent mouseEvent) {
-        if (isMousePressed) {
+        if (isMousePressed && selectionManager.getCurrentlySelected() == node) {
             double x = node.getLayoutX() + (mouseEvent.getX() - curX);
             double y = node.getLayoutY() + (mouseEvent.getY() - curY);
             node.setLayoutX(x);

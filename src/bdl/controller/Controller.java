@@ -72,8 +72,8 @@ public class Controller {
         this.componentSettingsStore = componentSettingsStore;
         fieldNames = new ArrayList<>();
         historyManager = new HistoryManager();
-        viewListeners = new ViewListeners(historyManager);
         selectionManager = new SelectionManager();
+        viewListeners = new ViewListeners(historyManager, selectionManager);
 
         setupLeftPanel();
         setupMiddlePanel();
@@ -619,28 +619,25 @@ public class Controller {
             }
         });
 
-        newNode.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+        newNode.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                destination.requestFocus();
                 selectionManager.updateSelected((GObject) newNode);
                 viewListeners.onMousePressed(newNode, mouseEvent);
-                mouseEvent.consume();
+                mouseEvent.consume();//Stops the mouseEvent falling through to the viewPane which would clear selection
             }
         });
-        newNode.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
+        newNode.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 viewListeners.onMouseReleased(newNode, mouseEvent);
-                mouseEvent.consume();
             }
         });
-        newNode.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+        newNode.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 viewListeners.onMouseDragged(newNode, mouseEvent);
                 selectionManager.updateSelected((GObject) newNode);
-                mouseEvent.consume();
             }
         });
 
@@ -721,96 +718,6 @@ public class Controller {
     }
 
     private void dealWithPane(final Pane newThing) {
-        newThing.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                double x = t.getX();
-                double y = t.getY();
-                eventFallThrough(newThing, x, y, t);
-            }
-
-            private void eventFallThrough(Pane n, double x, double y, MouseEvent t) {
-                for (Node node : n.getChildren()) {
-                    if (node.getBoundsInParent().contains(x, y)) {
-                        if (node instanceof Pane) {
-                            eventFallThrough((Pane) node, x, y, t);
-                        } else {
-                            selectionManager.updateSelected((GObject) node);
-                        }
-                    }
-                }
-            }
-        });
-        
-        newThing.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                t.consume();
-                double x = t.getX();
-                double y = t.getY();
-                eventFallThrough(newThing, x, y, t);
-            }
-
-            private void eventFallThrough(Pane n, double x, double y, MouseEvent t) {
-                for (Node node : n.getChildren()) {
-                    if (node.getBoundsInParent().contains(x, y)) {
-                        if (node instanceof Pane) {
-                            eventFallThrough((Pane) node, x, y, t);
-                        } else {
-                            viewListeners.onMousePressed(node, t);
-                            //node.fireEvent((Event) node.getOnMousePressed());
-                        }
-                    }
-                }
-            }
-        });
-
-        newThing.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                t.consume();
-                t.setDragDetect(false);
-                double x = t.getX();
-                double y = t.getY();
-                eventFallThrough(newThing, x, y, t);
-            }
-
-            private void eventFallThrough(Pane n, double x, double y, MouseEvent t) {
-                for (Node node : n.getChildren()) {
-                    if (node.getBoundsInParent().contains(x, y)) {
-                        if (node instanceof Pane) {
-                            eventFallThrough((Pane) node, x, y, t);
-                        } else {
-                            node.setCursor(Cursor.MOVE);
-                            viewListeners.onMouseDragged(node, t);
-                        }
-                    }
-                }
-            }
-        });
-
-        newThing.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                t.consume();
-                double x = t.getX();
-                double y = t.getY();
-                eventFallThrough(newThing, x, y, t);
-            }
-
-            private void eventFallThrough(Pane n, double x, double y, MouseEvent t) {
-                for (Node node : n.getChildren()) {
-                    if (node.getBoundsInParent().contains(x, y)) {
-                        if (node instanceof Pane) {
-                            eventFallThrough((Pane) node, x, y, t);
-                        } else {
-                            viewListeners.onMouseReleased(node, t);
-                            //node.fireEvent((Event) node.getOnMouseReleased());
-                        }
-                    }
-                }
-            }
-        });
 
         newThing.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
