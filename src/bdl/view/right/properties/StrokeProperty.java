@@ -40,8 +40,8 @@ public class StrokeProperty implements PanelProperty {
 
         //Grab value from settingsNode if given
         if (settingsNode != null) {
-            defaultStrokeColor = (Color)node.getStroke();
-            defaultStrokeWidth = node.getStrokeWidth();
+            defaultStrokeColor = (Color)((Shape)settingsNode).getStroke();
+            defaultStrokeWidth = ((Shape)settingsNode).getStrokeWidth();
         }
 
         colorPicker.setValue(defaultStrokeColor);
