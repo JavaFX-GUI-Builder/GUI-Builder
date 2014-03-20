@@ -1,5 +1,6 @@
 package bdl.controller;
 
+import bdl.Interface;
 import bdl.build.CodeGenerator;
 import bdl.build.GObject;
 import bdl.build.GUIObject;
@@ -59,17 +60,19 @@ import javafx.scene.layout.Pane;
 
 public class Controller {
 
-    public View view;
+    private View view;
     private ComponentSettingsStore componentSettingsStore;
     private ViewListeners viewListeners;
     private ArrayList<String> fieldNames;
-    public HistoryManager historyManager;
-    public SelectionManager selectionManager;
+    private HistoryManager historyManager;
+    private SelectionManager selectionManager;
+    private Interface blueJInterface;
     public static boolean historyPause = false;
 
-    public Controller(View view, ComponentSettingsStore componentSettingsStore) {
+    public Controller(View view, ComponentSettingsStore componentSettingsStore, Interface blueJInterface) {
         this.view = view;
         this.componentSettingsStore = componentSettingsStore;
+        this.blueJInterface = blueJInterface;
         fieldNames = new ArrayList<>();
         historyManager = new HistoryManager();
         selectionManager = new SelectionManager();
@@ -280,22 +283,30 @@ public class Controller {
                 new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                if (view.topPanel.mItmHistory.isSelected()) {
-                    view.rightPanel.getItems().add(view.rightPanel.historyPanel);
-                    view.rightPanel.setDividerPosition(0, 0.6);
-                } else {
-                    view.rightPanel.getItems().remove(view.rightPanel.historyPanel);
-                }
+                toggleHistory();
             }
         });
 
-//        view.topPanel.mItmDebugMsg.setOnAction(
-//                new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent t) {
-//                Interface.TestWriteMessage("Debug test from GUI Builder!");
-//            }
-//        });
+        view.topPanel.mItmDebugMsg.setOnAction(
+                new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                if (blueJInterface != null) {
+                    blueJInterface.sendMessageToBlueJ("Debug test from GUI Builder!");
+                }
+            }
+        });
+    }
+
+    public void toggleHistory() {
+        if (!view.rightPanel.getItems().contains(view.rightPanel.historyPanel)) {
+            view.topPanel.mItmHistory.setSelected(false);
+            view.rightPanel.getItems().add(view.rightPanel.historyPanel);
+            view.rightPanel.setDividerPosition(0, 0.6);
+        } else {
+            view.topPanel.mItmHistory.setSelected(true);
+            view.rightPanel.getItems().remove(view.rightPanel.historyPanel);
+        }
     }
 
     private void setupLeftPanel() {

@@ -16,6 +16,8 @@ import javafx.stage.Stage;
  */
 public class Main extends Application implements Runnable {
 
+    public Interface blueJInterface;
+
     public void run() {
         launch();
     }
@@ -41,7 +43,10 @@ public class Main extends Application implements Runnable {
             System.exit(1);
         }
         final View view = new View(stage);
-        Controller controller = new Controller(view, model);
+        Controller controller = new Controller(view, model, blueJInterface);
+        if (blueJInterface != null) {
+            blueJInterface.setGUIBuilderController(controller);
+        }
 
         Scene scene = new Scene(view, 1024, 600);
 
@@ -68,9 +73,11 @@ public class Main extends Application implements Runnable {
             }
         });
 
-        bdl.Interface.SetController(controller);
-        bdl.Interface.SetStage(stage);
         stage.show();
+    }
+
+    public void setInterface(Interface blueJInterface) {
+        this.blueJInterface = blueJInterface;
     }
 
     /**
