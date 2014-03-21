@@ -1,5 +1,6 @@
 package bdl.build;
 
+import bdl.Interface;
 import bdl.view.right.properties.PanelProperty;
 import java.util.ArrayList;
 import javafx.scene.Node;
@@ -10,13 +11,15 @@ import javafx.scene.layout.Pane;
 
 public class CodeGenerator {
 
-    public static String generateJavaCode(GUIObject guiObject, HashMap<String, String> allImports) {
+    public static String generateJavaCode(GUIObject guiObject, HashMap<String, String> allImports, Interface blueJInterface) {
 
         StringBuilder code = new StringBuilder();
 
         code.append(getJavaImports(guiObject, allImports)).append('\n');//Add imports
 
-        code.append("public class ").append(guiObject.getClassName()).append(" extends Application {\n\n");//Open class tag
+        String clName = (blueJInterface != null ? blueJInterface.getOpenGUIName() : guiObject.getClassName());
+        String clExtends = (blueJInterface != null ? "guibuilder.GUI" : "Application");
+        code.append("public class ").append(clName).append(" extends ").append(clExtends).append(" {\n\n");//Open class tag
 
         //Add declarations
         for (Node node : guiObject.getChildren()) {
@@ -61,6 +64,17 @@ public class CodeGenerator {
         code.append("    }\n\n");
 
 
+        // Add show method
+        code.append("    public void show() {\n"
+                + "        new JFXPanel();\n"
+                + "        Platform.runLater(new Runnable() {\n"
+                + "            @Override\n"
+                + "            public void run() {\n"
+                + "                start(new Stage());\n"
+                + "            }\n"
+                + "        });\n"
+                + "    }\n\n");
+        
         //Add start method
         code.append("    @Override\n"
                 + "    public void start(Stage primaryStage) {\n"
@@ -122,6 +136,8 @@ public class CodeGenerator {
 
         StringBuilder importsString = new StringBuilder();
         importsString.append("import javafx.application.Application;\n")
+                .append("import javafx.application.Platform;\n")
+                .append("import javafx.embed.swing.JFXPanel;\n")
                 .append("import javafx.scene.Scene;\n")
                 .append("import javafx.scene.Parent;\n")
                 .append("import javafx.scene.layout.AnchorPane;\n")

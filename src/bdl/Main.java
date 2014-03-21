@@ -15,6 +15,13 @@ import javafx.stage.Stage;
  * Main class.
  */
 public class Main extends Application implements Runnable {
+    
+    // Singleton
+//    private static Main __instance;
+//    public static Main getInstance() {
+//        if (__instance == null) { __instance = new Main(); }
+//        return __instance;
+//    }
 
     public Interface blueJInterface;
 
@@ -40,7 +47,8 @@ public class Main extends Application implements Runnable {
              model = new ComponentSettingsStore(componentSettingsLocation);
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(1);
+            //System.exit(1); - We don't want to kill BlueJ! The user might lose all their work!
+            throw new Exception("GUI Builder: Problem with component settings");
         }
         final View view = new View(stage);
         Controller controller = new Controller(view, model, blueJInterface);
@@ -73,7 +81,8 @@ public class Main extends Application implements Runnable {
             }
         });
 
-        stage.show();
+        // Don't show() if using BlueJ, we'll show when we want it with blueJInterface.show().
+        if (blueJInterface == null) { stage.show(); }
     }
 
     public void setInterface(Interface blueJInterface) {

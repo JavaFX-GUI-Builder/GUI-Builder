@@ -5,7 +5,7 @@ import bdl.lang.LabelGrabber;
 
 public class GUIObject extends GAnchorPane {
 
-    private String className = "GUI";
+    private String className = "UntitledGUI";
     private String title = LabelGrabber.getLabel("default.gui.title");
     private double width;
     private double height;
@@ -16,6 +16,10 @@ public class GUIObject extends GAnchorPane {
 
     public String getGUITitle() {
         return title;
+    }
+
+    public void setGUITitle(String title) {
+        this.title = title;
     }
 
     public String getClassName() {

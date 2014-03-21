@@ -89,62 +89,29 @@ public class Controller {
             @Override
             public void handle(ActionEvent actionEvent) {
                 FileChooser fileChooser = new FileChooser();
+                if (blueJInterface != null) { fileChooser.setInitialDirectory(blueJInterface.getWorkingDirectory()); }
                 FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
                 fileChooser.getExtensionFilters().add(filter);
 
                 File file = fileChooser.showOpenDialog(view.getStage());
 
-                if (file != null) {
-
-                    view.middleTabPane.viewPane.getChildren().clear();
-                    selectionManager.clearSelection();
-                    historyManager.clearHistory();
-
-                    try {
-                        Parent parent = FXMLLoader.load(file.toURI().toURL());
-
-                        GUIHelper.setBounds(view.middleTabPane.viewPane, view.middleTabPane.viewPaneDecorator, parent.prefWidth(0), parent.prefHeight(0));
-                        String className = parent.getId();
-                        if (className != null && !className.isEmpty()) {
-                            view.middleTabPane.viewPane.setClassName(className);
-                        }
-
-                        for (Node node : parent.getChildrenUnmodifiable()) {
-
-                            for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
-                                ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
-                                try {
-                                    if (componentSettings.getType().equals(node.getClass().getSimpleName())) {
-                                        historyPause = true;
-                                        Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
-                                        Constructor constructor = componentClass.getConstructor();
-                                        GObject newThing = (GObject) constructor.newInstance();
-                                        newThing.setFieldName(node.getId());
-
-                                        addGObject(newThing, componentSettings, view, viewListeners, node, -1, -1, view.middleTabPane.viewPane);
-                                        historyPause = false;
-                                        break;
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                openFile(file);
             }
         });
         view.topPanel.mItmSaveFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                FileChooser fileChooser = new FileChooser();
-                FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
-                fileChooser.getExtensionFilters().add(filter);
+                File file;
+                if (blueJInterface == null) {
+                    FileChooser fileChooser = new FileChooser();
+                    FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
+                    fileChooser.getExtensionFilters().add(filter);
 
-                File file = fileChooser.showSaveDialog(view.getStage());
+                    file = fileChooser.showSaveDialog(view.getStage());
+                }
+                else {
+                    file = new File(blueJInterface.getWorkingDirectory(), blueJInterface.getOpenGUIName() + ".fxml");
+                }
 
                 if (file != null) {
                     if (!file.getName().toLowerCase().endsWith(".fxml")) {
@@ -158,6 +125,21 @@ public class Controller {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                }
+                
+                // Update BlueJ java code
+                if ( (blueJInterface != null) && (blueJInterface.isEditingGUI()) ) {
+                    // Write java code to GUI java file.
+                    try {
+                        FileWriter fileWriter = new FileWriter(blueJInterface.getOpenGUIFile());
+                        fileWriter.write(generateJavaCode());
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    
+                    // Tell BlueJ to recompile the GUI java file.
+                    blueJInterface.recompileOpenGUI();
                 }
             }
         });
@@ -297,18 +279,7 @@ public class Controller {
             }
         });
     }
-
-    public void toggleHistory() {
-        if (!view.rightPanel.getItems().contains(view.rightPanel.historyPanel)) {
-            view.topPanel.mItmHistory.setSelected(false);
-            view.rightPanel.getItems().add(view.rightPanel.historyPanel);
-            view.rightPanel.setDividerPosition(0, 0.6);
-        } else {
-            view.topPanel.mItmHistory.setSelected(true);
-            view.rightPanel.getItems().remove(view.rightPanel.historyPanel);
-        }
-    }
-
+    
     private void setupLeftPanel() {
         view.leftPanel.leftList.setCellFactory(new Callback<ListView<ComponentMenuItem>, ListCell<ComponentMenuItem>>() {
             @Override
@@ -447,13 +418,7 @@ public class Controller {
             @Override
             public void handle(Event event) {
                 if (view.middleTabPane.codeTab.isSelected()) {
-                    HashMap<String, String> imports = new HashMap<>();
-                    for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
-                        ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
-                        imports.put(componentSettings.getType(), componentSettings.getPackageName());
-                    }
-                    String code = CodeGenerator.generateJavaCode(view.middleTabPane.viewPane, imports);
-                    view.middleTabPane.codePane.setText(code);
+                    view.middleTabPane.codePane.setText(generateJavaCode());
                 }
             }
         });
@@ -461,18 +426,15 @@ public class Controller {
             @Override
             public void handle(Event event) {
                 if (view.middleTabPane.previewTab.isSelected()) {
-                    //Grab imports & generate code
-                    HashMap<String, String> imports = new HashMap<>();
-                    for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
-                        ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
-                        imports.put(componentSettings.getType(), componentSettings.getPackageName());
-                    }
-                    String code = CodeGenerator.generateJavaCode(view.middleTabPane.viewPane, imports);
-
                     //Write .java file
+                    // Make temporary space in BlueJ user dir for compilation.
+                    File tempDir = new File(blueJInterface.getUserPrefDir(), "guibuilder");
+                    if (tempDir.isDirectory() == false) { tempDir.mkdirs(); }
+                    File fileJava = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".java");
+                    File fileClass = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".class");
                     try {
-                        BufferedOutputStream cssOutput = new BufferedOutputStream(new FileOutputStream(view.middleTabPane.viewPane.getClassName() + ".java"));
-                        cssOutput.write(code.getBytes());
+                        BufferedOutputStream cssOutput = new BufferedOutputStream(new FileOutputStream(fileJava));
+                        cssOutput.write(generateJavaCode().getBytes());
                         cssOutput.flush();
                         cssOutput.close();
                     } catch (Exception e) {
@@ -487,8 +449,13 @@ public class Controller {
                     StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 
                     Iterable<? extends JavaFileObject> compilationUnits1 =
-                            fileManager.getJavaFileObjectsFromFiles(Arrays.asList(new File(view.middleTabPane.viewPane.getClassName() + ".java")));
+                            fileManager.getJavaFileObjectsFromFiles(Arrays.asList(fileJava));
 
+                    // Compiler options
+//                    List<String> optionsList = new ArrayList<String>();
+//                    File fileJfxrt = new File(System.getProperty("java.home"), "lib\\jfxrt.jar");
+//                    optionsList.add("-classpath "+fileJfxrt.getAbsolutePath()+":.");
+                    
                     compiler.getTask(null, fileManager, null, null, null, compilationUnits1).call();
 
                     try {
@@ -499,9 +466,10 @@ public class Controller {
 
                     //Load & run class
                     try {
-                        URL[] urls = new URL[]{new File(".").toURI().toURL()};
-                        URLClassLoader ucl = new URLClassLoader(urls);
-                        Class guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, ucl);
+//                        URL[] urls = new URL[]{new File(".").toURI().toURL()};
+//                        URLClassLoader ucl = new URLClassLoader(urls);
+//                        Class guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, ucl);
+                        Class guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, Thread.currentThread().getContextClassLoader());
                         Method main = guiClass.getMethod("start", Stage.class);
                         Object obj = guiClass.newInstance();
                         main.invoke(obj, new Stage());
@@ -510,8 +478,8 @@ public class Controller {
                     }
 
                     //Delete created files
-                    new File(view.middleTabPane.viewPane.getClassName() + ".java").delete();
-                    new File(view.middleTabPane.viewPane.getClassName() + ".class").delete();
+                    fileJava.delete();
+                    fileClass.delete();
 
                     view.middleTabPane.getSelectionModel().select(0);
                 }
@@ -595,6 +563,97 @@ public class Controller {
 
     }
 
+    // Method related to top panel & BlueJ interface functionality
+    public void openFile(File file) {
+        if (file != null) {
+            view.middleTabPane.viewPane.getChildren().clear();
+            selectionManager.clearSelection();
+            historyManager.clearHistory();
+
+            try {
+                Parent parent = FXMLLoader.load(file.toURI().toURL());
+
+                GUIHelper.setBounds(view.middleTabPane.viewPane, view.middleTabPane.viewPaneDecorator, parent.prefWidth(0), parent.prefHeight(0));
+                String className = parent.getId();
+                if (className != null && !className.isEmpty()) {
+                    view.middleTabPane.viewPane.setClassName(className);
+                }
+
+                for (Node node : parent.getChildrenUnmodifiable()) {
+
+                    for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
+                        ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
+                        try {
+                            if (componentSettings.getType().equals(node.getClass().getSimpleName())) {
+                                historyPause = true;
+                                Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
+                                Constructor constructor = componentClass.getConstructor();
+                                GObject newThing = (GObject) constructor.newInstance();
+                                newThing.setFieldName(node.getId());
+
+                                addGObject(newThing, componentSettings, view, viewListeners, node, -1, -1, view.middleTabPane.viewPane);
+                                historyPause = false;
+                                break;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void newFile() {
+        view.middleTabPane.viewPane.getChildren().clear();
+        selectionManager.clearSelection();
+        historyManager.clearHistory();
+    }
+    public void newFile(String className) {
+        newFile();
+        view.middleTabPane.viewPane.setClassName(className);
+        view.middleTabPane.viewPane.setGUITitle(className);
+    }
+        
+    // Method related to top panel
+    public void toggleHistory() {
+        if (!view.rightPanel.getItems().contains(view.rightPanel.historyPanel)) {
+            view.topPanel.mItmHistory.setSelected(false);
+            view.rightPanel.getItems().add(view.rightPanel.historyPanel);
+            view.rightPanel.setDividerPosition(0, 0.6);
+        } else {
+            view.topPanel.mItmHistory.setSelected(true);
+            view.rightPanel.getItems().remove(view.rightPanel.historyPanel);
+        }
+    }
+    
+    // BlueJ interface functionality
+    public void setClassName(String className) {
+        view.middleTabPane.viewPane.setClassName(className);
+    }
+    // BlueJ interface functionality
+    public void showStage() {
+        view.getStage().show();
+        view.getStage().toFront();
+    }
+    // BlueJ interface functionality
+    public void hideStage() {
+        view.getStage().hide();
+    }
+    
+    // Generates the full Java code.
+    private String generateJavaCode() {
+        HashMap<String, String> imports = new HashMap<>();
+        for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
+            ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
+            imports.put(componentSettings.getType(), componentSettings.getPackageName());
+        }
+        return CodeGenerator.generateJavaCode(view.middleTabPane.viewPane, imports, blueJInterface);
+    }
+    
     //x and y are initial layout positions. To be used only with drag and drop.
     private void addGObject(final GObject newThing, ComponentSettings componentSettings, final View view, final ViewListeners viewListeners, Node settingsNode, int x, int y, final Pane destination) {
 
