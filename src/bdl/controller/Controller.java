@@ -335,7 +335,7 @@ public class Controller {
         });
 
         //Add listener to node list to update hierarchy pane
-        addPaneChildrenToHierarchy(view.middleTabPane.viewPane, view.leftPanel.hierarchyPane.treeRoot);
+        addPaneListChangeListener(view.middleTabPane.viewPane, view.leftPanel.hierarchyPane.treeRoot);
 
 
         //Add selection handlers for Hierarchy Pane
@@ -876,24 +876,31 @@ public class Controller {
         });
     }
 
-    private void addPaneChildrenToHierarchy(Pane ap, final TreeItem ti) {
+    private void addPaneListChangeListener(final Pane ap, final TreeItem ti) {
         ap.getChildren().addListener(new ListChangeListener<Node>() {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Node> change) {
                 TreeItem<HierarchyTreeItem> root = ti;
                 root.getChildren().clear();
 
-                ObservableList nodes = change.getList();
-                // Add backwards so that they appear in the correct order
-                for (int i = nodes.size() - 1; i >= 0; i--) {
-                    TreeItem ti = new TreeItem<>(new HierarchyTreeItem((GObject) nodes.get(i), view, selectionManager, historyManager));
-                    root.getChildren().add(ti);
-                    if (nodes.get(i) instanceof Pane) {
-                        addPaneChildrenToHierarchy((Pane) nodes.get(i), ti);
-                    }
-                }
+                addPaneChildrenToHierarchy(ap, root);
             }
         });
+    }
+
+    private void addPaneChildrenToHierarchy(Pane pane, TreeItem root) {
+        ObservableList<Node> nodes = pane.getChildren();
+        // Add backwards so that they appear in the correct order
+        for (int i = nodes.size() - 1; i >= 0; i--) {
+            Node curNode = nodes.get(i);
+            TreeItem ti = new TreeItem<>(new HierarchyTreeItem((GObject) curNode, view, selectionManager, historyManager));
+            root.getChildren().add(ti);
+            if (curNode instanceof Pane) {
+                addPaneChildrenToHierarchy((Pane) curNode, ti);//Recurse to continue adding all children, grandkids etc to hierarchy pane
+                addPaneListChangeListener((Pane) curNode, ti);// Add listener to any panes
+            }
+            ti.setExpanded(true);
+        }
     }
 
     private static class LeftListCellFactory extends ListCell<ComponentMenuItem> {
