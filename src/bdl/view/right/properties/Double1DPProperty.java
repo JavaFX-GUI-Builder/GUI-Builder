@@ -85,7 +85,7 @@ public class Double1DPProperty implements PanelProperty {
             final Method getMethod = gObj.getClass().getMethod(getter);
             final double old = (double) getMethod.invoke(gObj);
             final double nnew = dValue;
-            if (old != nnew && !Controller.historyPause) {
+            if (old != nnew && !historyManager.isPaused()) {
                 historyManager.addHistory(new HistoryItem() {
                     @Override
                     public void revert() {

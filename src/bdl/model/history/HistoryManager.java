@@ -11,6 +11,7 @@ public class HistoryManager {
     private int currentIndex;
     private ArrayList<HistoryItem> chain;
     private List<HistoryListener> historyListeners;
+    private boolean pauseHistory = false;
 
     public HistoryManager() {
         currentIndex = 0;
@@ -100,6 +101,22 @@ public class HistoryManager {
                 historyListener.historyUpdated(historyUpdate);
             }
         }
+    }
+
+    /**
+     * Important - HistoryManager can still add history when paused.
+     * It is up to the specific case to decide if it should not add history when paused.
+     */
+    public boolean isPaused() {
+        return pauseHistory;
+    }
+
+    public void pause() {
+        pauseHistory = true;
+    }
+
+    public void unpause() {
+        pauseHistory = false;
     }
 
 

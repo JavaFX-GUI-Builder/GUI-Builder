@@ -75,7 +75,7 @@ public class ColorProperty implements PanelProperty {
         final Method getMethod = gObj.getClass().getMethod(getter);
         final Color old = (Color) getMethod.invoke(gObj);
         final Color nnew = colorPicker.getValue();
-        if(!Controller.historyPause)
+        if(!historyManager.isPaused())
         historyManager.addHistory(new HistoryItem() {
             @Override
             public void revert() {
@@ -85,10 +85,10 @@ public class ColorProperty implements PanelProperty {
                     ex.printStackTrace();
                 }
                 colorPicker.setValue(old);
-                Controller.historyPause = true;
+                historyManager.pause();
                 // work around to update colorpicker's displayed selection
                 colorPicker.fireEvent(new ActionEvent(null, colorPicker));
-                Controller.historyPause = false;
+                historyManager.unpause();
             }
 
             @Override
@@ -99,10 +99,10 @@ public class ColorProperty implements PanelProperty {
                     ex.printStackTrace();
                 }
                 colorPicker.setValue(nnew);
-                Controller.historyPause = true;
+                historyManager.pause();
                 // work around to update colorpicker's displayed selection
                 colorPicker.fireEvent(new ActionEvent(null, colorPicker));
-                Controller.historyPause = false;
+                historyManager.unpause();
             }
 
             @Override

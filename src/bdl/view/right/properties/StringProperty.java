@@ -76,7 +76,7 @@ public class StringProperty implements PanelProperty {
         final Method getMethod = gObj.getClass().getMethod(getter);
         final String old = (String) getMethod.invoke(gObj);
         final String nnew = textField.getText();
-        if (!old.equals(nnew) && !Controller.historyPause) {
+        if (!old.equals(nnew) && !historyManager.isPaused()) {
             historyManager.addHistory(new HistoryItem() {
                 @Override
                 public void revert() {

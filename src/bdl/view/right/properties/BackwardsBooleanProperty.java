@@ -75,7 +75,7 @@ public class BackwardsBooleanProperty implements PanelProperty {
         final Method getMethod = gObj.getClass().getMethod(getter);
         final boolean old = (boolean) getMethod.invoke(gObj);
         final boolean nnew = !checkBox.isSelected();
-        if (old != nnew && !Controller.historyPause) {
+        if (old != nnew && !historyManager.isPaused()) {
             historyManager.addHistory(new HistoryItem() {
                 @Override
                 public void revert() {

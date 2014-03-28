@@ -67,7 +67,6 @@ public class Controller {
     private HistoryManager historyManager;
     private SelectionManager selectionManager;
     private Interface blueJInterface;
-    public static boolean historyPause = false;
 
     public Controller(View view, ComponentSettingsStore componentSettingsStore, Interface blueJInterface) {
         this.view = view;
@@ -303,7 +302,7 @@ public class Controller {
                     if (componentSettings != null) {
                         GObject newThing = null;
 
-                        historyPause = true;
+                        historyManager.pause();
                         try {
                             Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                             Constructor constructor = panelPropertyClass.getConstructor();
@@ -313,7 +312,7 @@ public class Controller {
                         }
 
                         addGObject(newThing, componentSettings, view, viewListeners, null, -1, -1, view.middleTabPane.viewPane);
-                        historyPause = false;
+                        historyManager.unpause();
                     }
                     view.leftPanel.leftList.getSelectionModel().select(-1);
                 }
@@ -512,7 +511,7 @@ public class Controller {
                 if (componentSettings != null) {
                     GObject newThing = null;
 
-                    historyPause = true;
+                    historyManager.pause();
                     try {
                         Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                         Constructor constructor = panelPropertyClass.getConstructor();
@@ -522,7 +521,7 @@ public class Controller {
                     }
 
                     addGObject(newThing, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY(), view.middleTabPane.viewPane);
-                    historyPause = false;
+                    historyManager.unpause();
                 }
                 view.leftPanel.leftList.getSelectionModel().select(-1);
             }
@@ -596,14 +595,14 @@ public class Controller {
                         ComponentSettings componentSettings = componentMenuItem.getComponentSettings();
                         try {
                             if (componentSettings.getType().equals(node.getClass().getSimpleName())) {
-                                historyPause = true;
+                                historyManager.pause();
                                 Class componentClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                                 Constructor constructor = componentClass.getConstructor();
                                 GObject newThing = (GObject) constructor.newInstance();
                                 newThing.setFieldName(node.getId());
 
                                 addGObject(newThing, componentSettings, view, viewListeners, node, -1, -1, view.middleTabPane.viewPane);
-                                historyPause = false;
+                                historyManager.unpause();
                                 break;
                             }
                         } catch (Exception e) {
@@ -840,7 +839,7 @@ public class Controller {
                 if (componentSettings != null) {
                     GObject newnewThing = null;
 
-                    historyPause = true;
+                    historyManager.pause();
                     try {
                         Class panelPropertyClass = Class.forName("bdl.build." + componentSettings.getPackageName() + ".G" + componentSettings.getType());
                         Constructor constructor = panelPropertyClass.getConstructor();
@@ -852,7 +851,7 @@ public class Controller {
 
                     addGObject(newGObj, componentSettings, view, viewListeners, null, (int) t.getX(), (int) t.getY(), newThing);
                     //newThing.getChildren().add((Node) newGObj);
-                    historyPause = false;
+                    historyManager.unpause();
                     historyManager.addHistory(new HistoryItem() {
                         @Override
                         public void restore() {

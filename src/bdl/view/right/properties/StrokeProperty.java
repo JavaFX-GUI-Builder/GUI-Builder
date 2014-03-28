@@ -74,7 +74,7 @@ public class StrokeProperty implements PanelProperty {
     }
 
     private void setColor() {
-        if (!Controller.historyPause && !node.getStroke().equals(colorPicker.getValue())) {
+        if (!historyManager.isPaused() && !node.getStroke().equals(colorPicker.getValue())) {
 
             historyManager.addHistory(new HistoryItem() {
                 final Color before = (Color) node.getStroke();
@@ -109,7 +109,7 @@ public class StrokeProperty implements PanelProperty {
         try {
             final double newWidth = Double.parseDouble(textField.getText());
 
-            if (!Controller.historyPause) {
+            if (!historyManager.isPaused()) {
                 historyManager.addHistory(new HistoryItem() {
                     double newValue = newWidth;
                     double oldValue = node.getStrokeWidth();
