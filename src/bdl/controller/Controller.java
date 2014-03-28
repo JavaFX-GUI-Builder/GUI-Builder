@@ -428,10 +428,17 @@ public class Controller {
                 if (view.middleTabPane.previewTab.isSelected()) {
                     //Write .java file
                     // Make temporary space in BlueJ user dir for compilation.
-                    File tempDir = new File(blueJInterface.getUserPrefDir(), "guibuilder");
-                    if (tempDir.isDirectory() == false) { tempDir.mkdirs(); }
-                    File fileJava = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".java");
-                    File fileClass = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".class");
+                    File fileJava;
+                    File fileClass;
+                    if (blueJInterface != null) {
+                        File tempDir = new File(blueJInterface.getUserPrefDir(), "guibuilder");
+                        if (tempDir.isDirectory() == false) { tempDir.mkdirs(); }
+                        fileJava = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".java");
+                        fileClass = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".class");
+                    } else {
+                        fileJava = new File(view.middleTabPane.viewPane.getClassName() + ".java");
+                        fileClass = new File(view.middleTabPane.viewPane.getClassName() + ".class");
+                    }
                     try {
                         BufferedOutputStream cssOutput = new BufferedOutputStream(new FileOutputStream(fileJava));
                         cssOutput.write(generateJavaCode().getBytes());
@@ -466,10 +473,14 @@ public class Controller {
 
                     //Load & run class
                     try {
-//                        URL[] urls = new URL[]{new File(".").toURI().toURL()};
-//                        URLClassLoader ucl = new URLClassLoader(urls);
-//                        Class guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, ucl);
-                        Class guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, Thread.currentThread().getContextClassLoader());
+                        Class guiClass;
+                        if (blueJInterface == null) {
+                            URL[] urls = new URL[]{new File(".").toURI().toURL()};
+                            URLClassLoader ucl = new URLClassLoader(urls);
+                            guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, ucl);
+                        } else {
+                            guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, Thread.currentThread().getContextClassLoader());
+                        }
                         Method main = guiClass.getMethod("start", Stage.class);
                         Object obj = guiClass.newInstance();
                         main.invoke(obj, new Stage());

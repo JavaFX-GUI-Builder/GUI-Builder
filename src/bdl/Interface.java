@@ -1,7 +1,6 @@
 package bdl;
 
 import bdl.controller.Controller;
-import bluej.pkgmgr.target.ClassTarget;
 import java.io.File;
 
 public interface Interface {
@@ -31,7 +30,5 @@ public interface Interface {
     public void show();
     
     public void hide();
-    
-    public void openGUI(ClassTarget guiClass);
 
 }

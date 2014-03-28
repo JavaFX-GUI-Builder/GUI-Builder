@@ -45,7 +45,7 @@ public class DisabledProperty implements PanelProperty {
 
     private void setValue(boolean init, boolean value) {
         if (value) {
-            ((Node)gObj).setStyle("-fx-opacity: -fx-disabled-opacity");
+            ((Node)gObj).setStyle("-fx-opacity: 0.4");
         } else {
             ((Node)gObj).setStyle("-fx-opacity: 1");
         }
