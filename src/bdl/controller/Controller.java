@@ -252,10 +252,10 @@ public class Controller {
             @Override
             public void handle(ActionEvent t) {
                 if (view.topPanel.mItmHierarchy.isSelected()) {
-                    view.leftPanel.getItems().add(view.leftPanel.hierarchyPane);
+                    view.leftPanel.getItems().add(view.leftPanel.hierarchyTitledPane);
                     view.leftPanel.setDividerPosition(0, 0.6);
                 } else {
-                    view.leftPanel.getItems().remove(view.leftPanel.hierarchyPane);
+                    view.leftPanel.getItems().remove(view.leftPanel.hierarchyTitledPane);
                 }
             }
         });

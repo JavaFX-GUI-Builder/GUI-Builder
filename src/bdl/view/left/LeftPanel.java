@@ -8,7 +8,7 @@ import javafx.scene.control.TitledPane;
 
 public class LeftPanel extends SplitPane {
 
-    private TitledPane hierarchyTitledPane;
+    public TitledPane hierarchyTitledPane;
     public ListView<ComponentMenuItem> leftList;
     public HierarchyPane hierarchyPane;
 
