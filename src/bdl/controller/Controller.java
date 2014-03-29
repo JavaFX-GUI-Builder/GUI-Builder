@@ -344,10 +344,18 @@ public class Controller {
         selectionManager.addSelectionListener(new SelectionListener() {
             @Override
             public void updateSelected(GObject gObject) {
-                for (TreeItem<HierarchyTreeItem> ti : view.leftPanel.hierarchyPane.treeRoot.getChildren()) {
-                    if (ti.getValue().getGObject().getFieldName().equals(gObject.getFieldName())) {
+                update(gObject.getFieldName(), view.leftPanel.hierarchyPane.treeRoot);
+            }
+
+            private void update(String fieldName, TreeItem<HierarchyTreeItem> treeRoot) {
+                for (TreeItem<HierarchyTreeItem> ti : treeRoot.getChildren()) {
+                    GObject gObject = ti.getValue().getGObject();
+                    if (gObject.getFieldName().equals(fieldName)) {
                         view.leftPanel.hierarchyPane.treeView.getSelectionModel().select(ti);
+                    } else if (gObject instanceof Pane) {
+                        update(fieldName, ti);
                     }
+
                 }
             }
 
