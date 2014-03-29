@@ -25,10 +25,6 @@ public class TopPanel extends MenuBar {
     public Menu menuView;
     public CheckMenuItem mItmHistory;
     public CheckMenuItem mItmHierarchy;
-    
-    // David
-    public Menu menuDebug;
-    public MenuItem mItmDebugMsg;
 
     public Menu menuHelp;
     public MenuItem mItmAbout;
@@ -59,12 +55,6 @@ public class TopPanel extends MenuBar {
         mItmHistory.setSelected(true);
         mItmHierarchy = new CheckMenuItem(LabelGrabber.getLabel("menu.view.hierarchy"));
         mItmHierarchy.setSelected(true);
-        
-        // David
-        if (isBlueJAttached) {
-            menuDebug = new Menu("Debug");
-            mItmDebugMsg = new MenuItem("Test String");
-        }
 
         menuHelp = new Menu(LabelGrabber.getLabel("menu.help"));
         mItmAbout = new MenuItem(LabelGrabber.getLabel("menu.help.about"));
@@ -76,11 +66,9 @@ public class TopPanel extends MenuBar {
         }
         menuEdit.getItems().addAll(mItmUndo, mItmRedo, mItmDelete, mItmClearAll);
         menuView.getItems().addAll(mItmHierarchy, mItmHistory);
-        if (isBlueJAttached) menuDebug.getItems().addAll(mItmDebugMsg);
         menuHelp.getItems().addAll(mItmAbout);
 
         getMenus().addAll(menuFile, menuEdit, menuView);
-        if (isBlueJAttached) getMenus().add(menuDebug);
         getMenus().addAll(menuHelp);
     }
 }
