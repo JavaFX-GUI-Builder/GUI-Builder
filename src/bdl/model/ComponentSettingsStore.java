@@ -66,7 +66,7 @@ public class ComponentSettingsStore {
 
     /**
      * Reads in the xml properties file located at
-     * bdl.view.components.component-options.xml and parses the file creating 
+     * bdl.model.component-settings.xml and parses the file creating
      * a list of Component with all properties initialised.
      */
     private void parseComponentSettings(String path) throws Exception {
