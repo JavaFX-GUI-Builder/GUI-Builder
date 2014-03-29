@@ -631,11 +631,11 @@ public class Controller {
     // Method related to top panel
     public void toggleHistory() {
         if (!view.rightPanel.getItems().contains(view.rightPanel.historyPanel)) {
-            view.topPanel.mItmHistory.setSelected(false);
+            view.topPanel.mItmHistory.setSelected(true);
             view.rightPanel.getItems().add(view.rightPanel.historyPanel);
             view.rightPanel.setDividerPosition(0, 0.6);
         } else {
-            view.topPanel.mItmHistory.setSelected(true);
+            view.topPanel.mItmHistory.setSelected(false);
             view.rightPanel.getItems().remove(view.rightPanel.historyPanel);
         }
     }
