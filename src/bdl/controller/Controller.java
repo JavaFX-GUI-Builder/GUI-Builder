@@ -427,6 +427,7 @@ public class Controller {
             @Override
             public void handle(Event event) {
                 if (view.middleTabPane.codeTab.isSelected()) {
+                    selectionManager.clearSelection();
                     view.middleTabPane.codePane.setText(generateJavaCode());
                 }
             }
@@ -435,6 +436,7 @@ public class Controller {
             @Override
             public void handle(Event event) {
                 if (view.middleTabPane.previewTab.isSelected()) {
+
                     //Write .java file
                     // Make temporary space in BlueJ user dir for compilation.
                     File fileJava;
