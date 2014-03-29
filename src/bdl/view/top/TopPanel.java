@@ -34,7 +34,7 @@ public class TopPanel extends MenuBar {
     public MenuItem mItmAbout;
     public MenuItem mItmClearAll;
 
-    public TopPanel() {
+    public TopPanel(boolean isBlueJAttached) {
         menuFile = new Menu(LabelGrabber.getLabel("menu.file"));
         mItmClose = new MenuItem(LabelGrabber.getLabel("menu.file.close"));
         mItmFullScreen = new MenuItem(LabelGrabber.getLabel("fullscreen.enable.text"));
@@ -61,18 +61,26 @@ public class TopPanel extends MenuBar {
         mItmHierarchy.setSelected(true);
         
         // David
-        menuDebug = new Menu("Debug");
-        mItmDebugMsg = new MenuItem("Test String");
+        if (isBlueJAttached) {
+            menuDebug = new Menu("Debug");
+            mItmDebugMsg = new MenuItem("Test String");
+        }
 
         menuHelp = new Menu(LabelGrabber.getLabel("menu.help"));
         mItmAbout = new MenuItem(LabelGrabber.getLabel("menu.help.about"));
 
-        menuFile.getItems().addAll(mItmLoadFile, mItmSaveFile, mItmFullScreen, mItmClose);
+        if (isBlueJAttached) {
+            menuFile.getItems().addAll(mItmSaveFile, mItmFullScreen, mItmClose);
+        } else {
+            menuFile.getItems().addAll(mItmLoadFile, mItmSaveFile, mItmFullScreen, mItmClose);
+        }
         menuEdit.getItems().addAll(mItmUndo, mItmRedo, mItmDelete, mItmClearAll);
         menuView.getItems().addAll(mItmHierarchy, mItmHistory);
-        menuDebug.getItems().addAll(mItmDebugMsg);
+        if (isBlueJAttached) menuDebug.getItems().addAll(mItmDebugMsg);
         menuHelp.getItems().addAll(mItmAbout);
 
-        getMenus().addAll(menuFile, menuEdit, menuView, menuDebug, menuHelp);
+        getMenus().addAll(menuFile, menuEdit, menuView);
+        if (isBlueJAttached) getMenus().add(menuDebug);
+        getMenus().addAll(menuHelp);
     }
 }

@@ -268,15 +268,17 @@ public class Controller {
             }
         });
 
-        view.topPanel.mItmDebugMsg.setOnAction(
-                new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                if (blueJInterface != null) {
-                    blueJInterface.sendMessageToBlueJ("Debug test from GUI Builder!");
+        if (blueJInterface != null) {
+            view.topPanel.mItmDebugMsg.setOnAction(
+                    new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    if (blueJInterface != null) {
+                        blueJInterface.sendMessageToBlueJ("Debug test from GUI Builder!");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     
     private void setupLeftPanel() {

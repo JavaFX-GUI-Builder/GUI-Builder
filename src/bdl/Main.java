@@ -50,7 +50,7 @@ public class Main extends Application implements Runnable {
             //System.exit(1); - We don't want to kill BlueJ! The user might lose all their work!
             throw new Exception("GUI Builder: Problem with component settings");
         }
-        final View view = new View(stage);
+        final View view = new View(stage, blueJInterface != null);
         Controller controller = new Controller(view, model, blueJInterface);
         if (blueJInterface != null) {
             blueJInterface.setGUIBuilderController(controller);

@@ -19,7 +19,7 @@ public class View extends AnchorPane {
 
     private Stage stage;
 
-    public View(Stage stage) {
+    public View(Stage stage, boolean isBlueJAttached) {
         this.stage = stage;
 
         //Begin Main panel
@@ -34,7 +34,7 @@ public class View extends AnchorPane {
         //End Main panel
 
         //Begin TopPanel (MenuBar)
-        topPanel = new TopPanel();
+        topPanel = new TopPanel(isBlueJAttached);
         borderPane.setTop(topPanel);
         //End TopPanel (MenuBar)
 
