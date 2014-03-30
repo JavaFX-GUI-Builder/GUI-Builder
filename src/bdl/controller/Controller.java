@@ -919,11 +919,13 @@ public class Controller {
             this.setOnDragDetected(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
-                    Dragboard db = view.leftPanel.leftList.startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent cc = new ClipboardContent();
-                    cc.putString("");
-                    db.setContent(cc);
-                    t.consume();
+                    if (view.leftPanel.leftList.getSelectionModel().getSelectedItem() != null) {
+                        Dragboard db = view.leftPanel.leftList.startDragAndDrop(TransferMode.ANY);
+                        ClipboardContent cc = new ClipboardContent();
+                        cc.putString("");
+                        db.setContent(cc);
+                        t.consume();
+                    }
                 }
             });
         }
