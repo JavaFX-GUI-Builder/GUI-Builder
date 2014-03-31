@@ -1,7 +1,7 @@
 package bdl.build;
 
 import bdl.Interface;
-import bdl.view.right.properties.PanelProperty;
+import bdl.build.properties.PanelProperty;
 import java.util.ArrayList;
 import javafx.scene.Node;
 

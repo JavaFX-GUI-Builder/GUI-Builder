@@ -7,7 +7,7 @@ import bdl.model.ComponentSettings;
 import bdl.model.ListenerHint;
 import bdl.model.Property;
 import bdl.model.history.HistoryManager;
-import bdl.view.right.properties.*;
+import bdl.build.properties.*;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -60,7 +60,7 @@ public class PropertyEditPane extends GridPane {
         for (Property property : componentSettings.getProperties()) {
             String type = property.getType();
             try {
-                Class panelPropertyClass = Class.forName("bdl.view.right.properties." + type + "Property");
+                Class panelPropertyClass = Class.forName("bdl.build.properties." + type + "Property");
                 Constructor constructor = panelPropertyClass.getConstructor(GObject.class, String.class, String.class, String.class, String.class, String.class, GridPane.class, int.class, Node.class, HistoryManager.class);
                 PanelProperty panelProperty = (PanelProperty) constructor.newInstance(gObj, property.getName(), property.getGetter(), property.getSetter(), property.getFxml(), property.getDefaultValue(), this, currentRow++, settingsNode, historyManager);
                 if (panelProperty instanceof LayoutProperty || panelProperty instanceof StrokeProperty) {

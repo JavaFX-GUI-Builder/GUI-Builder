@@ -1,4 +1,4 @@
-package bdl.view.right.properties;
+package bdl.build.properties;
 
 import bdl.build.GUIObject;
 import javafx.beans.value.ChangeListener;

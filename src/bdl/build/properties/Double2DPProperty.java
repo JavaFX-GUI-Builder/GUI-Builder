@@ -1,7 +1,6 @@
-package bdl.view.right.properties;
+package bdl.build.properties;
 
 import bdl.build.GObject;
-import bdl.controller.Controller;
 import bdl.model.history.HistoryItem;
 import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;

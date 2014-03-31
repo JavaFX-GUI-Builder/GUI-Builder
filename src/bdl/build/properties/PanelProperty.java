@@ -1,4 +1,4 @@
-package bdl.view.right.properties;
+package bdl.build.properties;
 
 public interface PanelProperty {
 

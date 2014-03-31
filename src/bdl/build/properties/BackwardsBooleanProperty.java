@@ -1,28 +1,27 @@
-package bdl.view.right.properties;
+package bdl.build.properties;
 
 import bdl.build.GObject;
-import bdl.controller.Controller;
 import bdl.model.history.HistoryItem;
 import bdl.model.history.HistoryManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.lang.reflect.Method;
 
-public class StringProperty implements PanelProperty {
+public class BackwardsBooleanProperty implements PanelProperty {
 
     private GObject gObj;
     private String setter;
-    private String getter;
     private String fxml;
-    private TextField textField;
+    private CheckBox checkBox;
     private final HistoryManager historyManager;
+    private String getter;
 
-    public StringProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
+    public BackwardsBooleanProperty(final GObject gObj, String name, String getter, final String setter, String fxml, String defaultValue, GridPane gp, int row, Node settingsNode, HistoryManager hm) {
         this.gObj = gObj;
         this.setter = setter;
         this.getter = getter;
@@ -30,13 +29,13 @@ public class StringProperty implements PanelProperty {
         this.historyManager = hm;
 
         gp.add(new Label(name + ":"), 0, row);
-        textField = new TextField();
+        checkBox = new CheckBox();
 
         //Grab value from settingsNode if given
         if (settingsNode != null) {
             try {
                 Method method = settingsNode.getClass().getMethod(getter);
-                String value = (String) method.invoke(settingsNode);
+                String value = Boolean.toString(!((Boolean) method.invoke(settingsNode)));
                 if (value != null) {
                     defaultValue = value;
                 }
@@ -45,7 +44,7 @@ public class StringProperty implements PanelProperty {
             }
         }
 
-        textField.setText(defaultValue);
+        checkBox.setSelected(Boolean.parseBoolean(defaultValue));//TODO - Handle bad defaultValue values
 
         try {
             setValue();
@@ -54,29 +53,28 @@ public class StringProperty implements PanelProperty {
             return;//TODO: Probably need some better behavior here.
         }
 
-        gp.add(textField, 1, row);
+        gp.add(checkBox, 1, row);
 
-        //Upon losing focus, save to the GObject
-        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+        //Upon change, save to the GObject
+        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
-                if (!aBoolean2) {
-                    try {
-                        setValue();
-                    } catch (Exception e) {
-                        return;//TODO: Probably need some better behavior here.
-                    }
+                try {
+                    setValue();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return;//TODO: Probably need some better behavior here.
                 }
             }
         });
     }
 
     private void setValue() throws Exception {
-        final Method setMethod = gObj.getClass().getMethod(setter, String.class);
+        final Method setMethod = gObj.getClass().getMethod(setter, boolean.class);
         final Method getMethod = gObj.getClass().getMethod(getter);
-        final String old = (String) getMethod.invoke(gObj);
-        final String nnew = textField.getText();
-        if (!old.equals(nnew) && !historyManager.isPaused()) {
+        final boolean old = (boolean) getMethod.invoke(gObj);
+        final boolean nnew = !checkBox.isSelected();
+        if (old != nnew && !historyManager.isPaused()) {
             historyManager.addHistory(new HistoryItem() {
                 @Override
                 public void revert() {
@@ -90,7 +88,7 @@ public class StringProperty implements PanelProperty {
                 @Override
                 public void restore() {
                     try {
-                            setMethod.invoke(gObj, nnew);
+                        setMethod.invoke(gObj, nnew);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -98,20 +96,20 @@ public class StringProperty implements PanelProperty {
 
                 @Override
                 public String getAppearance() {
-                    return gObj.getFieldName() + " string changed!";
+                    return gObj.getFieldName() + " checkbox changed!";
                 }
             });
         }
-        setMethod.invoke(gObj, textField.getText());
+        setMethod.invoke(gObj, !checkBox.isSelected());
     }
 
     @Override
     public String getJavaCode() {
-        return gObj.getFieldName() + "." + setter + "(\"" + textField.getText().replace("\\", "\\\\").replace("\"", "\\\"") + "\");";
+        return gObj.getFieldName() + "." + setter + "(" + !checkBox.isSelected() + ");";
     }
 
     @Override
     public String getFXMLCode() {
-        return fxml + "=\"" + textField.getText().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
+        return fxml + "=\"" + !checkBox.isSelected() + "\"";
     }
 }
