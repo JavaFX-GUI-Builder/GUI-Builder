@@ -460,8 +460,8 @@ public class Controller {
                     if (blueJInterface != null) {
                         File tempDir = new File(blueJInterface.getUserPrefDir(), "guibuilder");
                         if (tempDir.isDirectory() == false) { tempDir.mkdirs(); }
-                        fileJava = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".java");
-                        fileClass = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".class");
+                        fileJava = new File(tempDir, blueJInterface.getOpenGUIName() + ".java");
+                        fileClass = new File(tempDir, blueJInterface.getOpenGUIName() + ".class");
                     } else {
                         fileJava = new File(view.middleTabPane.viewPane.getClassName() + ".java");
                         fileClass = new File(view.middleTabPane.viewPane.getClassName() + ".class");
@@ -506,7 +506,9 @@ public class Controller {
                             URLClassLoader ucl = new URLClassLoader(urls);
                             guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, ucl);
                         } else {
-                            guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, Thread.currentThread().getContextClassLoader());
+                            URL[] urls = new URL[]{new File(blueJInterface.getUserPrefDir(), "guibuilder").toURI().toURL()};
+                            URLClassLoader ucl = new URLClassLoader(urls);
+                            guiClass = Class.forName(blueJInterface.getOpenGUIName(), false, ucl);
                         }
                         Method main = guiClass.getMethod("start", Stage.class);
                         Object obj = guiClass.newInstance();
