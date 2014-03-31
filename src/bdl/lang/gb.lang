@@ -25,4 +25,4 @@ code.view.tab=Code View
 preview.gui.tab=Preview GUI
 hierarchy.tab.title=Hierarchy
 menu.edit.clearall=Clear All
-about.text="JavaFX GUI Builder for BlueJ was developed by Ben Goodwin (bg93), Leon Atherton (la217) and David Hodgson (dh296) for their CO600 Project."
+about.text=JavaFX GUI Builder for BlueJ was developed by Ben Goodwin (bg93), Leon Atherton (la217) and David Hodgson (dh296) for their CO600 Project.
