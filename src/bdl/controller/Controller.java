@@ -277,19 +277,19 @@ public class Controller {
                 new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                Stage s = new Stage();
-                GridPane p = new GridPane();
-                Label l = new Label(LabelGrabber.getLabel("about.text"));
-                l.setMaxWidth(300);
-                l.setWrapText(true);
-                l.setFont(new Font(18));
-                l.setTextAlignment(TextAlignment.CENTER);
-                ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/BlueJ_Orange_64.png")));
-                p.add(iv, 1, 1);
-                p.add(l, 1, 2);
-                GridPane.setHalignment(iv, HPos.CENTER);
-                s.setScene(new Scene(p));
-                s.show();
+                Stage stage = new Stage();
+                GridPane pane = new GridPane();
+                Label label = new Label(LabelGrabber.getLabel("about.text"));
+                label.setMaxWidth(300);
+                label.setWrapText(true);
+                label.setFont(new Font(18));
+                label.setTextAlignment(TextAlignment.CENTER);
+                ImageView imageview = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/BlueJ_Orange_64.png")));
+                pane.add(imageview, 1, 1);
+                pane.add(label, 1, 2);
+                GridPane.setHalignment(imageview, HPos.CENTER);
+                stage.setScene(new Scene(pane));
+                stage.show();
             }
         });
         
