@@ -19,32 +19,6 @@ import bdl.view.left.ComponentMenuItem;
 import bdl.view.left.hierarchy.HierarchyTreeItem;
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.history.HistoryPanelItem;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
-import javafx.geometry.Side;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.util.Callback;
-
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -55,8 +29,39 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.geometry.HPos;
+import javafx.geometry.Side;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 
 public class Controller {
 
@@ -265,6 +270,26 @@ public class Controller {
             @Override
             public void handle(ActionEvent t) {
                 toggleHistory();
+            }
+        });
+        
+        view.topPanel.mItmAbout.setOnAction(
+                new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                Stage s = new Stage();
+                GridPane p = new GridPane();
+                Label l = new Label(LabelGrabber.getLabel("about.text"));
+                l.setMaxWidth(300);
+                l.setWrapText(true);
+                l.setFont(new Font(18));
+                l.setTextAlignment(TextAlignment.CENTER);
+                ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/BlueJ_Orange_64.png")));
+                p.add(iv, 1, 1);
+                p.add(l, 1, 2);
+                GridPane.setHalignment(iv, HPos.CENTER);
+                s.setScene(new Scene(p));
+                s.show();
             }
         });
         
