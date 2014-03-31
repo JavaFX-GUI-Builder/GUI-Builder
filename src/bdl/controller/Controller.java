@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -559,8 +561,19 @@ public class Controller {
         // Add selection handlers for the Property Edit Pane
         selectionManager.addSelectionListener(new SelectionListener() {
             @Override
-            public void updateSelected(GObject gObject) {
-                view.rightPanel.propertyScroll.setContent(gObject.getPEP());
+            public void updateSelected(final GObject gObject) {
+                // Yes, it really does make no sense to put this in a Platform.runLater,
+                // and removing and readding the splitpane makes no sense, but it fixes
+                // the panel not showing properties when loaded from BlueJ...
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.rightPanel.propertyScroll.setContent(gObject.getPEP());
+                        view.rightPanel.rightSplitPaneTop.getChildren().clear();
+                        view.rightPanel.rightSplitPaneTop.getChildren().add(view.rightPanel.propertyScroll);
+                    }
+                });
+
             }
 
             @Override

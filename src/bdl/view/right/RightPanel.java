@@ -10,9 +10,10 @@ public class RightPanel extends SplitPane {
 
     public HistoryPanel<HistoryPanelItem> historyPanel;
     public ScrollPane propertyScroll;
+    public AnchorPane rightSplitPaneTop;
 
     public RightPanel() {
-        AnchorPane rightSplitPaneTop = new AnchorPane();
+        rightSplitPaneTop = new AnchorPane();
 
         //Begin right properties panel
         propertyScroll = new ScrollPane();
