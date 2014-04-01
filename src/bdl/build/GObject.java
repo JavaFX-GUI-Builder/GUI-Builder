@@ -1,7 +1,7 @@
 package bdl.build;
 
 import bdl.view.right.PropertyEditPane;
-import bdl.view.right.properties.PanelProperty;
+import bdl.build.properties.PanelProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.List;

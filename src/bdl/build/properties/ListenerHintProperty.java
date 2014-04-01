@@ -1,4 +1,4 @@
-package bdl.view.right.properties;
+package bdl.build.properties;
 
 import bdl.build.GObject;
 import bdl.build.GUIObject;

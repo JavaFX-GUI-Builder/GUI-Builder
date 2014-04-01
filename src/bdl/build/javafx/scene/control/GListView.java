@@ -2,7 +2,7 @@ package bdl.build.javafx.scene.control;
 
 import bdl.build.GObject;
 import bdl.view.right.PropertyEditPane;
-import bdl.view.right.properties.PanelProperty;
+import bdl.build.properties.PanelProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.ListView;

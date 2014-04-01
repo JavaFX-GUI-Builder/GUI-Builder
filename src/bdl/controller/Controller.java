@@ -19,32 +19,6 @@ import bdl.view.left.ComponentMenuItem;
 import bdl.view.left.hierarchy.HierarchyTreeItem;
 import bdl.view.right.PropertyEditPane;
 import bdl.view.right.history.HistoryPanelItem;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
-import javafx.geometry.Side;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.util.Callback;
-
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -54,9 +28,42 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.geometry.HPos;
+import javafx.geometry.Side;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 
 public class Controller {
 
@@ -292,6 +299,26 @@ public class Controller {
             }
         });
         
+        view.topPanel.mItmAbout.setOnAction(
+                new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                Stage stage = new Stage();
+                GridPane pane = new GridPane();
+                Label label = new Label(LabelGrabber.getLabel("about.text"));
+                label.setMaxWidth(300);
+                label.setWrapText(true);
+                label.setFont(new Font(18));
+                label.setTextAlignment(TextAlignment.CENTER);
+                ImageView imageview = new ImageView(new Image(getClass().getResourceAsStream("/bdl/icons/BlueJ_Orange_64.png")));
+                pane.add(imageview, 1, 1);
+                pane.add(label, 1, 2);
+                GridPane.setHalignment(imageview, HPos.CENTER);
+                stage.setScene(new Scene(pane));
+                stage.show();
+            }
+        });
+        
     }
     
     private void setupLeftPanel() {
@@ -457,8 +484,8 @@ public class Controller {
                     if (blueJInterface != null) {
                         File tempDir = new File(blueJInterface.getUserPrefDir(), "guibuilder");
                         if (tempDir.isDirectory() == false) { tempDir.mkdirs(); }
-                        fileJava = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".java");
-                        fileClass = new File(tempDir, view.middleTabPane.viewPane.getClassName() + ".class");
+                        fileJava = new File(tempDir, blueJInterface.getOpenGUIName() + ".java");
+                        fileClass = new File(tempDir, blueJInterface.getOpenGUIName() + ".class");
                     } else {
                         fileJava = new File(view.middleTabPane.viewPane.getClassName() + ".java");
                         fileClass = new File(view.middleTabPane.viewPane.getClassName() + ".class");
@@ -503,7 +530,9 @@ public class Controller {
                             URLClassLoader ucl = new URLClassLoader(urls);
                             guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, ucl);
                         } else {
-                            guiClass = Class.forName(view.middleTabPane.viewPane.getClassName(), false, Thread.currentThread().getContextClassLoader());
+                            URL[] urls = new URL[]{new File(blueJInterface.getUserPrefDir(), "guibuilder").toURI().toURL()};
+                            URLClassLoader ucl = new URLClassLoader(urls);
+                            guiClass = Class.forName(blueJInterface.getOpenGUIName(), false, ucl);
                         }
                         Method main = guiClass.getMethod("start", Stage.class);
                         Object obj = guiClass.newInstance();
@@ -558,8 +587,19 @@ public class Controller {
         // Add selection handlers for the Property Edit Pane
         selectionManager.addSelectionListener(new SelectionListener() {
             @Override
-            public void updateSelected(GObject gObject) {
-                view.rightPanel.propertyScroll.setContent(gObject.getPEP());
+            public void updateSelected(final GObject gObject) {
+                // Yes, it really does make no sense to put this in a Platform.runLater,
+                // and removing and readding the splitpane makes no sense, but it fixes
+                // the panel not showing properties when loaded from BlueJ...
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.rightPanel.propertyScroll.setContent(gObject.getPEP());
+                        view.rightPanel.rightSplitPaneTop.getChildren().clear();
+                        view.rightPanel.rightSplitPaneTop.getChildren().add(view.rightPanel.propertyScroll);
+                    }
+                });
+
             }
 
             @Override
@@ -943,11 +983,13 @@ public class Controller {
             this.setOnDragDetected(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
-                    Dragboard db = view.leftPanel.leftList.startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent cc = new ClipboardContent();
-                    cc.putString("");
-                    db.setContent(cc);
-                    t.consume();
+                    if (view.leftPanel.leftList.getSelectionModel().getSelectedItem() != null) {
+                        Dragboard db = view.leftPanel.leftList.startDragAndDrop(TransferMode.ANY);
+                        ClipboardContent cc = new ClipboardContent();
+                        cc.putString("");
+                        db.setContent(cc);
+                        t.consume();
+                    }
                 }
             });
         }
