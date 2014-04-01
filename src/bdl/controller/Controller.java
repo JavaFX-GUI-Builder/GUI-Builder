@@ -84,6 +84,8 @@ public class Controller {
     }
 
     private void setupTopPanel() {
+        Stage stage = view.getStage();
+        // File > Load File
         view.topPanel.mItmLoadFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -97,6 +99,7 @@ public class Controller {
                 openFile(file);
             }
         });
+        // File > Save File
         view.topPanel.mItmSaveFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -126,7 +129,7 @@ public class Controller {
                     }
                 }
                 
-                // Update BlueJ java code
+                // Update BlueJ Java code
                 if ( (blueJInterface != null) && (blueJInterface.isEditingGUI()) ) {
                     // Write java code to GUI java file.
                     try {
@@ -136,9 +139,29 @@ public class Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    
+
                     // Tell BlueJ to recompile the GUI java file.
                     blueJInterface.recompileOpenGUI();
+                }
+            }
+        });
+        // File > Close
+        view.topPanel.mItmClose.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                stage.close();
+            }
+        });
+        // File > Make Full Screen
+        view.topPanel.mItmFullScreen.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (stage.isFullScreen()) {
+                    stage.setFullScreen(false);
+                    view.topPanel.mItmFullScreen.setText(LabelGrabber.getLabel("fullscreen.enable.text"));
+                } else {
+                    stage.setFullScreen(true);
+                    view.topPanel.mItmFullScreen.setText(LabelGrabber.getLabel("fullscreen.disable.text"));
                 }
             }
         });
@@ -247,6 +270,7 @@ public class Controller {
             }
         });
 
+        // View > Show Hierarchy
         view.topPanel.mItmHierarchy.setOnAction(
                 new EventHandler<ActionEvent>() {
             @Override
@@ -259,7 +283,7 @@ public class Controller {
                 }
             }
         });
-
+        // View > Show History
         view.topPanel.mItmHistory.setOnAction(
                 new EventHandler<ActionEvent>() {
             @Override
@@ -573,7 +597,7 @@ public class Controller {
         });
 
     }
-
+    
     // Method related to top panel & BlueJ interface functionality
     public void openFile(File file) {
         if (file != null) {

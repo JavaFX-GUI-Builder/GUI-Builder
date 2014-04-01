@@ -61,26 +61,6 @@ public class Main extends Application implements Runnable {
         stage.setTitle(LabelGrabber.getLabel("default.gui.title"));
         stage.setScene(scene);
 
-        //Handlers that require access to the Stage
-        view.topPanel.mItmClose.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                stage.close();
-            }
-        });
-        view.topPanel.mItmFullScreen.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if (stage.isFullScreen()) {
-                    stage.setFullScreen(false);
-                    view.topPanel.mItmFullScreen.setText(LabelGrabber.getLabel("fullscreen.enable.text"));
-                } else {
-                    stage.setFullScreen(true);
-                    view.topPanel.mItmFullScreen.setText(LabelGrabber.getLabel("fullscreen.disable.text"));
-                }
-            }
-        });
-
         // Don't show() if using BlueJ, we'll show when we want it with blueJInterface.show().
         if (blueJInterface == null) { stage.show(); }
     }

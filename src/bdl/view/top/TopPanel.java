@@ -32,10 +32,10 @@ public class TopPanel extends MenuBar {
 
     public TopPanel(boolean isBlueJAttached) {
         menuFile = new Menu(LabelGrabber.getLabel("menu.file"));
-        mItmClose = new MenuItem(LabelGrabber.getLabel("menu.file.close"));
-        mItmFullScreen = new MenuItem(LabelGrabber.getLabel("fullscreen.enable.text"));
         mItmLoadFile = new MenuItem(LabelGrabber.getLabel("menu.file.open"));
         mItmSaveFile = new MenuItem(LabelGrabber.getLabel("menu.file.save"));
+        mItmClose = new MenuItem(LabelGrabber.getLabel("menu.file.close"));
+        mItmFullScreen = new MenuItem(LabelGrabber.getLabel("fullscreen.enable.text"));
 
         menuEdit = new Menu(LabelGrabber.getLabel("menu.edit"));
         mItmUndo = new MenuItem(LabelGrabber.getLabel("menu.edit.undo"));
