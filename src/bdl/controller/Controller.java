@@ -74,6 +74,7 @@ public class Controller {
     private HistoryManager historyManager;
     private SelectionManager selectionManager;
     private Interface blueJInterface;
+    private boolean isOpeningFile = false;
 
     public Controller(View view, ComponentSettingsStore componentSettingsStore, Interface blueJInterface) {
         this.view = view;
@@ -88,10 +89,11 @@ public class Controller {
         setupMiddlePanel();
         setupRightPanel();
         setupTopPanel();
+        setupAutoSave();
     }
 
     private void setupTopPanel() {
-        Stage stage = view.getStage();
+        final Stage stage = view.getStage();
         // File > Load File
         view.topPanel.mItmLoadFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -110,46 +112,7 @@ public class Controller {
         view.topPanel.mItmSaveFile.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                File file;
-                if (blueJInterface == null) {
-                    FileChooser fileChooser = new FileChooser();
-                    FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
-                    fileChooser.getExtensionFilters().add(filter);
-
-                    file = fileChooser.showSaveDialog(view.getStage());
-                }
-                else {
-                    file = new File(blueJInterface.getWorkingDirectory(), blueJInterface.getOpenGUIName() + ".fxml");
-                }
-
-                if (file != null) {
-                    if (!file.getName().toLowerCase().endsWith(".fxml")) {
-                        file = new File(file.getAbsoluteFile() + ".fxml");
-                    }
-
-                    try {
-                        FileWriter fileWriter = new FileWriter(file);
-                        fileWriter.write(CodeGenerator.generateFXMLCode(view.middleTabPane.viewPane, null));//We don't need the imports, for the minute...
-                        fileWriter.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                
-                // Update BlueJ Java code
-                if ( (blueJInterface != null) && (blueJInterface.isEditingGUI()) ) {
-                    // Write java code to GUI java file.
-                    try {
-                        FileWriter fileWriter = new FileWriter(blueJInterface.getOpenGUIFile());
-                        fileWriter.write(generateJavaCode());
-                        fileWriter.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    // Tell BlueJ to recompile the GUI java file.
-                    blueJInterface.recompileOpenGUI();
-                }
+                saveFile();
             }
         });
         // File > Close
@@ -638,8 +601,25 @@ public class Controller {
 
     }
     
-    // Method related to top panel & BlueJ interface functionality
+    /** Adds a HistoryListener and saves whenever a change is made.
+     * Only effective when running with BlueJ.
+     */
+    private void setupAutoSave() {
+        if (blueJInterface != null) {
+            historyManager.addHistoryListener(new HistoryListener() {
+                @Override
+                public void historyUpdated(HistoryUpdate historyUpdate) {
+                    saveFile();
+                }
+            });
+        }
+    }
+    
+    /** Open the specified FXML file.
+     * @param file the File referencing the FXML file.
+     */
     public void openFile(File file) {
+        isOpeningFile = true;
         if (file != null) {
             view.middleTabPane.viewPane.getChildren().clear();
             selectionManager.clearSelection();
@@ -680,20 +660,75 @@ public class Controller {
                 e.printStackTrace();
             }
         }
+        isOpeningFile = false;
     }
     
+    /** Reset the workspace.
+     */
     public void newFile() {
+        isOpeningFile = true;
         view.middleTabPane.viewPane.getChildren().clear();
         selectionManager.clearSelection();
         historyManager.clearHistory();
+        isOpeningFile = false;
     }
+    /** Reset the workspace and set the new GUI's name to className.
+     * @param className the desired name of the new GUI
+     */
     public void newFile(String className) {
         newFile();
         view.middleTabPane.viewPane.setClassName(className);
         view.middleTabPane.viewPane.setGUITitle(className);
     }
+    
+    /** Save file to FXML. If running with BlueJ, output Java code to file.
+     */
+    private void saveFile() {
+        if (isOpeningFile) { return; }
+        File file;
+        if (blueJInterface == null) {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("FXML files (*.fxml)", "*.fxml");
+            fileChooser.getExtensionFilters().add(filter);
+
+            file = fileChooser.showSaveDialog(view.getStage());
+        }
+        else {
+            file = new File(blueJInterface.getWorkingDirectory(), blueJInterface.getOpenGUIName() + ".fxml");
+        }
+
+        if (file != null) {
+            if (!file.getName().toLowerCase().endsWith(".fxml")) {
+                file = new File(file.getAbsoluteFile() + ".fxml");
+            }
+
+            try {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write(CodeGenerator.generateFXMLCode(view.middleTabPane.viewPane, null));//We don't need the imports, for the minute...
+                fileWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         
-    // Method related to top panel
+        // Update BlueJ Java code
+        if ( (blueJInterface != null) && (blueJInterface.isEditingGUI()) ) {
+            // Write java code to GUI java file.
+            try {
+                FileWriter fileWriter = new FileWriter(blueJInterface.getOpenGUIFile());
+                fileWriter.write(generateJavaCode());
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Mark the file as dirty in BlueJ
+            blueJInterface.markAsDirty();
+        }
+    }
+    
+    /** Toggle the history panel's visibility.
+     */
     public void toggleHistory() {
         if (!view.rightPanel.getItems().contains(view.rightPanel.historyPanel)) {
             view.topPanel.mItmHistory.setSelected(true);
@@ -705,21 +740,25 @@ public class Controller {
         }
     }
     
-    // BlueJ interface functionality
+    /** Set the name of the GUI class. (BlueJ interface functionality.)
+     */
     public void setClassName(String className) {
         view.middleTabPane.viewPane.setClassName(className);
     }
-    // BlueJ interface functionality
+    /** Make the stage visible. (BlueJ interface functionality.)
+     */
     public void showStage() {
         view.getStage().show();
         view.getStage().toFront();
     }
-    // BlueJ interface functionality
+    /** Make the stage invisible. (BlueJ interface functionality.)
+     */
     public void hideStage() {
         view.getStage().hide();
     }
     
-    // Generates the full Java code.
+    /** Generates the full Java code.
+     */
     private String generateJavaCode() {
         HashMap<String, String> imports = new HashMap<>();
         for (ComponentMenuItem componentMenuItem : view.leftPanel.leftList.getItems()) {
@@ -826,6 +865,22 @@ public class Controller {
 
         destination.getChildren().add(newNode);
 
+        if (settingsNode == null) {
+            if (newNode instanceof Circle) {
+                newNode.setLayoutX((newNode.getLayoutBounds().getWidth() / 2) + 4);
+                newNode.setLayoutY((newNode.getLayoutBounds().getWidth() / 2) + 4);
+            } else {
+                newNode.setLayoutX(newNode.getLayoutX() + 4);
+                newNode.setLayoutY(newNode.getLayoutY() + 4);
+            }
+        }
+
+        if (x > 0 && y > 0) {
+            newNode.setLayoutX(x);
+            newNode.setLayoutY(y);
+        }
+
+        // Finally, let the history manager know this new thing has happened.
         historyManager.addHistory(new HistoryItem() {
             @Override
             public void restore() {
@@ -844,22 +899,6 @@ public class Controller {
                 return newThing.getClass().getSuperclass().getSimpleName() + " added!";
             }
         });
-
-
-        if (settingsNode == null) {
-            if (newNode instanceof Circle) {
-                newNode.setLayoutX((newNode.getLayoutBounds().getWidth() / 2) + 4);
-                newNode.setLayoutY((newNode.getLayoutBounds().getWidth() / 2) + 4);
-            } else {
-                newNode.setLayoutX(newNode.getLayoutX() + 4);
-                newNode.setLayoutY(newNode.getLayoutY() + 4);
-            }
-        }
-
-        if (x > 0 && y > 0) {
-            newNode.setLayoutX(x);
-            newNode.setLayoutY(y);
-        }
     }
 
     private void dealWithPane(final Pane newThing) {

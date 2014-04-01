@@ -5,6 +5,7 @@ import bdl.lang.LabelGrabber;
 import bdl.model.ComponentSettingsStore;
 import bdl.view.View;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -54,6 +55,7 @@ public class Main extends Application implements Runnable {
         Controller controller = new Controller(view, model, blueJInterface);
         if (blueJInterface != null) {
             blueJInterface.setGUIBuilderController(controller);
+            Platform.setImplicitExit(false);
         }
 
         Scene scene = new Scene(view, 1024, 600);
