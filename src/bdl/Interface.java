@@ -1,7 +1,6 @@
 package bdl;
 
 import bdl.controller.Controller;
-import bluej.pkgmgr.target.ClassTarget;
 import java.io.File;
 
 public interface Interface {
@@ -32,7 +31,7 @@ public interface Interface {
     /** If ct is currently being edited in the GUI Builder, this method will close it and reset the GUI Builder.
      * @param ct The removed class.
      */
-    public void notifyRemovedClass(ClassTarget ct);
+    public void notifyRemovedClass(Object ct);
     
     /** Marks the currently open class as dirty (needs recompiling) in BlueJ.
      */
